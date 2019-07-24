@@ -12,10 +12,10 @@ _beta: GraphFellow is still in development!_
 * [settings & config](settings)
 * [programming graph behaviour](behaviour)
 
-<script src="/vendor/pixi.min.js"></script>
-<script src="/vendor/greensock-js/TweenMax.min.js"></script>
+<script src="../vendor/pixi.min.js"></script>
+<script src="../vendor/greensock-js/TweenMax.min.js"></script>
 <div class="graphfellow" data-graph-src="example-graphs/example.json" style="width:500px;height:300px"></div>
-<script src="/graphfellow.js"></script>
+<script src="../graphfellow.js"></script>
 
 # Quick start
 
