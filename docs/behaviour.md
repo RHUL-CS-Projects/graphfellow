@@ -95,7 +95,7 @@ These fields are common to _all_ component types
 Always use `payload.set(value)` to set the value, because this updates the diagram too.
 
 
-### The `GraphVertex` object
+### The GraphVertex object
 
 Useful fields:
 
@@ -115,7 +115,7 @@ The `GraphVertex` object has a `pulse(color)` function that you can use to make 
 function has no effect).
 
 
-### The `GraphEdge` object
+### The GraphEdge object
 
 Useful fields:
 
@@ -125,7 +125,7 @@ Useful fields:
 | `.to`               | the vertex at which this edge ends
 | `.is_bidirectional` | `true` if travellers can traverse this edge both ways, in which case: be careful about what you infer from `from` and `to`
 
-### The `Traveller` object
+### The Traveller object
 
 Useful fields:
 
@@ -165,7 +165,7 @@ automatically if the number of journeys the traveller makes equals its
 executed.
 
 
-## The `Graph` object
+## The Graph object
 
 All the event handlers are called with two arguments, `event` and `graph`. The `graph` object gives you access to all the components in the graph.
 
@@ -198,7 +198,7 @@ let number_of_similar_items_in_graph = graph[this.json_type].length
 
 ## Creating graphs explicitly
 
-### `GraphFellow.create_graph`
+### GraphFellow.create_graph
 
 If you load `graphfellow.js` after your DOM is complete, it will automatically
 populate any elements (presumably `<div>`s) with class `graphfellow`, provided

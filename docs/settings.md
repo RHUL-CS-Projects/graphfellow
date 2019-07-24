@@ -256,7 +256,7 @@ settings fall back to the default values.
 | `arrowhead_length`     | `15`       | the length, from the tip to the back, of the arrowhead
 | `arrowhead_closed`     | `true`     | the arrowhead is made by two lines either side of the edge's line, joining at the tip. If `true`, the arrowhead is closed and becomes a filled triangle
 | `is_displaying_payload`| `false`    | `true` if the value of the edges's payload should be displayed
-| `payload`              | `0`        | initial value of the payload
+| `payload`              | `null`     | initial value of the payload
 | `payload_offset_x`     | `0`        | the payload value is displayed in the middle of the edge: nudge it horizontally by this amount
 | `payload_offset_y`     | `0`        | the payload value is displayed in the middle of the edge: nudge it vertically by this amount
 | `on_click`             | `null`     | what function should be run if the edge is clicked. Set this to null if you don't want any interaction.
@@ -277,7 +277,7 @@ via an edge.
 These are _not_ describing the travellers themselves (do that in the
 `travellers` array).
 
-A travellers can be a circle (a "spot") or a bitmap graphic (a "sprite"). Any
+A traveller can be a circle (a "spot") or a bitmap graphic (a "sprite"). Any
 of these settings can be overridden on an individual traveller's declaration.
 Everything is optional, because undeclared settings fall back to the default
 values.
@@ -292,7 +292,7 @@ values.
 | `stroke_color`         | `0x000000`    | the colour of the border of the spot-type traveller
 | `fill_color`           | `0x000000`    | the colour of the spot-type traveller (or the tint of the sprite)
 | `is_tinted`            | `false`       | `true` if the `fill_color` should be used to tint the sprite (sprite-type travellers only)
-| `speed`                | `1`           | a multiplier to journey duration that applies to this traveller. 0.5 is a twice as fast. 3 is twice as slow.
+| `speed`                | `1`           | a multiplier to journey duration that applies to this traveller. `0.5` is a twice as fast. `2` is twice as slow.
 | `resource_id`          | `pixi-bunny`  | the name of the resource to use as the bitmap for a sprite-type traveller
 | `sprite_scale`         | `1`           | the scale of the sprite-type traveller
 | `is_displaying_payload`| `false`       | `true` if the value of the traveller's payload should be displayed
