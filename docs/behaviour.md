@@ -119,12 +119,11 @@ function has no effect).
 
 Useful fields:
 
-| field            | description
-|------------------+----------------------------
-| `follow_edge`
-| `from`           | the vertex (`GraphVertex` object) from which this edge starts
-| `to`             | the vertex at which this edge ends
-| `is_bidirectional` | `true` if travellers can traverse this edge both ways, in which case: be careful about what you infer from `from` and `to`
+| field               | description
+|---------------------+----------------------------
+| `.from`             | the vertex (`GraphVertex` object) from which this edge starts
+| `.to`               | the vertex at which this edge ends
+| `.is_bidirectional` | `true` if travellers can traverse this edge both ways, in which case: be careful about what you infer from `from` and `to`
 
 ### The `Traveller` object
 

@@ -61,7 +61,9 @@ Create `example.json`:
 }
 ```
 
-Include the Pixi.js and Greensock libraries that GraphFellow uses. Use a CDN, or provide local copies.
+Include the [Pixi.js](https://www.pixijs.com) and
+[Greensock](https://greensock.com) libraries that GraphFellow uses. Use a CDN,
+or provide local copies.
 
 ```html
   <script src="vendor/pixi.min.js"></script>
