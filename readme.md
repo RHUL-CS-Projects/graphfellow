@@ -1,5 +1,5 @@
-
-# GraphFellow
+GraphFellow
+===========
 
 JavaScript to help draw animated, programmable directed graphs in a browser.
 
