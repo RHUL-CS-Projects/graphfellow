@@ -146,12 +146,26 @@ a traveller on its journey. Make sure the traveller's `at_vertex` is indeed one
 `from` end of the `edge` you provide as an argument (or either of the ends if
 the edge is bi-directional). 
 
+To programmatically create a traveller, use its constructor (which takes a config which _must_ include an `at_vertex`, and the graph to which it belongs).
+Currently you need to explictly add the `diagram` to the stage, and push it onto
+the graph's `travellers` array (TODO: this is probably going to change!):
+
+```javascript
+  let t = new Traveller({
+    "at_vertex": graph.get_vertex_by_id("foo"), 
+    "journey_lifespan": 1
+  }, graph);
+  t.add_diagram(graph.app.stage);
+  graph.travellers.push(t);
+```
+
 You can destroy a traveller with its `destroy()` function. This is called
 automatically if the number of journeys the traveller makes equals its
 `journey_lifespan`, after the `on_arrival` event of its final journey has been
 executed.
 
-## The `graph` object
+
+## The `Graph` object
 
 All the event handlers are called with two arguments, `event` and `graph`. The `graph` object gives you access to all the components in the graph.
 
@@ -182,5 +196,28 @@ The names of the arrays of components correspond to what you find by inspecting 
 let number_of_similar_items_in_graph = graph[this.json_type].length
 ```
 
+## Creating graphs explicitly
+
+### `GraphFellow.create_graph`
+
+If you load `graphfellow.js` after your DOM is complete, it will automatically
+populate any elements (presumably `<div>`s) with class `graphfellow`, provided
+they have a `data-graph-src` attribute. But if you can't use that mechanism,
+you can initialise graphs programmatically. This may be more convenient if you
+want to specify the config as a JavaScript object in the page, rather than
+loading it, via AJAX, as a separate JSON file.
+
+`GraphFellow.create_graph(container, initial_config)` creates the graph:
+
+| argument       | meaning
+|----------------+---------------------
+| container      | an HTML element from the DOM into which the graph will be inserted (typically a `<div>`)
+| initial_config | an object containing a complete [config](settings) for the graph — if `null`, GraphFellow will check for a `data-graph-src` attribute on the container and use that if it's available
+
+
+
+  
+  
+  
 
 

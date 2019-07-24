@@ -72,7 +72,7 @@ values.
 
 | `config`               | default    | meaning
 |------------------------+------------|----------------------
-| `grid_width`           | 1000       | the nominal width and height of the grid used by any coordinates (`x`, `y`) and sizes in the graph. You probably never need to change this, because the graph will automatically be scaled to fit within your container. For this reason, this is **not** a width in pixels.
+| `grid_width`           | `1000`     | the nominal width and height of the grid used by any coordinates (`x`, `y`) and sizes in the graph. You probably never need to change this, because the graph will automatically be scaled to fit within your container. For this reason, this is **not** a width in pixels.
 | `on_init`              | `null`     | named function to run, once, when graph is being initialised
 | `tick_period`          | `0`        | how frequently, in seconds, the "clock" ticks (see `on_tick`). `0` means `never`. Use a decimal for small periods (e.g., `0.05`), but don't expect anything faster than 1/60th of a second to work.
 | `on_tick`              | `null`     | named function to run on each tick
@@ -101,8 +101,8 @@ graph, and a coordinate position (`x`, `y`) on the canvas.
 | setting         | default      | meaning
 |-----------------+--------------+----------------------
 | `id`            | *no default* | named function to run, once, when graph is being initialised
-| `x`             | 0            | x coordinate of the centre of the vertex
-| `y`             | 0            | y coordinate of the centre of the vertex (default grid is 1000 pixels)
+| `x`             | `0`          | x coordinate of the centre of the vertex
+| `y`             | `0`          | y coordinate of the centre of the vertex (default grid is 1000 pixels)
 
 In addition, any of the global settings from `config.vertices` (see below)
 apply, overriding that setting (or its default) for the individual vertex.
@@ -183,10 +183,9 @@ The `journey_lifespan` of a traveller — either defined explicitly here, or in 
 | `1`                | _single journey_: use this if you want to program travellers that only exist on a journey-by-journey basis
 | _n_                | _specific n_: traveller makes _n_ journeys
 
-You can explcitly destroy a traveller using its `destroy()` function.
 
-The `on_arrival` event is unique to travellers: see [behaviour](behaviour) for
-more information.
+The `on_arrival` event is unique to travellers, and you can programmatically
+create and destroy travellers: see [behaviour](behaviour) for more information.
 
 
 ### Config for all vertices
