@@ -1,1 +1,4 @@
 theme: jekyll-theme-slate
+title: GraphFellow
+description: "GraphFellow: directed graphs in JavaScript"
+show_downloads: true
