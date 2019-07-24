@@ -1,0 +1,52 @@
+{
+  "vertices": [
+    {"id": "A", "x": 100, "y": 100, "payload": "A"},
+    {"id": "B", "x": 200, "y": 400, "payload": "B"},
+    {"id": "C", "x": 400, "y": 200, "payload": "C"},
+    {"id": "D", "x": 300, "y": 450, "payload": "D"},
+    {"id": "E", "x": 490, "y": 310, "payload": "E"},
+    {"id": "F", "x": 500, "y": 100, "payload": "F"},
+    {"id": "G", "x": 620, "y": 450, "payload": "G"},
+    {"id": "H", "x": 680, "y": 300, "payload": "H"},
+    {"id": "I", "x": 300, "y": 120, "payload": "I", "pulse_color": "0x0000ff", "pulse_duration": 2, "pulse_scale": 3},
+    {"id": "J", "x": 650, "y": 80,  "payload": "J"}
+  ],
+  "edges": [
+    {"from": "A", "to": "B"},
+    {"from": "B", "to": "C"},
+    {"from": "C", "to": "D"},
+    {"from": "D", "to": "E"},
+    {"from": "E", "to": "F"},
+    {"from": "F", "to": "G"},
+    {"from": "G", "to": "H"},
+    {"from": "D", "to": "G"},
+    {"from": "A", "to": "I"},
+    {"from": "F", "to": "J"},
+    {"from": "E", "to": "G"}
+  ],
+  "travellers": [
+  ],
+  "config": {
+    "tick_period": 2,
+    "on_tick": "_transmit_from_all_vertices_random",
+    "background_color": "0xccccff",
+    "vertices": {
+      "radius": 28,
+      "text_font_size": 28,
+      "stroke_width": 4
+    },
+    "edges": {
+      "traveller_radius": 6,
+      "journey_duration": 2,
+      "is_arrow": false,
+      "is_bidirectional": true
+    },
+    "travellers": {
+      "fill_color": "0xccffffff",
+      "radius": 18,
+      "payload": 0,
+      "is_displaying_payload": true,
+      "is_above_vertices": false
+    }
+  } 
+}

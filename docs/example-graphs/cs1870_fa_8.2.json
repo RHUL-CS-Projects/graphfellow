@@ -1,0 +1,56 @@
+{
+  "vertices": [
+    {"id": "0", "x": 180, "y": 250},
+    {"id": "1", "x": 60,  "y": 170},
+    {"id": "2", "x": 300, "y": 250},
+    {"id": "3", "x": 450, "y": 100, "has_ring": true, "pulse_color": "0xff0000", "pulse_duration": 1, "pulse_scale": 2},
+    {"id": "4", "x": 450, "y": 250},
+    {"id": "5", "x": 660, "y": 250, "has_ring": true, "pulse_color": "0xff0000", "pulse_duration": 1, "pulse_scale": 2},
+    {"id": "6", "x": 850, "y": 180},
+    {"id": "7", "x": 660, "y": 100}
+  ],
+  "edges": [
+    {"from": "0", "to": "1", "payload": "a", "payload_offset_x": -10, "payload_offset_y":  30},
+    {"from": "0", "to": "2", "payload": "b", "payload_offset_x":   0, "payload_offset_y":  25},
+    {"from": "2", "to": "3", "payload": "ε", "payload_offset_x": -15, "payload_offset_y": -10},
+    {"from": "2", "to": "4", "payload": "ε", "payload_offset_x":   0, "payload_offset_y": -20},
+    {"from": "3", "to": "2", "payload": "b", "payload_offset_x": -40, "payload_offset_y": -30, "control_points": [{"x": -250, "y": 0}]},
+    {"from": "3", "to": "5", "payload": "a", "payload_offset_x":  10, "payload_offset_y": -20},
+    {"from": "3", "to": "7", "payload": "a", "payload_offset_x":   0, "payload_offset_y": -20},
+    {"from": "4", "to": "3", "payload": "X", "payload_offset_x":  20, "payload_offset_y":   0},
+    {"from": "5", "to": "4", "payload": "ε", "payload_offset_x":   0, "payload_offset_y": -20},
+    {"from": "5", "to": "6", "payload": "X", "payload_offset_x":   0, "payload_offset_y":  20},
+    {"from": "6", "to": "6", "payload": "b", "control_points": [{"x": 0, "y": 140}, {"x": 200, "y": 10}]},
+    {"from": "6", "to": "7", "payload": "b", "payload_offset_x":   5, "payload_offset_y": -20},
+    {"from": "7", "to": "5", "payload": "b", "payload_offset_x":  15, "payload_offset_y":   0}
+  ],
+  "travellers": [],
+  "config": {
+    "on_init": "init",
+    "tick-period": 3,
+    "text_font_size": 50,
+    "on_tick": "_pulse",
+    "vertices": {
+      "radius": 30,
+      "text_font_family": "serif",
+      "text_font_size": 30,
+      "ring_radius": 36,
+      "on_click": "_vertex_transmit_to_random",
+      "pulse_color": "0x000000",
+      "pulse_duration": 0.5,
+      "is_pulse_blur": false,
+      "is_pulse_yoyo": false,
+      "pulse_scale": 1.25
+    },
+    "edges": {
+      "is_displaying_payload": true,
+      "text_font_family": "serif",
+      "text_font_style": "italic",
+      "text_font_size": 30
+    },
+    "travellers": {
+      "on_arrival": "_pulse"
+    }
+    
+  } 
+}

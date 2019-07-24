@@ -1,0 +1,91 @@
+{
+  "vertices": [
+    {"id": "A", "x": 300, "y": 100, "payload": "1"},
+    {"id": "B", "x": 300, "y": 400, "payload": "2"},
+    {"id": "C", "x": 600, "y": 200, "payload": "3"},
+    {"id": "D", "x": 450, "y": 450, "payload": "4"},
+    {"id": "E", "x": 600, "y": 410, "payload": "5"}
+  ],
+  "edges": [
+    {
+      "from": "A",
+      "to": "B",
+      "control-points": [{"x": -300, "y": 350}],
+      "journey-duration": 0.8,
+      "payload": "A-B",
+      "payload_offset_x": -30
+    },
+    {
+      "from": "A",
+      "to": "B",
+      "control-points": [{"x": 200, "y": 150}, {"x": 200, "y": 10}],
+      "payload": "A-B"
+      
+    },
+    {
+      "from": "A",
+      "to": "B",
+      "payload": "A-B",
+      "payload_offset_x": -30
+    },
+    {
+      "from": "C",
+      "to": "B",
+      "control-points": [{"x": 100, "y": 200}],
+      "payload": "C-B"
+    },
+    {
+      "from": "C",
+      "to": "A",
+      "payload": "C-A",
+      "payload_offset_y": -20
+    },
+    {
+      "from": "B",
+      "to": "D",
+      "payload": "B-D",
+      "payload_offset_x": -10,
+      "payload_offset_y": 30
+    },
+    {
+      "from": "D",
+      "to": "E",
+      "payload": "D-E",
+      "payload_offset_x": 10,
+      "payload_offset_y": 30
+    },
+    {
+      "from": "E",
+      "to": "C",
+      "control-points": [{"x": 300, "y": -250}],
+      "payload": "E-C"
+    }
+  ],
+  "travellers": [
+  ],
+  "config": {
+    "tick-period": 3,
+    "on_tick": "_transmit_from_all_vertices_random",
+    "background-color": "0xffcccc",
+    "vertices": {
+      "radius": 26,
+      "text-font-size": 24
+    },
+    "edges": {
+      "traveller-radius": 6,
+      "journey-duration": 2,
+      "is-arrow": false,
+      "is-bidirectional": true,
+      "is_displaying_payload": false,
+      "text_color": "0x0000ff"
+    },
+    "travellers": {
+      "fill-color": "0xffccff",
+      "radius": 18,
+      "payload": 0,
+      "is-displaying-payload": true,
+      "is-above-vertices": false
+    }
+    
+  } 
+}

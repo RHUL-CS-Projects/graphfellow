@@ -1,0 +1,40 @@
+{
+  "vertices": [ {"id": "A", "x": 500, "y": 200} ],
+  "edges": [
+    {
+      "from": "A",
+      "to": "A",
+      "control_points": [ {"x": -420, "y": 300}, {"x": 520, "y": 400}]
+    }
+  ],
+  "config": {
+    "tick_period":         4,
+    "on_tick": "_transmit_from_all_vertices_random",
+        
+    "vertices": {
+      "radius": 80,
+      "stroke_width": 8,
+      "has_id_as_payload": false
+    },
+    "edges": {
+      "journey_duration": 3,
+      "stroke_width": 8,
+      "arrowhead_length": 50,
+      "arrowhead_angle": 45
+    },
+    "travellers": {
+      "type": "sprite",
+      "resource_id": "bunny",
+      "sprite_scale": 3,
+      "radius": 28,
+      "stroke_width": 0,
+      "fill_color": "0xff0000"
+    },
+    "resources": [
+      { 
+        "id": "bunny", 
+        "resource": "../docs/img/pixi-bunny.png" 
+      }
+    ]
+  }
+}
