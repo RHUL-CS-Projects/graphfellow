@@ -146,6 +146,10 @@ a traveller on its journey. Make sure the traveller's `at_vertex` is indeed one
 `from` end of the `edge` you provide as an argument (or either of the ends if
 the edge is bi-directional). 
 
+You can destroy a traveller with its `destroy()` function. This is called
+automatically if the number of journeys the traveller makes equals its
+`journey_lifespan`, after the `on_arrival` event of its final journey has been
+executed.
 
 ## The `graph` object
 

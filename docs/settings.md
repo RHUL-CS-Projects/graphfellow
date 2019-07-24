@@ -172,10 +172,21 @@ In addition, any of the global settings from `config.travellers` (see below)
 apply, overriding that setting (or its default) for the individual traveller.
 
 It's possible that a graph will have no travellers defined in its initial
-settings, if you'e added [behaviour](behaviour) (named functions) that create
+settings, if you've added [behaviour](behaviour) (named functions) that create
 them.
 
-The `on_arrival` event is unique to travellers.
+The `journey_lifespan` of a traveller — either defined explicitly here, or in the global config for all travellers — determines how many journeys the traveller will make before being destroyed. The most useful values are these:
+
+| `journey_lifespan` | meaning
+|--------------------+--------------
+| `0`                |  _unlimited journeys_: use this if you want to move a persistent traveller around the graph
+| `1`                | _single journey_: use this if you want to program travellers that only exist on a journey-by-journey basis
+| _n_                | _specific n_: traveller makes _n_ journeys
+
+You can explcitly destroy a traveller using its `destroy()` function.
+
+The `on_arrival` event is unique to travellers: see [behaviour](behaviour) for
+more information.
 
 
 ### Config for all vertices
