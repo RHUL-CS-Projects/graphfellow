@@ -211,7 +211,7 @@ loading it, via AJAX, as a separate JSON file.
 
 | argument       | meaning
 |----------------+---------------------
-| container      | an HTML element from the DOM into which the graph will be inserted (typically a `<div>`)
+| container      | an HTML element from the DOM into which the graph will be inserted (typically a `<div>`), e.g., `document.getElementById("foo")`
 | initial_config | an object containing a complete [config](settings) for the graph — if `null`, GraphFellow will check for a `data-graph-src` attribute on the container and use that if it's available
 
 
