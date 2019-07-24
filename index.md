@@ -1,5 +1,5 @@
 ---
-title: GraphFellow: directed graphs in JavaScript
+title: "GraphFellow: directed graphs in JavaScript"
 layout: default
 ---
 
