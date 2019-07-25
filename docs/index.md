@@ -69,8 +69,8 @@ Include the [Pixi.js](https://www.pixijs.com) and
 or provide local copies.
 
 ```html
-  <script src="vendor/pixi.min.js"></script>
-  <script src="vendor/greensock-js/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.0/pixi.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 ```
 
 Add a container `<div>` with class `graphfellow`, and link to its JSON definition with `data-graph-src`:
