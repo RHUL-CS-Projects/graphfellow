@@ -19,12 +19,13 @@ the graph with the `add_function` function.
 
 The functions which control the behaviour of the graph are triggered by the following events:
 
-| event type  | on        | description          
-|-------------+-----------|-----------------------------
-| `on_init`   | graph     | runs when the graph is initialised 
-| `on_tick`   | graph     | runs every 'tick', if `tick_period` is not zero 
-| `on_arrival`| traveller | run by a traveller when it arrives at the end of its journey along an edge
-| `on_click`  | vertex, edge, traveller | runs when user clicks on component
+| event type     | on        | description          
+|----------------+-----------|-----------------------------
+| `on_init`      | graph     | runs when the graph is initialised 
+| `on_tick`      | graph     | runs every 'tick', if `tick_period` is not zero 
+| `on_departure` | traveller | run by a traveller just before it sets off on a journey along an edge
+| `on_arrival` | traveller | run by a traveller when it arrives at the end of its journey along an edge
+| `on_click`     | vertex, edge, traveller | runs when user clicks on component
 | `on_mouseover` | vertex, edge, traveller | runs when user's mouse pointer moves over component
 
 The function is called with two arguments: `event` and `graph`. You can also
@@ -136,15 +137,18 @@ Useful fields:
 | `.following_edge`    | the edge (`GraphEdge` object) that this traveller is following (`null` if it is not travelling)
 | `.at_vertex`         | the vertex at which this traveller is currently resting (or at which it has just arrvied — see note below)
 
-The `from`, `to`, and `following_edge` fields are cleared _after_ the
-traveller's `on_arrival` event is fired. The `at_vertex` field is populated
+The `from`, `to`, and `following_edge` fields are set _before_ the traveller's
+`on_departure` event, and cleared _after_ its `on_arrival` event. Additionally,
+the `at_vertex` field is cleared after the `on_departure` event and populated
 just before the `on_arrival` event — so all those fields are useful to you when
-programming `on_arrival` functions.
+programming the traveller's journey-based event functions.
 
 The `Traveller` object has a `travel(edge)` function, which you can use to set
-a traveller on its journey. Make sure the traveller's `at_vertex` is indeed one
-`from` end of the `edge` you provide as an argument (or either of the ends if
-the edge is bi-directional). 
+a traveller on its journey. Make sure the traveller _can_ travel along that
+edge based on its current location. That is, its `at_vertex` must be the same
+vertex as `edge.from` (or either of `edge.from` or `edge.to` if the edge is
+bi-directional) — otherwise this call will do nothing. Calling `travel` will
+subequently trigger the `on_departure` event if this traveller has one defined.
 
 To programmatically create a traveller, use its constructor (which takes a config which _must_ include an `at_vertex`, and the graph to which it belongs).
 Currently you need to explictly add the `diagram` to the stage, and push it onto

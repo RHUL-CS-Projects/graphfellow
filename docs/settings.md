@@ -24,7 +24,7 @@ created and destroyed.
 
 | **vertices**   | Vertices are the nodes of the directed graph. Vertices must have a unique ID. All vertices are rendered as circles. Vertices can be rendered with an additional ring, and can be made to pulse (showing an animated surround).
 | **edges**      | Edges are rendered as lines joining the vertices of the graph, and are directed (that is, they have a `from` and a `to` vertex). Edges can be bi-directional, and can be drawn with or without arrowheads. An edge can loop, joining a vertex to itself.
-| **travellers** | Travellers move along the edges, vertex-to-vertex, and can be either circles ("spots") or graphics (sprites). Travellers can have an `on_arrival` event handler, which can be useful for programming [graph behaviour](behaviour).
+| **travellers** | Travellers move along the edges, vertex-to-vertex, and can be either circles ("spots") or graphics (sprites). Travellers can have `on_departure` and `on_arrival` event handlers, which can be useful for programming [graph behaviour](behaviour).
 
 
 
@@ -184,8 +184,9 @@ The `journey_lifespan` of a traveller — either defined explicitly here, or in 
 | _n_                | _specific n_: traveller makes _n_ journeys
 
 
-The `on_arrival` event is unique to travellers, and you can programmatically
-create and destroy travellers: see [behaviour](behaviour) for more information.
+The `on_departure` and `on_arrival` events are unique to travellers, and you
+can programmatically create and destroy travellers: see [behaviour](behaviour)
+for more information.
 
 
 ### Config for all vertices
@@ -296,7 +297,8 @@ values.
 | `resource_id`          | `pixi-bunny`  | the name of the resource to use as the bitmap for a sprite-type traveller
 | `sprite_scale`         | `1`           | the scale of the sprite-type traveller
 | `is_displaying_payload`| `false`       | `true` if the value of the traveller's payload should be displayed
-| `on_arrival`           | `null`        | what function should be run when the traveller arrives at the end of its journey.
+| `on_departure`           | `null`        | what function should be run when the traveller departs on its journey
+| `on_arrival`           | `null`        | what function should be run when the traveller arrives at the end of its journey
 | `on_click`             | `null`        | what function should be run if the edge is clicked. Set this to null if you don't want any interaction.
 | `on_moueseover`        | `null`        | what function should be run if the mouse pointer moves over the traveller. Set this to null if you don't want any interaction.
 | `payload`              | `0`           | initial value of the payload       

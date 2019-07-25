@@ -99,6 +99,7 @@
       "is_text_wordwrap": false,
       "text_wordwrap_width": 10,
       "on_arrival":       null,
+      "on_departure":     null,
       "on_click":         null,
       "on_mouseover":     null
     },
@@ -793,6 +794,9 @@
       this.following_edge = edge;
       this.from = this.at_vertex;
       this.to = edge.to === this.from? edge.from : edge.to; // reverse
+      if (functions[this.on_departure] instanceof Function) {
+        functions[this.on_departure].call(this, new Event("departure"), this.graph);
+      }
       this.at_vertex = null;
       let settings_json = edge.get_tween_data(this.from);
       let traveller = this;
