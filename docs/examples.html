@@ -12,7 +12,7 @@
         margin: 0;
         padding: 0;
       }
-      .graphfellow, #other{
+      .graphfellow, .graph-container{
         width: 500px;
         height:300px;
         border:1px solid #ccc;
@@ -21,8 +21,8 @@
 
     </style>
   <body>
-    <div id="other" data-graph-config="background-color:0xffffcc"></div>
-    <div class="graphfellow" data-graph-src="example-graphs/cs1870_fa_8.2.json"></div> 
+    <div id="other" class="graph-container" data-graph-config="background-color:0xffffcc"></div>
+    <a href="example-graphs/regexp"><div id="regexp-example" class="graph-container" data-graph-src="example-graphs/cs1870_fa_8.2.json"></div></a>
     <div class="graphfellow" data-graph-src="example-graphs/graph.json" data-graph-config="vertices.on_click:test01,tick-duration:0,vertices.text-font-size:30,vertices.is-pulse-blur:true"></div> 
     <div class="graphfellow" data-graph-src="example-graphs/graph.json"
     data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
@@ -37,16 +37,6 @@
         alert("I am one of the " + this.json_type + " with payload " + this.payload.value);
       });
       GraphFellow.add_function("test01", function(){});
-      GraphFellow.add_function("init", function(){
-        let startv = this.get_vertex_by_id("0");
-        let pulse_dur = startv.pulse_duration;
-        let pulse_scale = startv.pulse_scale;
-        startv.pulse_duration = 2;
-        startv.pulse_scale = 2;
-        this.get_vertex_by_id("0").pulse(0x00ff00);
-        startv.pulse_duration = pulse_dur;
-        startv.pulse_scale = pulse_scale;
-      });
       
       let example_config = {
         vertices: [
@@ -84,7 +74,49 @@
         }
       };
       GraphFellow.create_graph(document.getElementById("other"), example_config);
-      
+
+      // functions for CS 1870 finite automata
+
+      let current = document.getElementById("regexp-current")
+      let accepted = document.getElementById("regexp-accepted");
+  
+      GraphFellow.add_function("spot_arrives_at_next_state", function(e, graph){
+        if (this.following_edge.payload.value != "ε") {
+          this.payload.set(this.payload.value + this.following_edge.payload.value);
+        }
+        this.at_vertex.pulse();
+        if (current) {
+          current.innerHTML = "<span>" + this.payload.value + "</span>";
+        }
+        if (this.at_vertex.has_ring) {
+          if (accepted) {
+            accepted.innerHTML = "<span>" + this.payload.value + "</span>" + accepted.innerHTML;
+          }
+        }
+      });
+
+      GraphFellow.add_function("send_traveller_to_node", function(e, graph){
+        let t = graph.travellers[0]; // find the (only) traveller
+        if (t && t.at_vertex) { // only if the traveller is at rest
+          let possible_edges = [];
+          if (this.json_type === 'edges') {
+            if (this.from === t.at_vertex) {
+              possible_edges.push(this);
+            }
+          } else if (this.json_type === 'vertices') {
+            for (let i =0; i < t.at_vertex.edges_out.length; i++) {
+              if (t.at_vertex.edges_out[i].to === this) {
+                possible_edges.push(t.at_vertex.edges_out[i]);
+              }
+            }
+          }
+          if (possible_edges.length === 1) {
+            t.travel(possible_edges[0]);
+          }
+        }
+      });
+      GraphFellow.create_graph(document.getElementById("regexp-example"));
+
     </script>
   </body>
 </html>
