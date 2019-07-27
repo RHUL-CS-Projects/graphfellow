@@ -43,6 +43,7 @@ This finite state automata, representing a regular expression, has a start
 state of `0` and two accepting states, `3` and `5`. Move the red spot through
 it by clicking on the nodes or edges and see how the language "accepts" some
 strings and not others.
+<button id="regexp-reset">reset</button>
 
 
 <div id="regexp-example"
@@ -93,7 +94,17 @@ strings and not others.
       }
     }
   });
-  
+
+  document.getElementById("regexp-reset")
+    .addEventListener("click", function(){
+    let g = GraphFellow.graphs[0];
+    if (g) {
+      g.travellers[0].destroy();
+      g.create_traveller({at_vertex: "0"});
+      current.innerHTML = accepted.innerHTML = "";
+    }
+  });
+
   GraphFellow.create_graph(document.getElementById("regexp-example"));
 </script>
 
@@ -134,7 +145,7 @@ The regexp demo uses three DOM elements: the container for the graph itself, and
 
 Before defining custom functions, the GraphFellow library itself is loaded:
 
-```javascript
+```html
 <script src="../../graphfellow.js"></script>
 ```
 
@@ -187,13 +198,7 @@ This finite state automata works by moving a single, persistent traveller around
 
 ```javascript
 "travellers": [
-  {
-    "at_vertex": "0",
-    "on_arrival": "spot_arrives_at_next_state",
-    "is_above_vertices": true,
-    "payload": "",
-    "fill_color": "0xff0000"
-  }
+  { "at_vertex": "0" }
 ]
 ```
 
@@ -227,7 +232,11 @@ adds `on_click` handlers to _all_ of the edges and vertices:
     "on_click": "send_traveller_to_node"
   },
   "travellers": {
-    "payload_value": ""
+    "payload_value": "",
+    "on_arrival": "spot_arrives_at_next_state",
+    "is_above_vertices": true,
+    "payload": "",
+    "fill_color": "0xff0000"
   }
 } 
 ```
@@ -333,14 +342,47 @@ GraphFellow.add_function("spot_arrives_at_next_state", function(e, graph){
 });
 ```
 
-The definition of the regular expression is that epsilon (ε) is an empty-string
-transition. Note that using `this.payload.set()` is recommended — rather than
-manipulating the `this.payload.value` directly — because, if the payload is
-being displayed, this would also update the diagram.
+By definition, the epsilon (ε) transition in a finite automata is an
+empty-string transition. Note that using `this.payload.set()` is recommended —
+rather than manipulating the `this.payload.value` directly — because, if the
+payload is being displayed, this would also update the diagram.
 
 The `pulse()` function on the vertex will behave differently for accepting
 states (vertices `3` and `5`) because the config defined those states' pulses
 differently from the rest.
+
+### Add a reset button
+
+The example automata has a dead-end in it: if you go to state `1`, you can't get out. There are other reasons you might want to reset the graph anyway. The reset button is just a `<button>` element:
+
+```html
+<button id="regexp-reset">reset</button>
+```
+
+...with a click event handler added to it:
+
+```javascript
+document.getElementById("regexp-reset")
+  .addEventListener("click", function(){
+  let g = GraphFellow.graphs[0];
+  if (g) {
+    g.travellers[0].destroy();
+    g.create_traveller({at_vertex: "0"});
+    current.innerHTML = accepted.innerHTML = "";
+  }
+});
+```
+
+This deletes the traveller and replaces it with a new one at the start state (vertex `0`). The `destroy()` and `create_traveller()` functions handle rendering of the diagram, and manage the graph's `travellers` array too. 
+
+The click handler also clears the two HTML elements that are displaying the current and accepted strings. Everything is ready to start again.
+
+Note that when the config for the traveller was specified (in the JSON file),
+the characteristics of the travellers were put in the `config.travellers{}`
+section (and not as settings of the single traveller defined in the
+`travellers` array). This ensures that all new travellers created inherit these
+same settings, which happens when this reset method creates the new traveller.
+
 
 ### All done: create the graph
 
@@ -354,4 +396,3 @@ attribute found on the container:
   GraphFellow.create_graph(document.getElementById("regexp-example"));
 ```
 
-TODO: currently there's no way to reset the graph other than reloading the page.

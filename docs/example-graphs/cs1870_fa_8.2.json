@@ -25,13 +25,7 @@
     {"from": "7", "to": "5", "payload": "b", "payload_offset_x":  15, "payload_offset_y":   0}
   ],
   "travellers": [
-    {
-      "at_vertex": "0",
-      "on_arrival": "spot_arrives_at_next_state",
-      "is_above_vertices": true,
-      "payload": "",
-      "fill_color": "0xff0000"
-    }
+    { "at_vertex": "0" }
   ],
   "config": {
     "tick-period": 3,
@@ -57,7 +51,11 @@
       "on_click": "send_traveller_to_node"
     },
     "travellers": {
-      "payload_value": ""
+      "payload_value": "",
+      "on_arrival": "spot_arrives_at_next_state",
+      "is_above_vertices": true,
+      "payload": "",
+      "fill_color": "0xff0000"
     }
   } 
 }

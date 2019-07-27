@@ -20,6 +20,7 @@ This finite state automata, representing a regular expression, has a start
 state of `0` and two accepting states, `3` and `5`. Move the red spot through
 it by clicking on the nodes or edges and see how the language "accepts" some
 strings and not others.
+<button id="regexp-reset">reset</button>
 
 <style>
   .graphfellow canvas {
@@ -96,6 +97,15 @@ strings and not others.
       if (possible_edges.length === 1) {
         t.travel(possible_edges[0]);
       }
+    }
+  });
+  
+  document.getElementById("regexp-reset").addEventListener("click", function(){
+    let g = GraphFellow.graphs[0];
+    if (g) {
+      g.travellers[0].destroy();
+      g.create_traveller({at_vertex: "0"});
+      current.innerHTML = accepted.innerHTML = "";
     }
   });
   
