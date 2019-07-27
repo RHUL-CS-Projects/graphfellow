@@ -136,10 +136,8 @@
   let functions = {
     _vertex_transmit_to_random: function(event, graph) {
       if (this instanceof GraphVertex) {
-        let t = new Traveller({"at_vertex": this, "journey_lifespan": 1}, graph);
-        t.add_diagram(graph.app.stage);
+        let t = graph.create_traveller({"at_vertex": this, "journey_lifespan": 1});
         t.payload.set(this.payload.value);
-        graph.travellers.push(t);
         t.travel(this.get_random_edge_out());
       }
     },
@@ -431,6 +429,12 @@
         }
       }
     );
+  }
+  Graph.prototype.create_traveller = function(config) {
+    let t = new Traveller(config, this);
+    t.add_diagram(this.app.stage);
+    this.travellers.push(t);
+    return t;
   }
 
   //-----------------------------------------------------------
