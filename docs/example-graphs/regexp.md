@@ -1,5 +1,5 @@
 ---
-title: GraphFellow example: regexp automata
+title: "GraphFellow example: regexp automata"
 layout: default
 ---
 
