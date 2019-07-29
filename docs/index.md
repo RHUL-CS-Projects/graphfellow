@@ -21,7 +21,9 @@ _beta: GraphFellow is still in development!_
 <script src="../graphfellow.js"></script>
 # Quick start
 
-Create `example.json`:
+Create `example.json` defining a graph on a `1000` × `1000` grid (the default),
+with a "tick" every 2 seconds:
+
 ```json
 {
   "vertices": [
@@ -42,7 +44,7 @@ Create `example.json`:
     {
       "at_vertex": "A", "radius": 20, "on_arrival": "_pulse",
       "fill_color": "0xff0000", "stroke_color": "0xff0000"
-   }
+    }
   ],
   "config": {
     "vertices": {
@@ -72,29 +74,37 @@ or provide local copies.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 ```
 
-Add a container `<div>` with class `graphfellow`, and link to its JSON definition with `data-graph-src`:
-
-```html
-  <div class="graphfellow" data-graph-src="example.json"></div>
-```
-
 Load `graphfellow.js`:
 
 ```html
-  <script src="graphfellow.js"></script>
+<script src="graphfellow.js"></script>
 ```
 
-Populate the graph with `init()`:
+Add a container with class `graphfellow`, and link to its JSON:
 
 ```html
-  <script> GraphFellow.init() </script>
+<div class="graphfellow" data-graph-src="example.json"></div>
 ```
+
+Populate the graph with `init`:
+
+```html
+<script> GraphFellow.init() </script>
+```
+
+...and graphy magic happens.
+
 
 ---
 
-* [examples](examples)
-* [settings & config](settings)
-* [programming graph behaviour](behaviour)
+<br><br><br>
+
+Really `graphfellow.js` is probably all you need, but if you download the whole
+repo you'll get all the example source files to poke around in too.
+
+* see more [examples](examples)
+* detailed docs mostly cover [settings & config](settings)
+* how to [program graph behaviour](behaviour) with JavaScript
 
 <script> GraphFellow.init() </script>
 
