@@ -157,11 +157,9 @@ As the `data-graph-src` attribute shows, the graph is defined in
 [`cs1870_fa_8.2.json`](cs1870_fa_8.2.json). You can click on that and inspect
 the whole file, but the rest of this page describes the JSON piece-by-piece.
 
-The container `<div>` does _not_ have a class of `graphfellow`: this is to
-prevent auto-initialising — instead, the graph will be explicitly initialised
-by calling `create_graph()` after the event handling functions have been
-defined.
-  
+The graph will be explicitly initialised by calling `create_graph()` after the
+event handling functions have been defined.
+ 
 The two vertices (`3` and `5`) representing accepting states pulse differently
 from the other states (their pulses are bigger, and red).
 
