@@ -17,6 +17,9 @@ The behaviour of the graph is controlled by named JavaScript functions. There
 are a few already available, but you can also write your own, and add them to
 the graph with the `add_function` function.
 
+You should make sure you add all the functions you need _before_ you initialise
+your graphs with `GraphFellow.init()` or `GraphFellow.create_graph()`.
+
 The functions which control the behaviour of the graph are triggered by the following events:
 
 | event type     | on        | description          
@@ -199,29 +202,4 @@ The names of the arrays of components correspond to what you find by inspecting 
 // this may be a vertex, edge, or traveller
 let number_of_similar_items_in_graph = graph[this.json_type].length
 ```
-
-## Creating graphs explicitly
-
-### GraphFellow.create_graph
-
-If you load `graphfellow.js` after your DOM is complete, it will automatically
-populate any elements (presumably `<div>`s) with class `graphfellow`, provided
-they have a `data-graph-src` attribute. But if you can't use that mechanism,
-you can initialise graphs programmatically. This may be more convenient if you
-want to specify the config as a JavaScript object in the page, rather than
-loading it, via AJAX, as a separate JSON file.
-
-`GraphFellow.create_graph(container, initial_config)` creates the graph:
-
-| argument       | meaning
-|----------------+---------------------
-| container      | an HTML element from the DOM into which the graph will be inserted (typically a `<div>`), e.g., `document.getElementById("foo")`
-| initial_config | an object containing a complete [config](settings) for the graph — if `null`, GraphFellow will check for a `data-graph-src` attribute on the container and use that if it's available
-
-
-
-  
-  
-  
-
 

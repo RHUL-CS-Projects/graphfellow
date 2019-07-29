@@ -19,7 +19,6 @@ _beta: GraphFellow is still in development!_
   data-graph-config="background-color:0xf2f2f2"
   style="width:500px;height:300px"></div>
 <script src="../graphfellow.js"></script>
-
 # Quick start
 
 Create `example.json`:
@@ -79,10 +78,16 @@ Add a container `<div>` with class `graphfellow`, and link to its JSON definitio
   <div class="graphfellow" data-graph-src="example.json"></div>
 ```
 
-Load `graphfellow.js` when your DOM is ready, and it will populate the container with the graph.
+Load `graphfellow.js`:
 
 ```html
   <script src="graphfellow.js"></script>
+```
+
+Populate the graph with `init()`:
+
+```html
+  <script> GraphFellow.init() </script>
 ```
 
 ---
@@ -90,3 +95,6 @@ Load `graphfellow.js` when your DOM is ready, and it will populate the container
 * [examples](examples)
 * [settings & config](settings)
 * [programming graph behaviour](behaviour)
+
+<script> GraphFellow.init() </script>
+

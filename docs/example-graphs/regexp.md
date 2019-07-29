@@ -105,7 +105,7 @@ strings and not others.
     }
   });
 
-  GraphFellow.create_graph(document.getElementById("regexp-example"));
+  GraphFellow.init(document.getElementById("regexp-example"));
 </script>
 
 <hr style="margin-bottom:4em"/>
@@ -143,6 +143,8 @@ The regexp demo uses three DOM elements: the container for the graph itself, and
 <p class="regexp-strings" id="regexp-accepted"></p>
 ```
 
+The container's `data-graph-config` attribute contains config settings that will override any found in the config file. In this case, it's setting the background colour to match that of the page.
+
 Before defining custom functions, the GraphFellow library itself is loaded:
 
 ```html
@@ -151,14 +153,17 @@ Before defining custom functions, the GraphFellow library itself is loaded:
 
 ### Config in the JSON
 
-As the `data-graph-src` attribute shows, the graph is defined in [`cs1870_fa_8.2.json`](cs1870_fa_8.2.json). You can click on that and inspect the whole file, but the rest of this page describes the JSON piece-by-piece.
+As the `data-graph-src` attribute shows, the graph is defined in
+[`cs1870_fa_8.2.json`](cs1870_fa_8.2.json). You can click on that and inspect
+the whole file, but the rest of this page describes the JSON piece-by-piece.
 
 The container `<div>` does _not_ have a class of `graphfellow`: this is to
 prevent auto-initialising — instead, the graph will be explicitly initialised
 by calling `create_graph()` after the event handling functions have been
 defined.
   
-The two vertices (`3` and `5`) representing accepting states pulse differently from the other states (their pulses are bigger, and red).
+The two vertices (`3` and `5`) representing accepting states pulse differently
+from the other states (their pulses are bigger, and red).
 
 ```javascript
 "vertices": [
@@ -173,8 +178,13 @@ The two vertices (`3` and `5`) representing accepting states pulse differently f
 ]
 ```
 
-The edges' payload values are important: these correspond to the characters that are added to the string when the traveller traverses them. The `payload_offset` settings are common on edges, because the default position of the payload is the middle of the edge, which for straight lines means it will intersect. Note two control points on the `6`-to-`6` loop: if you don't have
-two, separated control points on an edge that starts and ends at the same vertex, you will not be able to see it.
+The edges' payload values are important: these correspond to the characters
+that are added to the string when the traveller traverses them. The
+`payload_offset` settings are common on edges, because the default position of
+the payload is the middle of the edge, which for straight lines means it will
+intersect. Note two control points on the `6`-to-`6` loop: if you don't have
+two, separated control points on an edge that starts and ends at the same
+vertex, you will not be able to see it.
 
 ```javascript
 "edges": [
@@ -194,7 +204,9 @@ two, separated control points on an edge that starts and ends at the same vertex
 ]
 ```
 
-This finite state automata works by moving a single, persistent traveller around the graph. So it's defined in the JSON config too, set at vertex `0` which is the start state of the automata:
+This finite state automata works by moving a single, persistent traveller
+around the graph. So it's defined in the JSON config too, set at vertex `0`
+which is the start state of the automata:
 
 ```javascript
 "travellers": [
@@ -212,6 +224,7 @@ adds `on_click` handlers to _all_ of the edges and vertices:
 ```javascript
 "config": {
   "text_font_size": 50,
+  "background-color": "0xffffff",
   "vertices": {
     "radius": 30,
     "text_font_family": "serif",
@@ -246,6 +259,9 @@ done in the config (for example, creating the one, persistent traveller).
 There's no `tick_period` either, because all the behaviour is in response to
 user interaction. By default, `tick_period` is `0`, so there's no `on_tick`
 activity happening on this graph.
+
+The `background_color` setting in this config is being explicitly overridden by
+the one set in the `data-graph-config` in the containing `<div>`.
 
 ### Defining the custom functions
 
@@ -291,7 +307,9 @@ Next, `this.json_type` is used to determine what kind of component the `this`
 keyword refers to, because this function is the `on_click` event handler for
 both vertices and edges and each needs slightly different treatment.
 
-Note that the function is not anticipating any edges being bi-directional, because finite state automata like this do not have such edges. But if the graph were to contain them, the logic would be a little more complicated:
+Note that the function is not anticipating any edges being bi-directional,
+because finite state automata like this do not have such edges. But if the
+graph were to contain them, the logic would be a little more complicated:
 
 ```javascript
 if (this.from === t.at_vertex || 
@@ -353,7 +371,9 @@ differently from the rest.
 
 ### Add a reset button
 
-The example automata has a dead-end in it: if you go to state `1`, you can't get out. There are other reasons you might want to reset the graph anyway. The reset button is just a `<button>` element:
+The example automata has a dead-end in it: if you go to state `1`, you can't
+get out. There are other reasons you might want to reset the graph anyway. The
+reset button is just a `<button>` element:
 
 ```html
 <button id="regexp-reset">reset</button>
@@ -373,9 +393,12 @@ document.getElementById("regexp-reset")
 });
 ```
 
-This deletes the traveller and replaces it with a new one at the start state (vertex `0`). The `destroy()` and `create_traveller()` functions handle rendering of the diagram, and manage the graph's `travellers` array too. 
+This deletes the traveller and replaces it with a new one at the start state
+(vertex `0`). The `destroy()` and `create_traveller()` functions handle
+rendering of the diagram, and manage the graph's `travellers` array too.
 
-The click handler also clears the two HTML elements that are displaying the current and accepted strings. Everything is ready to start again.
+The click handler also clears the two HTML elements that are displaying the
+current and accepted strings. Everything is ready to start again.
 
 Note that when the config for the traveller was specified (in the JSON file),
 the characteristics of the travellers were put in the `config.travellers{}`
@@ -386,13 +409,20 @@ same settings, which happens when this reset method creates the new traveller.
 
 ### All done: create the graph
 
-Finally, the graph is initialised by an explicit call to `create_graph()`. This
-takes two arguments: the container into which the graph will be rendered, and a
-config object. Because no config object is provided, GraphFellow will load the
-config as a JSON file (that is, an AJAX call) defined in the `data-graph-src`
-attribute found on the container:
+Finally, the graph is initialised by an explicit call to `create_graph()`:
 
 ```javascript
-  GraphFellow.create_graph(document.getElementById("regexp-example"));
+GraphFellow.create_graph(document.getElementById("regexp-example"));
 ```
+
+If the graph's container had a class of `graphfellow`, it would be possible to
+simply use `GraphFellow.init()` instead. The primary advantage of using
+`create_graph` is that it allows you to directly specify the container to
+populate, and, optionally, define its config as a JavaScript object. In this
+example, as the JSON is defined in the `data-graph-src` attribute,
+`create_graph` is being used just to target the container.
+
+
+
+
 
