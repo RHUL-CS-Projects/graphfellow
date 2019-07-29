@@ -57,7 +57,7 @@ strings and not others.
   style="width:100%;height: 300px;"></div>
 <p class="regexp-strings" id="regexp-current"></p>
 <p class="regexp-strings" id="regexp-accepted"></p>
-<script src="../../graphfellow.js"></script>
+<script src="graphfellow.js"></script>
 <script>
   // functions for CS 1870 finite automata
 
