@@ -967,7 +967,7 @@
     }
   });
   
-  // can manually add a graph here (e.g., if div isn't ready when the _init autoruns)
+  // can manually add a graph here (e.g., if div isn't ready when the init autoruns)
   GraphFellow.create_graph = function(container, initial_config) {
     if (initial_config == null) {
       // no initial config so make the AJAX call to get it
@@ -993,14 +993,19 @@
     }
   }
   
-  GraphFellow._init = function(div) {
-    let divs = document.querySelectorAll(".graphfellow");
+  GraphFellow.init = function(divs) {
+    if (divs !== undefined) {
+      if (! (divs instanceof Array )) {
+        divs = [divs];
+      }
+    } else {
+      divs = document.querySelectorAll(".graphfellow");
+    }
     for (let i=0; i < divs.length; i++) {
-      if (divs[i].getAttribute('data-graph-src')) {
+      if (divs[i] && typeof divs[i].getAttribute === "function" && divs[i].getAttribute('data-graph-src')) {
         GraphFellow.create_graph(divs[i], null);
       }
     }
   }
-  GraphFellow._init();
 
 }( window.GraphFellow = window.GraphFellow || {}));
