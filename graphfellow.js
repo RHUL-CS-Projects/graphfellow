@@ -337,8 +337,7 @@
       this.app.stage.addChildAt(this.edges[i].diagram, 0);
     }
     for (let i=0; i< this.graph_data.travellers.length; i++) {
-      this.travellers[i] = new Traveller(this.graph_data.travellers[i], this);
-      this.travellers[i].add_diagram(this.app.stage);
+      this.create_traveller(this.graph_data.travellers[i]);
     }
     let graph = this;
     setTimeout(function(){graph.graph_init(graph)}, 1000) // 1 second delay at start
