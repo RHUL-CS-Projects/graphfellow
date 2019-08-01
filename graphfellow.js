@@ -927,6 +927,7 @@
         }
       }
     }
+    pixi_config.resolution = 1; // explicit for Android Chrome maybe?
     return new PIXI.TextStyle(pixi_config);
   }
 
