@@ -28,8 +28,8 @@ The functions which control the behaviour of the graph are triggered by the foll
 | `on_tick`      | graph     | runs every 'tick', if `tick_period` is not zero 
 | `on_departure` | traveller | run by a traveller just before it sets off on a journey along an edge
 | `on_arrival` | traveller | run by a traveller when it arrives at the end of its journey along an edge
-| `on_click`     | vertex, edge, traveller | runs when user clicks on component
-| `on_mouseover` | vertex, edge, traveller | runs when user's mouse pointer moves over component
+| `on_click`     | vertex, edge, traveller | runs when user clicks or taps on component
+| `on_mouseover` | vertex, edge, traveller | runs when user's pointer moves over component
 
 The function is called with two arguments: `event` and `graph`. You can also
 use the `this` keyword to access the specific component that triggered the
@@ -37,8 +37,9 @@ event (for `init` and `tick` events, `this` is the graph).
 
 Use `event.type` to determine what triggered the function. The `graph` object provides access to the [whole graph](#the-graph-object).
 
-Be aware that `on_mouseover` events might never be triggered on pointerless
-devices (e.g., tablets).
+The `on_click` and `on_mouseover` events are triggered by `pointertap` and
+`pointerover` events in the browser, so work with touch as well as mouse
+interfaces.
 
 ## Built-in functions
 

@@ -27,7 +27,7 @@
       "ring_radius":      25,
       "ring_width":       2,
       "ring_color":       0x000000,
-      "on_click":         "_print_payload",
+      "on_click":         null,
       "on_mouseover":     null,
       "has_pulse":        true,
       "pulse_color":      0xff0000,
@@ -203,11 +203,12 @@
   }
   GraphComponent.prototype.make_diagram_interactive = function(){
     let event_types = ['click', 'mouseover'];
+    let pixi_event_types = ['pointertap', 'pointerover']; // equivalences
     for (let i=0; i < event_types.length; i++) {
       let fname = this["on_" + event_types[i]];
       if (fname) {
         if (functions[fname] instanceof Function) {
-          this.diagram.on(event_types[i], (event) => {
+          this.diagram.on(pixi_event_types[i], (event) => {
             functions[fname].call(this, event, this.graph)
           });
           this.is_interactive = true;
