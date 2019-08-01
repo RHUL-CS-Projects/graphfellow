@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>demo of gossip prototcol</title>
+  <style>
+    html, body {
+      font-family: sans-serif;
+      background-color:#ffffff;
+      color:#000000;
+      line-height:1.3;
+    }
+    #regexp-example {
+      width: 100%;
+      height:50vh;
+      position: relative; /* container */
+    }
+    h1{
+      font-size:1.5em;
+      margin-bottom:1em;
+      font-weight:normal;
+    }
+   .regexp-strings {
+     min-height: 3em;
+     margin: 2em;
+   }
+   .regexp-strings span {
+      padding:0.5em;
+      margin:0.2em; 
+      background-color: #ff0000;
+      color: #ffffff;
+      border-radius: 4px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    #regexp-current span {
+      background-color: #666666;
+    }
+    #regexp-current:before {
+      content: "current:";
+    }
+    #regexp-accepted:before {
+      content: "accepted:";
+    } 
+    #regexp-reset {
+      position: absolute;
+      top:0em;
+      left:2em;
+      font-size:1.2em;
+      padding:0.25em;
+      background-color: #eeeeee;
+      border:1px solid #000000;
+    }
+    #regexp-reset:hover {
+      background-color: #999999
+    }
+    p {
+      margin: 1em auto;
+      max-width: 40em;
+    }
+    .link-to-docs {
+      float: right;
+      padding:1em;
+    }
+  </style>
+<script src="../../vendor/pixi.min.js"></script>
+<script src="../../vendor/greensock-js/TweenMax.min.js"></script>
+
+<a class="link-to-docs" href="regexp-details">code&nbsp&amp;&nbspdocs&nbsp;→</a>
+<h1>Finite automata: regexp</h1>
+
+
+<div id="regexp-example" data-graph-src="regexp.json">
+  <button id="regexp-reset">reset</button>
+</div>
+<p class="regexp-strings" id="regexp-current"></p>
+<p class="regexp-strings" id="regexp-accepted"></p>
+<script src="../../graphfellow.js"></script>
+<script>
+  // functions for CS 1870 finite automata
+
+  let current = document.getElementById("regexp-current")
+  let accepted = document.getElementById("regexp-accepted");
+  
+  GraphFellow.add_function("spot_arrives_at_next_state", function(e, graph){
+    if (this.following_edge.payload.value != "ε") {
+      this.payload.set(this.payload.value + this.following_edge.payload.value);
+    }
+    this.at_vertex.pulse();
+    if (current) {
+      current.innerHTML = "<span>" + this.payload.value + "</span>";
+    }
+    if (this.at_vertex.has_ring) {
+      if (accepted) {
+        accepted.innerHTML = "<span>" + this.payload.value + "</span>" + accepted.innerHTML;
+      }
+    }
+  });
+
+  GraphFellow.add_function("send_traveller_to_node", function(e, graph){
+    let t = graph.travellers[0]; // find the (only) traveller
+    if (t && t.at_vertex) { // only if the traveller is at rest
+      let possible_edges = [];
+      if (this.json_type === 'edges') {
+        if (this.from === t.at_vertex) {
+          possible_edges.push(this);
+        }
+      } else if (this.json_type === 'vertices') {
+        for (let i =0; i < t.at_vertex.edges_out.length; i++) {
+          if (t.at_vertex.edges_out[i].to === this) {
+            possible_edges.push(t.at_vertex.edges_out[i]);
+          }
+        }
+      }
+      if (possible_edges.length === 1) {
+        t.travel(possible_edges[0]);
+      }
+    }
+  });
+
+  document.getElementById("regexp-reset")
+    .addEventListener("click", function(){
+    let g = GraphFellow.graphs[0];
+    if (g) {
+      g.travellers[0].destroy();
+      g.create_traveller({at_vertex: "0"});
+      current.innerHTML = accepted.innerHTML = "";
+    }
+  });
+
+  GraphFellow.init(document.getElementById("regexp-example"));
+</script>
+  <p>
+  This finite state automata, representing a regular expression, has a start
+  state of 0 and two accepting states, 3 and 5. Move the red spot through
+  it by clicking on the nodes or edges and see how the language accepts some
+  strings and not others.
+  </p>
+  
+</body>
+</html>

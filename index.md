@@ -52,7 +52,7 @@ strings and not others.
 <script src="vendor/pixi.min.js"></script>
 <script src="vendor/greensock-js/TweenMax.min.js"></script>
 <div id="regexp-example"
-  data-graph-src="docs/example-graphs/cs1870_fa_8.2.json"
+  data-graph-src="docs/example-graphs/regexp.json"
   data-graph-config="background-color:0xf2f2f2"
   style="width:100%;height: 300px;"></div>
 <p class="regexp-strings" id="regexp-current"></p>

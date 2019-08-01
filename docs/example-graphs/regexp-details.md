@@ -47,7 +47,7 @@ strings and not others.
 
 
 <div id="regexp-example"
-  data-graph-src="cs1870_fa_8.2.json"
+  data-graph-src="regexp.json"
   data-graph-config="background-color:0xf2f2f2"
   style="width:100%;height: 300px;"></div>
 <p class="regexp-strings" id="regexp-current"></p>
@@ -136,7 +136,7 @@ The regexp demo uses three DOM elements: the container for the graph itself, and
 
 ```html
 <div id="regexp-example"
-  data-graph-src="cs1870_fa_8.2.json"
+  data-graph-src="regexp.json"
   data-graph-config="background-color:0xf2f2f2"
   style="width:100%;height: 300px;"></div>
 <p class="regexp-strings" id="regexp-current"></p>
@@ -154,7 +154,7 @@ Before defining custom functions, the GraphFellow library itself is loaded:
 ### Config in the JSON
 
 As the `data-graph-src` attribute shows, the graph is defined in
-[`cs1870_fa_8.2.json`](cs1870_fa_8.2.json). You can click on that and inspect
+[`regexp.json`](regexp.json). You can click on that and inspect
 the whole file, but the rest of this page describes the JSON piece-by-piece.
 
 The graph will be explicitly initialised by calling `create_graph()` after the
