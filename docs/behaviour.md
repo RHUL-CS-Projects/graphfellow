@@ -157,24 +157,23 @@ vertex as `edge.from` (or either of `edge.from` or `edge.to` if the edge is
 bi-directional) — otherwise this call will do nothing. Calling `travel` will
 subequently trigger the `on_departure` event if this traveller has one defined.
 
-To programmatically create a traveller, use its constructor (which takes a
-config which _must_ include an `at_vertex`, and the graph to which it belongs).
-Currently you need to explictly add the `diagram` to the stage, and push it
-onto the graph's `travellers` array (TODO: this is probably going to change!):
+To programmatically create a traveller, use `Graph.create_traveller()`, which
+takes a config object that _must_ include an `at_vertex` `GraphVertex` object,
+and the graph to which it belongs). This automatically renders the diagram on
+the stage and adds the traveller to the graph's `travellers` array.
 
 ```javascript
-  let t = new Traveller({
+  let t = graph.create_traveller({
     "at_vertex": graph.get_vertex_by_id("foo"), 
     "journey_lifespan": 1
-  }, graph);
-  t.add_diagram(graph.app.stage);
-  graph.travellers.push(t);
+  });
 ```
 
 You can destroy a traveller with its `destroy()` function. This is called
 automatically if the number of journeys the traveller makes equals its
 `journey_lifespan`, after the `on_arrival` event of its final journey has been
-executed.
+executed. If you call `destroy()` on a traveller that is already on a journey,
+it will be destroyed and its `on_arrival` event will not be triggered.
 
 
 ## The Graph object
