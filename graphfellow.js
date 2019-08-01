@@ -182,10 +182,8 @@
     },
     _transmit_from_all_vertices_random(event, graph) {
       for (let i=0; i < graph.vertices.length; i++) {
-        let t = new Traveller({"at_vertex": graph.vertices[i], "journey_lifespan": 1}, graph);
-        t.add_diagram(graph.app.stage);
+        let t = graph.create_traveller({"at_vertex": graph.vertices[i], "journey_lifespan": 1});
         t.payload.set(graph.vertices[i].payload.value);
-        graph.travellers.push(t);
         t.travel(graph.vertices[i].get_random_edge_out());
       }
     }
