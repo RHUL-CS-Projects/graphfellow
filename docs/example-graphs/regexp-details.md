@@ -6,7 +6,11 @@ layout: default
 _beta: GraphFellow is still in development!_
 
 # GraphFellow example: regexp automata
+
+* [quick start](../index)
 * [more examples](../examples)
+* [settings & config](../settings)
+* [programming graph behaviour](../behaviour)
 
 <style>
   .graphfellow canvas {
