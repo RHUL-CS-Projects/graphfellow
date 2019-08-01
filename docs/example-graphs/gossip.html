@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<head>
+  <title>demo of gossip prototcol</title>
+<style>
+  html, body {
+    font-family: sans-serif;
+    background-color:#000033;
+    color:#eeeeff;
+  }
+  .graphfellow {
+    width: 100%;
+    height:96vh;
+  }
+  h1{
+    padding:0.5em 0em 0em 0.5em;
+    font-size:1.5em;
+    position:fixed;
+    top:0px;
+    left:0px;
+    margin:0px;
+    font-weight:normal;
+  }
+  .settings {
+    width:100%;
+    border-top:1px solid #66666699;
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    padding:1em;
+    background-color: rgba(0,0,1,0.5);
+  }
+  label {
+    padding:0.5em;
+    display:inline-block;
+  }
+  #gossip-reset {
+    font-size:1.5em;
+    padding:0.25em;
+    background-color: #ccccff;
+    border:none;
+  }
+  #gossip-reset:hover {
+    background-color: #6666dd;
+  }
+  .link-to-docs {
+    position: fixed;
+    top:0;
+    right:0;
+    padding: 1em;
+    color: #ccccff;
+    text-decoration: none;
+  }
+  .link-to-docs:hover {
+    text-decoration: none;
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.0/pixi.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+<script src="../../graphfellow.js"></script>
+</head>
+<body>
+<h1>Gossip protocol</h1>
+<a class="link-to-docs" href="gossip-details">code&nbsp&amp;&nbspdocs&nbsp;→</a>
+
+<div class="graphfellow" data-graph-src="gossip-protocol.json" ></div>
+<div class="settings">
+  <button id="gossip-reset">reset</button>
+  <label><input type="checkbox" id="is-transmitting-all" class="gossip-settings"/> transmit to all neighbours</label>
+  <label><input type="checkbox" id="is-tracking-max-value" class="gossip-settings"/> show max value in red</label>
+  <label><input type="checkbox" id="is-using-unique-values"  checked="true" class="gossip-settings"/> unique values at start</label>
+  <label class="gossip-settings">
+    transmit
+  <select id="transmit-freq">
+    <option value="0.100">frequently</option>
+    <option value="0.020" selected="true">moderately</option>
+    <option value="0.005">rarely</option>
+    <option value="0.000">never</option>
+  </select>
+  <label>click node to transmit</label>
+</div>
+<script>
+  
+  // when transmiting gossip, send on one edge
+  // or all or all edges?
+  // (always sends on all when user clicks on a vertex)
+  let is_transmitting_all = false;
+  
+  // probablility that a node will transmit gossip,
+  // tested every tick
+  let p_transmit_this_tick =  0.02;
+  
+  // when populating the network at the start, should
+  // all values be unique (otherwise duplicates may occur)?
+  let is_using_unique_values = true;
+
+  // if graph is tracking max value, max value is shown in red
+  // (nodes themselves can't really know it's max, so it's artificial)
+  let is_tracking_max_value = false;
+  
+  // once a vertex has transmitted, wait this long (ms)
+  // before trying again
+  let min_time_between_transmissions = 3001;
+  
+  // track max value, to display it differently
+  let max_payload_in_graph = 0;
+
+  const max_value_traveller_color = 0xcc0000,
+        max_value_pulse_color = 0xff9999;
+  
+  function make_traveller(at_vertex, graph) {
+    let v = at_vertex.payload.value;
+    let t_config = {at_vertex: at_vertex};
+    if ( is_tracking_max_value && v === max_payload_in_graph ) {
+      t_config.fill_color = max_value_traveller_color;
+    }
+    return graph.create_traveller(t_config);
+  }
+
+  GraphFellow.add_function("randomly_assign_payloads", function(e, graph){
+    while (graph.travellers.length > 0) {
+      graph.travellers[0].destroy();
+    }
+    for (let i=0; i < graph.vertices.length; i++) {
+      graph.vertices[i].stop_pulse();
+    }
+    max_payload_in_graph = 0;
+    let values = new Array(graph.vertices.length);
+    for (let i=0; i < values.length; i++) {
+      values[i] = 1 + (is_using_unique_values? i : Math.floor(Math.random()*values.length));
+      if (values[i] > max_payload_in_graph) {
+        max_payload_in_graph = values[i];
+      }
+    }
+    // shuffle code from
+    // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array#6274398
+    let c = values.length;
+    while (c > 0) {
+      let i = Math.floor(Math.random() * c);
+        c--;
+        let temp = values[c];
+        values[c] = values[i];
+        values[i] = temp;
+    }
+    let now = new Date();
+    for (let i=0; i<graph.vertices.length; i++) {
+      graph.vertices[i].payload.set(values[i]);
+      graph.vertices[i].custom_timestamp = now;
+    }
+  });
+
+  GraphFellow.add_function("take_payload_from_vertex", function(e, graph){
+    this.payload.set(this.at_vertex.payload.value);
+  });
+
+  GraphFellow.add_function("give_payload_to_vertex", function(e, graph){
+    if (this.at_vertex.payload.value < this.payload.value) {
+      this.at_vertex.payload.set(this.payload.value);
+      let pulse_color = null;
+      if (is_tracking_max_value && this.payload.value === max_payload_in_graph) {
+        pulse_color =  max_value_pulse_color;
+      }
+      this.at_vertex.pulse(pulse_color);
+    }
+  });
+  
+  GraphFellow.add_function("transmit_gossip_from_vertex", function(e, graph){
+    if (this.json_type === 'vertices' && this.edges_out.length > 0) {
+      for (let i=0; i < this.edges_out.length; i++) {
+        make_traveller(this, graph).travel(this.edges_out[i]);
+      }
+    }
+  });
+
+  GraphFellow.add_function("selectively_transmit_gossip_from_vertices", function(e, graph){
+    let now = new Date();
+    for (let i=0; i<graph.vertices.length; i++) {
+      if ( Math.random() < p_transmit_this_tick
+        &&
+        (now - graph.vertices[i].custom_timestamp) > min_time_between_transmissions) {
+          graph.vertices[i].custom_timestamp = now;
+        let edges_to_follow = [];
+        if (is_transmitting_all) {
+          edges_to_follow = graph.vertices[i].edges_out;
+        } else {
+          edges_to_follow.push(graph.vertices[i].get_random_edge_out());
+        }
+        for (let j=0; j < edges_to_follow.length; j++) {
+          let t = make_traveller(graph.vertices[i], graph);
+          t.travel(edges_to_follow[j]);
+        }
+      }
+    }
+  });
+
+  GraphFellow.init();
+
+  document.getElementById("gossip-reset")
+  .addEventListener("click", function(){
+    GraphFellow.call_function(GraphFellow.graphs[0], "randomly_assign_payloads");
+  });
+
+  document.getElementById("is-transmitting-all")
+    .addEventListener("change", function(){is_transmitting_all = this.checked});
+  document.getElementById("is-tracking-max-value")
+    .addEventListener("change", function(){is_tracking_max_value = this.checked});
+  document.getElementById("is-using-unique-values")
+    .addEventListener("change", function(){is_using_unique_values = this.checked});
+  document.getElementById("transmit-freq")
+    .addEventListener("change", function(){p_transmit_this_tick = this.value});
+  
+</script>
+</body>
+</html>
