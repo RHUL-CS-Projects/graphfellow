@@ -326,15 +326,10 @@
     }
     this.sprite_resources = res; // preserve resources globally
     for (let i=0; i < this.graph_data.vertices.length; i++) {
-      this.vertices[i] = new GraphVertex(this.graph_data.vertices[i], this);
-      this.vertices_by_id[this.vertices[i].id] = this.vertices[i];
-      this.app.stage.addChild(this.vertices[i].diagram);
+      this.create_vertex(this.graph_data.vertices[i]);
     }
     for (let i=0; i< this.graph_data.edges.length; i++) {
-      let from_vertex = this.get_vertex_by_id(this.graph_data.edges[i].from);
-      let to_vertex = this.get_vertex_by_id(this.graph_data.edges[i].to);
-      this.edges[i] = new GraphEdge(from_vertex, to_vertex, this.graph_data.edges[i], this);
-      this.app.stage.addChildAt(this.edges[i].diagram, 0);
+      this.create_edge(this.graph_data.edges[i]);
     }
     for (let i=0; i< this.graph_data.travellers.length; i++) {
       this.create_traveller(this.graph_data.travellers[i]);
@@ -432,6 +427,21 @@
     t.add_diagram(this.app.stage);
     this.travellers.push(t);
     return t;
+  }
+  Graph.prototype.create_vertex = function(config) {
+    let vertex = new GraphVertex(config, this);
+    this.vertices_by_id[vertex.id] = vertex;
+    this.app.stage.addChild(vertex.diagram);
+    this.vertices.push(vertex);
+    return vertex;
+  }
+  Graph.prototype.create_edge = function(config) {
+    let from_vertex = this.get_vertex_by_id(config.from);
+    let to_vertex = this.get_vertex_by_id(config.to);
+    let edge = new GraphEdge(from_vertex, to_vertex, config, this);
+    this.app.stage.addChildAt(edge.diagram, 0);
+    this.edges.push(edge);
+    return edge;
   }
 
   //-----------------------------------------------------------
