@@ -567,7 +567,7 @@
   }
   GraphVertex.prototype.stop_pulse = function(){
     if (this.has_pulse) {
-      TweenMax.killTweensOf(this.diagram_pulse);
+      TweenMax.killTweensOf(this.diagram_pulse.scale);
       this.diagram_pulse.renderable = false;
       this.diagram_pulse.scale = new Point(1, 1);
     }
@@ -827,11 +827,12 @@
     }
   }
   Traveller.prototype.destroy = function(){
-    // find the traveller in the traveller's array
     if (this.diagram) {
+      TweenMax.killTweensOf(this.diagram.position);
       if (this.diagram.parent) {
         this.diagram.parent.removeChild(this);
       }
+      this.diagram.visible = false;
       this.diagram.destroy();
     }
     for (let i=0; i < this.graph.travellers.length; i++){
