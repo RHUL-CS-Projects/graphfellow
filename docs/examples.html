@@ -14,7 +14,7 @@
       }
       .graphfellow, .graph-container{
         width: 500px;
-        height:300px;
+        height:320px;
         border:1px solid #ccc;
         display:inline-block;
       }
@@ -23,7 +23,7 @@
   <body>
     <div id="other" class="graph-container" data-graph-config="background-color:0xffffcc"></div>
     <a href="example-graphs/regexp"><div class="graphfellow" data-graph-src="example-graphs/cs1870_fa_8.2.json"></div></a>
-    <div class="graphfellow" data-graph-src="example-graphs/graph.json" data-graph-config="vertices.on_click:test01,tick-duration:0,vertices.text-font-size:30,vertices.is-pulse-blur:true"></div> 
+    <a href="example-graphs/gossip"><div class="graphfellow" data-graph-src="example-graphs/gossip-protocol.json"></div> 
     <div class="graphfellow" data-graph-src="example-graphs/graph.json"
     data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
     <div class="graphfellow" data-graph-src="example-graphs/gossip.json"></div>
@@ -115,6 +115,105 @@
           }
         }
       });
+      
+      // for gossip-protocol
+
+      let is_transmitting_all = false;
+      let p_transmit_this_tick =  0.02;
+      let is_using_unique_values = true;
+      let is_tracking_max_value = true;
+      let min_time_between_transmissions = 3001;
+      let max_payload_in_graph = 0;
+
+      const max_value_traveller_color = 0xcc0000,
+            max_value_pulse_color = 0xff9999;
+  
+      function make_traveller(at_vertex, graph) {
+        let v = at_vertex.payload.value;
+        let t_config = {at_vertex: at_vertex};
+        if ( is_tracking_max_value && v === max_payload_in_graph ) {
+          t_config.fill_color = max_value_traveller_color;
+        }
+        return graph.create_traveller(t_config);
+      }
+
+      GraphFellow.add_function("randomly_assign_payloads", function(e, graph){
+        while (graph.travellers.length > 0) {
+          graph.travellers[0].destroy();
+        }
+        for (let i=0; i < graph.vertices.length; i++) {
+          graph.vertices[i].stop_pulse();
+        }
+        max_payload_in_graph = 0;
+        let values = new Array(graph.vertices.length);
+        for (let i=0; i < values.length; i++) {
+          values[i] = 1 + (is_using_unique_values? i : Math.floor(Math.random()*values.length));
+          if (values[i] > max_payload_in_graph) {
+            max_payload_in_graph = values[i];
+          }
+        }
+        // shuffle code from
+        // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array#6274398
+        let c = values.length;
+        while (c > 0) {
+          let i = Math.floor(Math.random() * c);
+            c--;
+            let temp = values[c];
+            values[c] = values[i];
+            values[i] = temp;
+        }
+        let now = new Date();
+        for (let i=0; i<graph.vertices.length; i++) {
+          graph.vertices[i].payload.set(values[i]);
+          graph.vertices[i].custom_timestamp = now;
+        }
+      });
+
+      GraphFellow.add_function("take_payload_from_vertex", function(e, graph){
+        this.payload.set(this.at_vertex.payload.value);
+      });
+
+      GraphFellow.add_function("give_payload_to_vertex", function(e, graph){
+        if (this.at_vertex.payload.value < this.payload.value) {
+          this.at_vertex.payload.set(this.payload.value);
+          let pulse_color = null;
+          if (is_tracking_max_value && this.payload.value === max_payload_in_graph) {
+            pulse_color =  max_value_pulse_color;
+          }
+          this.at_vertex.pulse(pulse_color);
+        }
+      });
+  
+      GraphFellow.add_function("transmit_gossip_from_vertex", function(e, graph){
+        if (this.json_type === 'vertices' && this.edges_out.length > 0) {
+          for (let i=0; i < this.edges_out.length; i++) {
+            make_traveller(this, graph).travel(this.edges_out[i]);
+          }
+        }
+      });
+
+      GraphFellow.add_function("selectively_transmit_gossip_from_vertices", function(e, graph){
+        let now = new Date();
+        for (let i=0; i<graph.vertices.length; i++) {
+          if ( Math.random() < p_transmit_this_tick
+            &&
+            (now - graph.vertices[i].custom_timestamp) > min_time_between_transmissions) {
+              graph.vertices[i].custom_timestamp = now;
+            let edges_to_follow = [];
+            if (is_transmitting_all) {
+              edges_to_follow = graph.vertices[i].edges_out;
+            } else {
+              edges_to_follow.push(graph.vertices[i].get_random_edge_out());
+            }
+            for (let j=0; j < edges_to_follow.length; j++) {
+              let t = make_traveller(graph.vertices[i], graph);
+              t.travel(edges_to_follow[j]);
+            }
+          }
+        }
+      });
+
+      
       GraphFellow.init(); // all graphs with class 'graphfellow' and data-graph-src
     </script>
   </body>
