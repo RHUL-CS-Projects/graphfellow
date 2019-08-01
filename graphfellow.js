@@ -943,6 +943,24 @@
     }
     return json_string;
   }
+
+  GraphFellow.call_function = function(caller, fname) {
+    // external access to named functions
+    if (caller) {
+      if (functions[fname]) {
+        let graph = caller instanceof Graph? caller : caller.graph;
+        if (! (graph instanceof Graph)) {
+          throw "named function caller must have access to graph object"
+        } else {
+          functions[fname].call(caller, new Event("call"), graph);
+        }
+      } else {
+        throw "no function named \"" + fname +"\"";
+      }
+    } else {
+      throw "call_function called without a caller";
+    }
+  }
   
   GraphFellow.add_function = function(fname, func) {
     if (func instanceof Function) {
