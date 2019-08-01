@@ -17,11 +17,14 @@ This page describes how to configure your graphs.
 
 ## Creating graphs
 
-Specify the layout and appearance of your graph using the settings described on this page. There are two ways to pass the config to GraphFellow: in a JSON file, or as a JavaScript object.
+Specify the layout and appearance of your graph using the settings described on
+this page. There are two ways to pass the config to GraphFellow: in a JSON
+file, or as a JavaScript object.
 
 ### In a JSON file
 
-If you put the config in a JSON file,  link to it in the `data-graph-src` attribute of the container in the HTML:
+If you put the config in a JSON file, link to it in the `data-graph-src`
+attribute of the container in the HTML:
 
 ```html
 <div data-graph-src='path/to/your/config-file.json' id="foo"></div>
@@ -44,7 +47,8 @@ GraphFellow.init( div_element ); // specific container
 
 ### As a JavaScript object
 
-If you prefer to define your config in JavaScript (or even fetch and parse the JSON yourself), you can pass in a container together with its config:
+If you prefer to define your config in JavaScript (or even fetch and parse the
+JSON yourself), you can pass in a container together with its config:
 
 ```javascript
 var config = { 
@@ -231,7 +235,9 @@ It's possible that a graph will have no travellers defined in its initial
 settings, if you've added [behaviour](behaviour) (named functions) that create
 them.
 
-The `journey_lifespan` of a traveller — either defined explicitly here, or in the global config for all travellers — determines how many journeys the traveller will make before being destroyed. The most useful values are these:
+The `journey_lifespan` of a traveller — either defined explicitly here, or in
+the global config for all travellers — determines how many journeys the
+traveller will make before being destroyed. The most useful values are these:
 
 | `journey_lifespan` | meaning
 |--------------------+--------------

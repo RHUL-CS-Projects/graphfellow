@@ -20,7 +20,8 @@ the graph with the `add_function` function.
 You should make sure you add all the functions you need _before_ you initialise
 your graphs with `GraphFellow.init()` or `GraphFellow.create_graph()`.
 
-The functions which control the behaviour of the graph are triggered by the following events:
+The functions which control the behaviour of the graph are triggered by the
+following events:
 
 | event type     | on        | description          
 |----------------+-----------|-----------------------------
@@ -35,7 +36,8 @@ The function is called with two arguments: `event` and `graph`. You can also
 use the `this` keyword to access the specific component that triggered the
 event (for `init` and `tick` events, `this` is the graph).
 
-Use `event.type` to determine what triggered the function. The `graph` object provides access to the [whole graph](#the-graph-object).
+Use `event.type` to determine what triggered the function. The `graph` object
+provides access to the [whole graph](#the-graph-object).
 
 The `on_click` and `on_mouseover` events are triggered by `pointertap` and
 `pointerover` events in the browser, so work with touch as well as mouse
@@ -116,7 +118,8 @@ This vertex might not be the `from` vertex of an edge you find in the
 `to` vertex (and, similarly, be attentive with bi-directional edges in
 `edges_in`).
 
-The `GraphVertex` object has a `pulse(color)` function that you can use to make it pulse (if the vertex has not been configured with `has_pulse` then this
+The `GraphVertex` object has a `pulse(color)` function that you can use to make
+it pulse (if the vertex has not been configured with `has_pulse` then this
 function has no effect).
 
 
@@ -154,9 +157,10 @@ vertex as `edge.from` (or either of `edge.from` or `edge.to` if the edge is
 bi-directional) — otherwise this call will do nothing. Calling `travel` will
 subequently trigger the `on_departure` event if this traveller has one defined.
 
-To programmatically create a traveller, use its constructor (which takes a config which _must_ include an `at_vertex`, and the graph to which it belongs).
-Currently you need to explictly add the `diagram` to the stage, and push it onto
-the graph's `travellers` array (TODO: this is probably going to change!):
+To programmatically create a traveller, use its constructor (which takes a
+config which _must_ include an `at_vertex`, and the graph to which it belongs).
+Currently you need to explictly add the `diagram` to the stage, and push it
+onto the graph's `travellers` array (TODO: this is probably going to change!):
 
 ```javascript
   let t = new Traveller({
@@ -175,7 +179,8 @@ executed.
 
 ## The Graph object
 
-All the event handlers are called with two arguments, `event` and `graph`. The `graph` object gives you access to all the components in the graph.
+All the event handlers are called with two arguments, `event` and `graph`. The
+`graph` object gives you access to all the components in the graph.
 
 Useful fields:
 
@@ -197,7 +202,9 @@ for (let i=0; i < graph.vertices.length; i++) {
 
 Use `graph.get_vertex_by_id(id)` to find a vertex by its (string) id.
 
-The names of the arrays of components correspond to what you find by inspecting a component's `json_type` field. This may be useful if you're writing event handlers that are generic because you can use a construction like:
+The names of the arrays of components correspond to what you find by inspecting
+a component's `json_type` field. This may be useful if you're writing event
+handlers that are generic because you can use a construction like:
 
 ```javascript
 // this may be a vertex, edge, or traveller
