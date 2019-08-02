@@ -94,7 +94,7 @@ These fields are common to _all_ component types
 
 | field             | description
 |-------------------+----------------------------
-| `.component_type` | use `this.json_type` to determine what type of thing it is — this returns a string with a value one of `vertex`, `edge`, `traveller` or `graph`
+| `.component_type` | use `this.component_type` to determine what type of thing it is — returns a string with a value one of `vertex`, `edge`, `traveller` or `graph`
 | `.json_type`      | string with a value one of `vertices`, `edges` or `travellers`, matching the collection names in the [graph object](#the-graph-object))
 | `.diagram`        | the visual representation of the object on the graph — it's a [PIXI.DisplayObject](https://pixijs.download/dev/docs/PIXI.DisplayObject.html). For example, the `.position` of that gives the (before-scaling) coordinates on the graph (which by default is 1000 wide — see `graph.config.grid_width` to check).
 | `.payload`        | the payload (which includes a `diagram` and a `value`)
