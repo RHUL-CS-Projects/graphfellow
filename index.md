@@ -52,7 +52,7 @@ strings and not others.
 <script src="vendor/pixi.min.js"></script>
 <script src="vendor/greensock-js/TweenMax.min.js"></script>
 <div id="regexp-example"
-  data-graph-src="docs/example-graphs/regexp.json"
+  data-graph-src="docs/examples/regexp.json"
   data-graph-config="background-color:0xf2f2f2"
   style="width:100%;height: 300px;"></div>
 <p class="regexp-strings" id="regexp-current"></p>
@@ -114,4 +114,4 @@ strings and not others.
 
 <hr style="margin-bottom:4em"/>
 
-[See how this example was implemented](docs/example-graphs/regexp)
+[See how this example was implemented](docs/examples/regexp)

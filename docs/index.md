@@ -15,7 +15,7 @@ _beta: GraphFellow is still in development!_
 <script src="../vendor/pixi.min.js"></script>
 <script src="../vendor/greensock-js/TweenMax.min.js"></script>
 <div class="graphfellow"
-  data-graph-src="example-graphs/example.json"
+  data-graph-src="examples/example.json"
   data-graph-config="background-color:0xf2f2f2"
   style="width:500px;height:300px"></div>
 <script src="../graphfellow.js"></script>
