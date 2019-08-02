@@ -234,6 +234,10 @@ Each traveller requires an `at_vertex`, which must be an id of a vertex.
 In addition, any of the global settings from `config.travellers` (see below)
 apply, overriding that setting (or its default) for the individual traveller.
 
+You can specify an `id` for the traveller, but this is optional. If you do need
+`id`s (because you're defining behaviour that needs them) then the policy of
+enforcing their uniqueness is down to you.
+
 It's possible that a graph will have no travellers defined in its initial
 settings, if you've added [behaviour](behaviour) (named functions) that create
 them.
