@@ -207,7 +207,7 @@ a component's `json_type` field. This may be useful if you're writing event
 handlers that are generic because you can use a construction like:
 
 ```javascript
-// this may be a vertex, edge, or traveller
+// "this" may be a vertex, edge, or traveller
 let number_of_similar_items_in_graph = graph[this.json_type].length
 ```
 
