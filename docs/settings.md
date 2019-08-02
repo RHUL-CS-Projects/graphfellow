@@ -160,12 +160,15 @@ graph, and a coordinate position (`x`, `y`) on the canvas.
 
 | setting         | default      | meaning
 |-----------------+--------------+----------------------
-| `id`            | *no default* | named function to run, once, when graph is being initialised
+| `id`            | *no default* | give every vertex a unique `id` (it can be any string) — you need this in order to define the edges that connect to it
 | `x`             | `0`          | x coordinate of the centre of the vertex
 | `y`             | `0`          | y coordinate of the centre of the vertex (default grid is 1000 pixels)
 
 In addition, any of the global settings from `config.vertices` (see below)
 apply, overriding that setting (or its default) for the individual vertex.
+
+If you specify a graph with `id`s that are not unique for every vertex, things
+will go wonky. Don't do that.
 
 ### Defining the edges
 
