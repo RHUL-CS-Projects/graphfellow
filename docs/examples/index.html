@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Graph</title>
+    <script src="../../vendor/pixi.min.js"></script>
+    <script src="../../vendor/greensock-js/TweenMax.min.js"></script>
+    
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .graphfellow, .graph-container{
+        width: 500px;
+        height:320px;
+        border:1px solid #ccc;
+        display:inline-block;
+      }
+
+    </style>
+  <body>
+    <div id="other" class="graph-container" data-graph-config="background-color:0xffffcc"></div>
+    <a href="regexp"><div class="graphfellow" data-graph-src="regexp.json"></div></a>
+    <a href="gossip"><div class="graphfellow" data-graph-src="gossip-protocol.json"></div></a>
+    <div class="graphfellow" data-graph-src="graph-1.json"
+    data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
+    <div class="graphfellow" data-graph-src="graph-2.json"></div>
+    <div class="graphfellow" data-graph-src="bunny.json" data-graph-config="background-color:0xffccff"></div>
+
+    <script src="../../graphfellow.js"></script>
+
+    <script>
+    
+      GraphFellow.add_function("arrival", function(){
+        alert("I am one of the " + this.json_type + " with payload " + this.payload.value);
+      });
+      GraphFellow.add_function("test01", function(){});
+      
+      let example_config = {
+        vertices: [
+          { id: "A", x: 300, y: 125 },
+          { id: "B", x: 700, y: 125 },
+          { id: "C", x: 700, y: 475 },
+          { id: "D", x: 300, y: 475 }
+        ],
+        edges: [
+          { from: "A", to: "B"},
+          { from: "B", to: "C"},
+          { from: "C", to: "D"},
+          { from: "D", to: "A"},
+          { from: "A", to: "C", is_bidirectional: true, journey_duration: 1.4},
+          { from: "B", to: "D", is_bidirectional: true, journey_duration: 1.4}
+        ],
+        travellers: [
+          { at_vertex: "A", radius: 20, on_arrival: "_pulse", fill_color: 0xff0000, stroke_color: 0xff0000 }
+        ],
+        config: {
+          vertices: {
+            stroke_width: 6,
+            radius: 80,
+            text_font_size: 60,
+            has_pulse: true,
+            pulse_scale: 1.1,
+            is_pulse_blur: false
+          },
+          edges: {
+            stroke_width: 6,
+            arrowhead_length: 24
+          },
+          tick_period: 2,
+          on_tick: "_send_travellers_on_all_random"
+        }
+      };
+      GraphFellow.create_graph(document.getElementById("other"), example_config);
+
+      // functions for CS 1870 finite automata
+
+      let current = document.getElementById("regexp-current")
+      let accepted = document.getElementById("regexp-accepted");
+  
+      GraphFellow.add_function("spot_arrives_at_next_state", function(e, graph){
+        if (this.following_edge.payload.value != "ε") {
+          this.payload.set(this.payload.value + this.following_edge.payload.value);
+        }
+        this.at_vertex.pulse();
+        if (current) {
+          current.innerHTML = "<span>" + this.payload.value + "</span>";
+        }
+        if (this.at_vertex.has_ring) {
+          if (accepted) {
+            accepted.innerHTML = "<span>" + this.payload.value + "</span>" + accepted.innerHTML;
+          }
+        }
+      });
+
+      GraphFellow.add_function("send_traveller_to_node", function(e, graph){
+        let t = graph.travellers[0]; // find the (only) traveller
+        if (t && t.at_vertex) { // only if the traveller is at rest
+          let possible_edges = [];
+          if (this.json_type === 'edges') {
+            if (this.from === t.at_vertex) {
+              possible_edges.push(this);
+            }
+          } else if (this.json_type === 'vertices') {
+            for (let i =0; i < t.at_vertex.edges_out.length; i++) {
+              if (t.at_vertex.edges_out[i].to === this) {
+                possible_edges.push(t.at_vertex.edges_out[i]);
+              }
+            }
+          }
+          if (possible_edges.length === 1) {
+            t.travel(possible_edges[0]);
+          }
+        }
+      });
+      
+      // for gossip-protocol
+
+      let is_transmitting_all = false;
+      let p_transmit_this_tick =  0.02;
+      let is_using_unique_values = true;
+      let is_tracking_max_value = true;
+      let min_time_between_transmissions = 3001;
+      let max_payload_in_graph = 0;
+
+      const max_value_traveller_color = 0xcc0000,
+            max_value_pulse_color = 0xff9999;
+  
+      function make_traveller(at_vertex, graph) {
+        let v = at_vertex.payload.value;
+        let t_config = {at_vertex: at_vertex};
+        if ( is_tracking_max_value && v === max_payload_in_graph ) {
+          t_config.fill_color = max_value_traveller_color;
+        }
+        return graph.create_traveller(t_config);
+      }
+
+      GraphFellow.add_function("randomly_assign_payloads", function(e, graph){
+        while (graph.travellers.length > 0) {
+          graph.travellers[0].destroy();
+        }
+        for (let i=0; i < graph.vertices.length; i++) {
+          graph.vertices[i].stop_pulse();
+        }
+        max_payload_in_graph = 0;
+        let values = new Array(graph.vertices.length);
+        for (let i=0; i < values.length; i++) {
+          values[i] = 1 + (is_using_unique_values? i : Math.floor(Math.random()*values.length));
+          if (values[i] > max_payload_in_graph) {
+            max_payload_in_graph = values[i];
+          }
+        }
+        // shuffle code from
+        // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array#6274398
+        let c = values.length;
+        while (c > 0) {
+          let i = Math.floor(Math.random() * c);
+            c--;
+            let temp = values[c];
+            values[c] = values[i];
+            values[i] = temp;
+        }
+        let now = new Date();
+        for (let i=0; i<graph.vertices.length; i++) {
+          graph.vertices[i].payload.set(values[i]);
+          graph.vertices[i].custom_timestamp = now;
+        }
+      });
+
+      GraphFellow.add_function("take_payload_from_vertex", function(e, graph){
+        this.payload.set(this.at_vertex.payload.value);
+      });
+
+      GraphFellow.add_function("give_payload_to_vertex", function(e, graph){
+        if (this.at_vertex.payload.value < this.payload.value) {
+          this.at_vertex.payload.set(this.payload.value);
+          let pulse_color = null;
+          if (is_tracking_max_value && this.payload.value === max_payload_in_graph) {
+            pulse_color =  max_value_pulse_color;
+          }
+          this.at_vertex.pulse(pulse_color);
+        }
+      });
+  
+      GraphFellow.add_function("transmit_gossip_from_vertex", function(e, graph){
+        if (this.json_type === 'vertices' && this.edges_out.length > 0) {
+          for (let i=0; i < this.edges_out.length; i++) {
+            make_traveller(this, graph).travel(this.edges_out[i]);
+          }
+        }
+      });
+
+      GraphFellow.add_function("selectively_transmit_gossip_from_vertices", function(e, graph){
+        let now = new Date();
+        for (let i=0; i<graph.vertices.length; i++) {
+          if ( Math.random() < p_transmit_this_tick
+            &&
+            (now - graph.vertices[i].custom_timestamp) > min_time_between_transmissions) {
+              graph.vertices[i].custom_timestamp = now;
+            let edges_to_follow = [];
+            if (is_transmitting_all) {
+              edges_to_follow = graph.vertices[i].edges_out;
+            } else {
+              edges_to_follow.push(graph.vertices[i].get_random_edge_out());
+            }
+            for (let j=0; j < edges_to_follow.length; j++) {
+              let t = make_traveller(graph.vertices[i], graph);
+              t.travel(edges_to_follow[j]);
+            }
+          }
+        }
+      });
+
+      
+      GraphFellow.init(); // all graphs with class 'graphfellow' and data-graph-src
+    </script>
+  </body>
+</html>
