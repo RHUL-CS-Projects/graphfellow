@@ -33,7 +33,7 @@
     "resources": [
       { 
         "id": "bunny", 
-        "resource": "../docs/img/pixi-bunny.png" 
+        "resource": "../img/pixi-bunny.png" 
       }
     ]
   }
