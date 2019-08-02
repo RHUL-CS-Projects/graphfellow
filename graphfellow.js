@@ -226,6 +226,7 @@
     this.container = container;
     this.container_size = new PIXI.Point(0, 0); // updated on first resize
     // use defaults, overridden with JSON "graph-specific" defaults
+    this.component_type = 'graph';
     this.json_type = 'graphs';
     this.config = JSON.parse(JSON.stringify(default_config));
     this.graph_data = {}; // from AJAX response: per-object config
@@ -481,6 +482,7 @@
   //-----------------------------------------------------------
   function GraphVertex(config, graph){
     this.graph = graph;
+    this.component_type = 'vertex';
     this.json_type = 'vertices';
     this.id = config.id;
     GraphComponent.call(this, config);
@@ -597,6 +599,7 @@
   //-----------------------------------------------------------
   function GraphEdge(from_vertex, to_vertex, config, graph){
     this.graph = graph;
+    this.component_type = 'edge';
     this.json_type = 'edges';
     GraphComponent.call(this, config);
     this.from = from_vertex;
@@ -769,6 +772,7 @@
   //-----------------------------------------------------------
   function Traveller(config, graph){
     this.graph = graph;
+    this.component_type = 'traveller';
     this.json_type = 'travellers';
     this.id = config.id;
     GraphComponent.call(this, config);
