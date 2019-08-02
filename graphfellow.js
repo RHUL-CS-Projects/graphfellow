@@ -226,6 +226,7 @@
     this.container = container;
     this.container_size = new PIXI.Point(0, 0); // updated on first resize
     // use defaults, overridden with JSON "graph-specific" defaults
+    this.json_type = 'graphs';
     this.config = JSON.parse(JSON.stringify(default_config));
     this.graph_data = {}; // from AJAX response: per-object config
     this.vertices = [];
