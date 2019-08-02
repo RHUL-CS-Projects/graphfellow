@@ -83,11 +83,11 @@ strings and not others.
     let t = graph.travellers[0]; // find the (only) traveller
     if (t && t.at_vertex) { // only if the traveller is at rest
       let possible_edges = [];
-      if (this.json_type === 'edges') {
+      if (this.component_type === 'edge') {
         if (this.from === t.at_vertex) {
           possible_edges.push(this);
         }
-      } else if (this.json_type === 'vertices') {
+      } else if (this.component_type === 'vertex') {
         for (let i =0; i < t.at_vertex.edges_out.length; i++) {
           if (t.at_vertex.edges_out[i].to === this) {
             possible_edges.push(t.at_vertex.edges_out[i]);
