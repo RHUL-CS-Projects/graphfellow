@@ -211,3 +211,8 @@ handlers that are generic because you can use a construction like:
 let number_of_similar_items_in_graph = graph[this.json_type].length
 ```
 
+**Caution**: be careful when iterating over the graph's `travellers` array if
+any of those travellers might be destroyed or created while you're doing it.
+The `destroy()` method in particular can cause unexpected results, because the
+indices of the array may change when a traveller is removed from it.
+
