@@ -12,7 +12,7 @@ See the [quick start](https://rhul-cs-projects.github.io/graphfellow/docs/) docs
 
 You probably only need `graphfellow.js`.
 
-Jeckyll 
+Jekyll 
 -------
 
 The rest of this repo is the docs/website, which contains example code and
