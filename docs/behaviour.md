@@ -86,9 +86,9 @@ with an underscore, because those are reserved for the built-ins.
 ## Component objects
 
 Depending on what triggered the event you're programming, `this` may be a
-`GraphVertex`, `GraphEdge`, or `Traveller` object. The following overview is a
-jumping-off place for working with these objects — if you need to get deeply
-familiar with them, look in the `graphfellow.js` source.
+`GraphVertex`, `GraphEdge`, `Traveller`, or `Graph` object. The following
+overview is a jumping-off place for working with these objects — if you need to
+get deeply familiar with them, look in the `graphfellow.js` source.
 
 These fields are common to _all_ component types
 
