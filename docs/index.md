@@ -22,7 +22,8 @@ _beta: GraphFellow is still in development!_
 # Quick start
 
 Create `example.json` defining a graph on a `1000` × `1000` grid (the default),
-with a "tick" every 2 seconds:
+with a "tick" every 2 seconds. This graph has four **vertices** joined by 
+six **edges**, and one **traveller** that moves along them:
 
 ```json
 {
