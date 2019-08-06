@@ -192,8 +192,8 @@ Useful fields:
 | `.travellers`    | array of all travellers
 | `.config`        | the current config settings (see [settings](settings) for detail)
 | `.container`     | the DOM element containing the graph
-| `.component_type`| returns a string `graph`
-| `.json_type`     | returns a string `graphs`
+| `.component_type`| returns the string "`graph`"
+| `.json_type`     | returns the string "`graphs`"
 
 For example, you can pulse all vertices red:
 
