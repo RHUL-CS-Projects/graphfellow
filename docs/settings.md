@@ -139,12 +139,12 @@ values.
 | `antialias`            | `true`     | determines if all the edges should be rendered smoothly on the graph. You probably want `true` because it looks prettier, but this comes at the cost of more processing overhead in the browser.
 | `background_color`     | `0xffffff` | background colour of graph
 | `text_color`           | `0x000000` | default text (fill) colour
-| `text_font_size`       | `20`       | default text size (see `core_size`)
+| `text_font_size`       | `20`       | default text size (see `grid_width`)
 | `text_font_family`     | `Arial`    | default text font family
 | `text_font_style`      | `normal`   | default text font style (e.g., `italic`)
 | `text_font_weight`     | `normal`   | default text font weight (e.g., `bold`)
 | `is_text_wordwrap`     | `false`    | default text wordwrap enabled
-| `text_wordwrap_width`  | `10`       | default text wordwrap width (see `core_size`)
+| `text_wordwrap_width`  | `10`       | default text wordwrap width (see `grid_width`)
 
 The graph's coordinate system is nominally 1000 × 1000, unless you've changed
 the `grid_width` value (which you probably never need to do). The graph will be
