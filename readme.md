@@ -1,7 +1,7 @@
 GraphFellow
 ===========
 
-JavaScript to help draw animated, programmable directed graphs in a browser.
+JavaScript to help display animated, programmable directed graphs in a browser.
 
 Website for documentation and examples: [rhul-cs-projects.github.io/graphfellow](https://rhul-cs-projects.github.io/graphfellow/)
 
