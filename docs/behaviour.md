@@ -86,7 +86,7 @@ with an underscore, because those are reserved for the built-ins.
 ## Component objects
 
 Depending on what triggered the event you're programming, `this` may be a
-`GraphVertex`, `GraphEdge`, or `Traveller` (or sometimes the `Graph` object
+`GraphVertex`, `GraphEdge`, or `Traveller` (or sometimes [the `Graph` object](#the-graph-object)
 itself). The following overview is a jumping-off place for working with these
 objects — if you need to get deeply familiar with them, look in the
 `graphfellow.js` source.
@@ -95,7 +95,7 @@ These fields are common to _all_ three component types:
 
 | field             | description
 |-------------------+----------------------------
-| `.component_type` | use `this.component_type` to determine what type of thing it is — returns a string with a value one of `vertex`, `edge`, `traveller` or `graph`
+| `.component_type` | use `this.component_type` to determine what type of thing it is — returns a string with a value one of `vertex`, `edge`, or `traveller` (or even `graph`)
 | `.json_type`      | string with a value one of `vertices`, `edges` or `travellers`, matching the collection names in the [graph object](#the-graph-object)
 | `.diagram`        | the visual representation of the object on the graph — it's a [PIXI.DisplayObject](https://pixijs.download/dev/docs/PIXI.DisplayObject.html). For example, the `.position` of that gives the (before-scaling) coordinates on the graph (which by default is 1000 wide — see `graph.config.grid_width` to check).
 | `.payload`        | the payload (which includes a `diagram` and a `value`)
@@ -103,10 +103,6 @@ These fields are common to _all_ three component types:
 
 Always use `payload.set(value)` to set the value, because this updates the
 diagram too.
-
-The `Graph` object isn't really a component, but for convenience it has
-`component_type` and `json_type` fields (returning `graph` and `graphs`
-respectively), but not the others.
 
 ### The GraphVertex object
 
@@ -196,6 +192,8 @@ Useful fields:
 | `.travellers`    | array of all travellers
 | `.config`        | the current config settings (see [settings](settings) for detail)
 | `.container`     | the DOM element containing the graph
+| `.component_type`| returns a string `graph`
+| `.json_type`     | returns a string `graphs`
 
 For example, you can pulse all vertices red:
 
