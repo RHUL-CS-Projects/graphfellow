@@ -86,22 +86,27 @@ with an underscore, because those are reserved for the built-ins.
 ## Component objects
 
 Depending on what triggered the event you're programming, `this` may be a
-`GraphVertex`, `GraphEdge`, `Traveller`, or `Graph` object. The following
-overview is a jumping-off place for working with these objects — if you need to
-get deeply familiar with them, look in the `graphfellow.js` source.
+`GraphVertex`, `GraphEdge`, or `Traveller` (or sometimes the `Graph` object
+itself). The following overview is a jumping-off place for working with these
+objects — if you need to get deeply familiar with them, look in the
+`graphfellow.js` source.
 
-These fields are common to _all_ component types
+These fields are common to _all_ three component types:
 
 | field             | description
 |-------------------+----------------------------
 | `.component_type` | use `this.component_type` to determine what type of thing it is — returns a string with a value one of `vertex`, `edge`, `traveller` or `graph`
-| `.json_type`      | string with a value one of `vertices`, `edges` or `travellers`, matching the collection names in the [graph object](#the-graph-object))
+| `.json_type`      | string with a value one of `vertices`, `edges` or `travellers`, matching the collection names in the [graph object](#the-graph-object)
 | `.diagram`        | the visual representation of the object on the graph — it's a [PIXI.DisplayObject](https://pixijs.download/dev/docs/PIXI.DisplayObject.html). For example, the `.position` of that gives the (before-scaling) coordinates on the graph (which by default is 1000 wide — see `graph.config.grid_width` to check).
 | `.payload`        | the payload (which includes a `diagram` and a `value`)
 | `.payload.value`  | payload value
 
-Always use `payload.set(value)` to set the value, because this updates the diagram too.
+Always use `payload.set(value)` to set the value, because this updates the
+diagram too.
 
+The `Graph` object isn't really a component, but for convenience it has
+`component_type` and `json_type` fields (returning `graph` and `graphs`
+respectively), but not the others.
 
 ### The GraphVertex object
 
