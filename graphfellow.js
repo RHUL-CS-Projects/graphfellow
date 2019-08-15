@@ -302,6 +302,7 @@
       antialias: this.config.antialias,
       backgroundColor: this.config.background_color}
     );
+    this.app.resizeTo = this.container;
     this.container.appendChild(this.app.view);
     let resource_ids = {}; // check for dups
     if (this.config && this.config.resources) {
@@ -348,11 +349,7 @@
         this.container_size = new Point(w, h);
         this.core_scale = w / this.config.grid_width;
         this.app.stage.scale = new Point(this.core_scale, this.core_scale);
-      	this.app.renderer.resize(this.container.clientWidth, this.container.clientHeight);
-        // You can use the 'screen' property as the renderer visible
-        // area, this is more useful than view.width/height because
-        // it handles resolution
-        // GraphFellow.app.resize(GraphFellow.app.view.parentElement.innerWidth, GraphFellow.app.view.parentElement.innerHeight);
+        this.app.resize();
         this.app.render(this.app.stage);
       }
     }
