@@ -9,6 +9,7 @@ _beta: GraphFellow is still in development!_
 
 * [quick start](../index)
 * [more examples](../examples)
+* [HTML for graphs](../html)
 * [settings & config](../settings)
 * [programming graph behaviour](../behaviour)
 

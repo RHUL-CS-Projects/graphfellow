@@ -7,7 +7,8 @@ _beta: GraphFellow is still in development!_
 
 * [quick start](index)
 * [examples](examples)
-* [settings & config](settings)
+* [HTML for graphs](html)
+* settings & config
 * [programming graph behaviour](behaviour)
 
 
@@ -15,63 +16,9 @@ _beta: GraphFellow is still in development!_
 
 This page describes how to configure your graphs.
 
-## Creating graphs
-
-Specify the layout and appearance of your graph using the settings described on
-this page. There are two ways to pass the config to GraphFellow: in a JSON
-file, or as a JavaScript object.
-
-### In a JSON file
-
-If you put the config in a JSON file, link to it in the `data-graph-src`
-attribute of the container in the HTML:
-
-```html
-<div data-graph-src='path/to/your/config-file.json' id="foo"></div>
-```
-
-Then populate the graph with one of these two calls:
-
-```javascript
-GraphFellow.init(); //  containers with class="graphfellow"
-
-var div_element = document.getElementById('foo'); // if id="foo"
-GraphFellow.init( div_element ); // specific container
-```
-
-`GraphFellow.init(containers)` creates the graph:
-
-| argument       | value
-|----------------+---------------------
-| `containers`     | (optional) an HTML element from the DOM (or, for multiple graphs, an array of such elements) into which the graph will be inserted (typically a `<div>`). If no containers are provided, `init()` will automatically find and attempt to populate all elements with class `graphfellow`.
-
-### As a JavaScript object
-
-If you prefer to define your config in JavaScript (or even fetch and parse the
-JSON yourself), you can pass in a container together with its config:
-
-```javascript
-var config = { 
-  vertices: [
-    {is: "A", x: "500", y: "500"}
-    // more vertices...
-  ]
-  // ...more config here...
-};
-var container = document.getElementById('foo'); // if id="foo"
-GraphFellow.create_graph( container, config );
-
-```
-
-`GraphFellow.create_graph(container, initial_config)` creates the graph:
-
-| argument       | value
-|----------------+---------------------
-| `container`      | an HTML element from the DOM into which the graph will be inserted (typically a `<div>`), e.g., `document.getElementById("foo")`
-| `initial_config` | (optional) an object containing a complete config for the graph. If `null`, GraphFellow will check for a `data-graph-src` attribute on the container and use that if it's available
-
-
-
+You also need a container (in your HTML) to put it in: see docs on [the HTML
+for the container](html), which also describe how to pass these settings to
+GraphFellow.
 
 ## Graph components
 
@@ -380,29 +327,6 @@ values.
 | `text_font_weight`     | global default | override global text weight for all travellers
 | `is_text_wordwrap`     | global default | override global text wordwrap for all travellers
 | `text_wordwrap_width`  | global default | override global text wordwrap width for all travellers
-
-
-## Overriding config in the HTML
-
-You can specifiy _some_ config in the `data-graph-config` attribute of the
-container of your graph as a comma-separated list of name:value settings.
-Settings in here have the highest priority: they will override the same
-settings that you may have made anywhere else. This is mostly useful for
-specifying the background colour. You can set nested properties using `.`, such
-as `edges.stroke_color:0x00ff00`.
-
-```html
-  <div class="graphfellow" data-graph-src="my-graph.json"
-    data-graph-config="background-color:0xffccff,vertices.is-pulse-blur:true"></div>
-```
-
-GraphFellow is tolerant of you using hyphens or colons interchangeably in the
-property names here.
-
-It's probably not a good idea to overuse this feature, and only use it for
-specific overrides. You can't specify components here, only the `config`
-settings, so this is not an alternative for defining a complete configuration
-in JSON or JavaScript.
 
 
 

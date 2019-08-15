@@ -7,8 +7,9 @@ _beta: GraphFellow is still in development!_
 
 * [quick start](index)
 * [examples](examples)
+* [HTML for graphs](html)
 * [settings & config](settings)
-* [programming graph behaviour](behaviour)
+* programming graph behaviour
 
 # Programming graph behaviour
 
