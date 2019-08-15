@@ -163,7 +163,7 @@ For a fixed-size graph:
 
 ## Overriding config in the HTML
 
-The [settings & config docs](settings) are normally provided via JSON
+GraphFellow's [settings & config](settings) are normally provided via JSON
 or JavaScript, but it's also possible to pass some in via the HTML.
 
 You can specifiy _some_ config in the `data-graph-config` attribute of the
