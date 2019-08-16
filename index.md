@@ -13,7 +13,7 @@ Animated, interactive directed graphs in JavaScript
 [examples](docs/examples) |
 [HTML for graphs](docs/html) |
 [settings & config](docs/settings) |
-[programming graph behaviour](docs/behaviour)
+[programming&nbsp;graph&nbsp;behaviour](docs/behaviour)
 
 ---
 
