@@ -88,10 +88,15 @@ read the contents of that JSON file and render the graph.
 
 | argument       | value
 |----------------+---------------------
-| `containers`     | (optional) an HTML element from the DOM (or, for multiple graphs, an array of such elements) into which the graph will be inserted (typically a `<div>`). If no containers are provided, `init()` will automatically find and attempt to populate all elements with class `graphfellow`.
+| `containers`   | (optional) an HTML element from the DOM (or, for multiple graphs, an array of such elements) into which the graph will be inserted (typically a `<div>`). If no containers are provided, `init()` will automatically find and attempt to populate all elements with class `graphfellow`.
 
 If your container doesn't have a `data-graph-src` attribute, or the JSON file
-can't be found, or the JSON can't be parsed, then no graph will appear.
+can't be found, or the JSON can't be parsed, then no graph will appear when
+you call `init()`.
+
+You _can_ create a graph without a separate JSON file, but if you want to do
+that, you need to create a JavaScript object containing the config, and use
+`create_graph()` instead. of `init()`
 
 ### Config as a JavaScript object
 
@@ -117,8 +122,8 @@ Note that this is using `GraphFellow.create_graph()` instead of `init()`.
 
 `GraphFellow.create_graph(container, initial_config)` creates the graph:
 
-| argument       | value
-|----------------+---------------------
+| argument         | value
+|------------------+---------------------
 | `container`      | an HTML element from the DOM into which the graph will be inserted (typically a `<div>`), e.g., `document.getElementById("foo")`
 | `initial_config` | (optional) an object containing a complete config for the graph. If `null`, GraphFellow will check for a `data-graph-src` attribute on the container and use that if it's available
 
