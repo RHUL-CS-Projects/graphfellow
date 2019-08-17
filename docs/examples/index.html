@@ -27,7 +27,7 @@
     <a href="gossip"><div class="graphfellow" data-graph-src="gossip-protocol.json"></div></a>
     <div class="graphfellow" data-graph-src="graph-1.json"
     data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
-    <div class="graphfellow" data-graph-src="graph-2.json"></div>
+    <div class="graphfellow" data-graph-src="cascade.json"></div>
     <div class="graphfellow" data-graph-src="bunny.json" data-graph-config="background-color:0xffccff"></div>
 
     <script src="../../graphfellow.js"></script>
@@ -208,7 +208,27 @@
           }
         }
       });
+      
+      // for cascading marbles
 
+      GraphFellow.add_function("drop_new_marble", function(event, graph){
+        let v = graph.get_vertex_by_id("00");
+        v.payload.set(v.payload.value+1);
+        v.pulse(event.type == 'pointertap' ? 0x00ff00 : 0x0000ff);
+        let t = graph.create_traveller({"at_vertex": v});
+        t.travel(v.get_random_edge_out());
+      });
+
+      GraphFellow.add_function("marble_arrives", function(event, graph){
+        let t = this;
+        t.at_vertex.payload.set(t.at_vertex.payload.value+1);
+        if (t.at_vertex.id.indexOf("6") === 0) { // bottom (6th) row
+          t.destroy();
+          t.at_vertex.pulse();
+        } else {
+          setTimeout(function(){t.travel(t.at_vertex.get_random_edge_out())}, 10);
+        }
+      });
       
       GraphFellow.init(); // all graphs with class 'graphfellow' and data-graph-src
     </script>
