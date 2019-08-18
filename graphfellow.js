@@ -774,7 +774,8 @@
     this.id = config.id;
     GraphComponent.call(this, config);
     this.start_at_vertex = config.at_vertex;
-    this.following_edge = null; // when travelling
+    this._is_travelling = false; // flag: when travelling
+    this.following_edge = null;
     this.at_vertex = this.start_at_vertex instanceof GraphVertex?
         this.start_at_vertex
         :
@@ -805,6 +806,7 @@
   Traveller.prototype = Object.create(GraphComponent.prototype);
   Traveller.prototype.travel = function(edge){
     if (edge) {
+      this._is_travelling = true;
       this.following_edge = edge;
       this.from = this.at_vertex;
       this.to = edge.to === this.from? edge.from : edge.to; // reverse
@@ -824,18 +826,19 @@
     }
   }
   Traveller.prototype._on_arrival = function(){
+    this._is_travelling = false; // journey is over
     this.at_vertex = this.to;
+    this.qty_journeys += 1;
     if (functions[this.on_arrival] instanceof Function) {
       functions[this.on_arrival].call(this, new Event("arrival"), this.graph);
     }
-    this.following_edge = null;
-    this.to = null;
-    this.from = null;
-    if (this.journey_lifespan && this.journey_lifespan > 0) {
-      this.qty_journeys += 1;
-      if (this.qty_journeys >= this.journey_lifespan) {
-        this.destroy();
-      }
+    if (! this._is_travelling ) { // arrival might have triggered travel() call
+      this.following_edge = null;
+      this.to = null;
+      this.from = null;
+    }
+    if (this.journey_lifespan && this.qty_journeys >= this.journey_lifespan) {
+      this.destroy();
     }
   }
   Traveller.prototype.destroy = function(){
