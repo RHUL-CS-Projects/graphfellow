@@ -210,23 +210,24 @@
       });
       
       // for cascading marbles
+      const max_cascade_depth = 6;
+      const start_vertex_id = "00";
 
       GraphFellow.add_function("drop_new_marble", function(event, graph){
-        let v = graph.get_vertex_by_id("00");
+        let v = graph.get_vertex_by_id(start_vertex_id);
         v.payload.set(v.payload.value+1);
-        v.pulse(event.type == 'pointertap' ? 0x00ff00 : 0x0000ff);
-        let t = graph.create_traveller({"at_vertex": v});
-        t.travel(v.get_random_edge_out());
+        v.pulse(event.type === 'tick'? 0x0000ff:0x00ff00); // green for tap/click
+        graph.create_traveller({"at_vertex": v}).travel(v.get_random_edge_out());
       });
 
       GraphFellow.add_function("marble_arrives", function(event, graph){
         let t = this;
         t.at_vertex.payload.set(t.at_vertex.payload.value+1);
-        if (t.at_vertex.id.indexOf("6") === 0) { // bottom (6th) row
-          t.destroy();
-          t.at_vertex.pulse();
+        if (t.qty_journeys < max_cascade_depth) {
+          t.travel(t.at_vertex.get_random_edge_out());
         } else {
-          setTimeout(function(){t.travel(t.at_vertex.get_random_edge_out())}, 10);
+          t.at_vertex.pulse();
+          t.destroy(); // alternatively, config could set journey_lifespan: 6
         }
       });
       
