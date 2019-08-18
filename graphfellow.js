@@ -58,7 +58,7 @@
       "is_arrow":         true,
       "arrowhead_angle":  33,
       "arrowhead_length": 15,
-      "arrowhead_closed": true,
+      "is_arrowhead_closed": true,
       "is_bidirectional": false,
       "is_displaying_payload": false,
       "payload":          0,
@@ -694,7 +694,7 @@
       )
     ];
     this.diagram.lineStyle(this.stroke_width, this.stroke_color);
-    if (this.arrowhead_closed) { // triangle
+    if (this.is_arrowhead_closed) { // triangle
       this.diagram.beginFill(this.stroke_color).drawPolygon(p_arrow).endFill();
     } else { // line
       this.diagram.moveTo(p_arrow[0].x, p_arrow[0].y)

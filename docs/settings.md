@@ -271,7 +271,7 @@ settings fall back to the default values.
 | `is_arrow`             | `true`     | `true` if the line should have an arrowhead at the 'to' end (or, if `is_bidirectional` is true, both ends)
 | `arrowhead_angle`      | `33`       | the angle, in degrees, of the arrowhead
 | `arrowhead_length`     | `15`       | the length, from the tip to the back, of the arrowhead
-| `arrowhead_closed`     | `true`     | the arrowhead is made by two lines either side of the edge's line, joining at the tip. If `true`, the arrowhead is closed and becomes a filled triangle
+| `is_arrowhead_closed`  | `true`     | the arrowhead is made by two lines either side of the edge's line, joining at the tip. If `true`, the arrowhead is closed and becomes a filled triangle
 | `is_displaying_payload`| `false`    | `true` if the value of the edges's payload should be displayed
 | `payload`              | `null`     | initial value of the payload
 | `payload_offset_x`     | `0`        | the payload value is displayed in the middle of the edge: nudge it horizontally by this amount
