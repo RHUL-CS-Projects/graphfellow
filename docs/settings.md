@@ -69,7 +69,7 @@ but GraphFellow tries to be forgiving if you've used hyphens by mistake in your
 JSON (`background-color`) because frankly life is too short to waste time
 spotting _that_ particular bug.
 
-Here's an example of how some config settings relate to vertices and edges.
+Here's an example showing how some config settings apply to vertices and edges.
 Note how the `vertices` settings for `pulse_scale`, `radius` and `ring_radius`
 are related.
 
