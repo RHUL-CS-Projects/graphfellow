@@ -117,11 +117,11 @@ graph, and a coordinate position (`x`, `y`) on the canvas.
 | `x`             | `0`          | x coordinate of the centre of the vertex
 | `y`             | `0`          | y coordinate of the centre of the vertex (default grid is 1000 pixels)
 
-In addition, any of the global settings from `config.vertices` (see below)
-apply, overriding that setting (or its default) for the individual vertex.
-
 If you specify a graph with `id`s that are not unique for every vertex, things
 will go wonky. Don't do that.
+
+> In addition, any of the global settings from `config.vertices` (see below)
+> apply, overriding that setting (or its default) for the individual vertex.
 
 ### Defining the edges
 
@@ -138,8 +138,8 @@ You can specify the same value for `from` and `to` in order to describe an edge
 which loops on a single vertex. If you do this you *must* provide two control
 points to make the curve visible (see below).
 
-In addition, any of the global settings from `config.edges` (see below) apply,
-overriding that setting (or its default) for the individual edge.
+> In addition, any of the global settings from `config.edges` (see below) apply,
+> overriding that setting (or its default) for the individual edge.
 
 #### Edge control points
 
@@ -184,8 +184,8 @@ Each traveller requires an `at_vertex`, which must be an id of a vertex.
 |-------------------+------------|----------------------
 | `at_vertex`       | no default | id of the vertex the traveller is located at
 
-In addition, any of the global settings from `config.travellers` (see below)
-apply, overriding that setting (or its default) for the individual traveller.
+> In addition, any of the global settings from `config.travellers` (see below)
+> apply, overriding that setting (or its default) for the individual traveller.
 
 You can specify an `id` for the traveller, but this is optional. If you do need
 `id`s (because you're defining behaviour that needs them) then the policy of
@@ -297,7 +297,7 @@ settings fall back to the default values.
 A traveller is a thing that traverses the graph by moving from vertex to vertex
 via an edge.
 
-These are _not_ describing the travellers themselves (do that in the
+These are _not_ defining the travellers themselves (do that in the
 `travellers` array).
 
 A traveller can be a circle (a "spot") or a bitmap graphic (a "sprite"). Any
