@@ -104,9 +104,13 @@ Populate the graph with `init`:
 Really `graphfellow.js` is probably all you need, but if you download the whole
 repo you'll get all the example source files to poke around in too.
 
-* see more [examples](examples)
-* detailed docs mostly cover [settings & config](settings)
-* how to [program graph behaviour](behaviour) with JavaScript
+* see more [examples](examples), including...
+  * a network demonstrating the [gossip protocol](examples/gossip)
+  * a [finite state automata](examples/regexp) implementing a regular expression
+* or dive into the documentation about...
+  * the [container (in your HTML)](html) your graph goes into
+  * [the settings & config](settings) that define your graph
+  * how to [program its behaviour](behaviour) with JavaScript
 
 <script> GraphFellow.init() </script>
 
