@@ -69,6 +69,12 @@ but GraphFellow tries to be forgiving if you've used hyphens by mistake in your
 JSON (`background-color`) because frankly life is too short to waste time
 spotting _that_ particular bug.
 
+Here's an example of how some config settings relate to vertices and edges.
+Note how the `vertices` settings for `pulse_scale`, `radius` and `ring_radius`
+are related.
+
+![example settings](img/graphfellow-vertex-edge-settings.png)
+
 ### Config for the whole graph
 
 These settings apply to the graph and its behaviour. The text settings will be
