@@ -103,8 +103,8 @@ The graph's coordinate system is nominally 1000 × 1000, unless you've changed
 the `grid_width` value (which you probably never need to do). The graph will be
 scaled to fit whatever size (in pixels) your container is.
 
-Note that it's possible to override these settings in the `data-graph-config`
-attribute of the container in the HTML.
+Note that it's possible to [override these settings](html#overriding-config-in-the-html)
+in the `data-graph-config` attribute of the container in the HTML.
 
 ### Defining the vertices
 
