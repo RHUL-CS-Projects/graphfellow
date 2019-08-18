@@ -178,6 +178,10 @@ automatically if the number of journeys the traveller makes equals its
 executed. If you call `destroy()` on a traveller that is already on a journey,
 it will be destroyed and its `on_arrival` event will not be triggered.
 
+The number of journeys a traveller has made is recorded in its `.qty_journeys`
+property. This is updated on arrival at a vertex, _before_ the `on_arrival`
+function (if any) is called.
+
 
 ## The Graph object
 
