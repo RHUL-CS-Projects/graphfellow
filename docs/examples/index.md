@@ -39,7 +39,7 @@ _beta: GraphFellow is still in development!_
 <div class="graphfellow" data-graph-src="gossip-protocol.json"><a href="gossip">gossip protocol →</a></div>
 <div class="graphfellow" data-graph-src="graph-1.json"
 data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
-<div class="graphfellow" data-graph-src="cascade.json"></div>
+<div class="graphfellow" data-graph-src="galton.json"><a href="galton">Galton Board →</a></div>
 <div class="graphfellow" data-graph-src="bunny.json" data-graph-config="background-color:0xffccff"></div>
 
 <script src="../../graphfellow.js"></script>
@@ -221,7 +221,7 @@ GraphFellow.add_function("selectively_transmit_gossip_from_vertices", function(e
   }
 });
 
-// for cascading marbles
+// for Galton Board cascading marbles
 const max_cascade_depth = 6;
 const start_vertex_id = "00";
 

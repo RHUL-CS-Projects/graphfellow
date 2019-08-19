@@ -11,20 +11,43 @@
     margin:0;
     padding:0;
   }
+  h1{
+    padding:0.5em;
+    position:fixed;
+    top:0px;
+    left:0px;
+    margin:0px;
+    font-size: 1.2em;
+    font-weight:normal;
+  }
   .graphfellow {
     width: 100%;
-    height:96vh;
+    height:90vh;
     overflow:hidden;
   }
+  .link-to-docs {
+    position: fixed;
+    top:0;
+    right:0;
+    padding: 1em;
+    text-decoration: none;
+  }
+  .link-to-docs:hover {
+    text-decoration: none;
+  }
+  p { padding:0em 1em;}
   </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.0/pixi.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 <script src="../../graphfellow.js"></script>
 </head>
 <body>
-<div class="graphfellow" data-graph-src="cascade.json" ></div>
-<script>
+<h1>Galton Board</h1>
+<a class="link-to-docs" href="galton-details">code&nbsp&amp;&nbspdocs&nbsp;→</a>
+<div class="graphfellow" data-graph-src="galton.json" ></div>
+<p>Click on root node for more marbles.</p>
 
+<script>
   const max_cascade_depth = 6;
   const start_vertex_id = "00";
 
@@ -36,13 +59,12 @@
   });
 
   GraphFellow.add_function("marble_arrives", function(event, graph){
-    let t = this;
-    t.at_vertex.payload.set(t.at_vertex.payload.value+1);
-    if (t.qty_journeys < max_cascade_depth) {
-      t.travel(t.at_vertex.get_random_edge_out());
+    this.at_vertex.payload.set(this.at_vertex.payload.value+1);
+    if (this.qty_journeys < max_cascade_depth) {
+      this.travel(this.at_vertex.get_random_edge_out());
     } else {
-      t.at_vertex.pulse();
-      t.destroy(); // alternatively, config could set journey_lifespan: 6
+      this.at_vertex.pulse();
+      this.destroy(); // alternatively, config could set journey_lifespan: 6
     }
   });
 

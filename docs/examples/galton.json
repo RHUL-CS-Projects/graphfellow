@@ -81,7 +81,6 @@
       "is_pulse_blur": false,
       "pulse_scale": 1.3,
       "is_displaying_payload": true,
-      "has_id_as_payload": true,
       "text_font_size": 16
     },
     "edges": {
