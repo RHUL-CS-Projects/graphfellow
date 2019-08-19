@@ -203,8 +203,8 @@ explicitly tests for the marble's sixth journey (see `marble_arrives` below).
 For clarity, a couple of contstants:
 
 ```javascript
-  const max_cascade_depth = 6;
-  const start_vertex_id = "00";
+const max_cascade_depth = 6;
+const start_vertex_id = "00";
 ```
 
 The first function creates a new traveller (a marble). Marbles _always_ start
@@ -221,28 +221,28 @@ exactly two edges out (except the bottom row, which has none), so
 `get_random_edge_out()` is always choosing either left of right.
 
 ```javascript
-  GraphFellow.add_function("drop_new_marble", function(event, graph){
-    let v = graph.get_vertex_by_id(start_vertex_id);
-    v.payload.set(v.payload.value+1);
-    v.pulse(event.type === 'tick'? 0x0000ff:0x00ff00); // green for tap/click
-    graph.create_traveller({"at_vertex": v}).travel(v.get_random_edge_out());
-  });
-```javascript
+GraphFellow.add_function("drop_new_marble", function(event, graph){
+  let v = graph.get_vertex_by_id(start_vertex_id);
+  v.payload.set(v.payload.value+1);
+  v.pulse(event.type === 'tick'? 0x0000ff:0x00ff00); // green for tap/click
+  graph.create_traveller({"at_vertex": v}).travel(v.get_random_edge_out());
+});
+```
 
 Each marble's `on_arrival` method increments the payload of the vertex it is
 passing through. If it's reached the last row, the vertex is pulsed, and the
 marble self-destructs by calling its own `destroy()` method.
 
 ```javascript
-  GraphFellow.add_function("marble_arrives", function(event, graph){
-    this.at_vertex.payload.set(this.at_vertex.payload.value+1);
-    if (this.qty_journeys < max_cascade_depth) {
-      this.travel(this.at_vertex.get_random_edge_out());
-    } else {
-      this.at_vertex.pulse();
-      this.destroy(); // alternatively, config could set journey_lifespan: 6
-    }
-  });
+GraphFellow.add_function("marble_arrives", function(event, graph){
+  this.at_vertex.payload.set(this.at_vertex.payload.value+1);
+  if (this.qty_journeys < max_cascade_depth) {
+    this.travel(this.at_vertex.get_random_edge_out());
+  } else {
+    this.at_vertex.pulse();
+    this.destroy(); // alternatively, config could set journey_lifespan: 6
+  }
+});
 ```
 
 ### All done: create the graph
