@@ -1,5 +1,5 @@
 ---
-title: "GraphFellow example: Galton bloard"
+title: "GraphFellow example: Galton board"
 layout: default
 ---
 
@@ -98,12 +98,17 @@ piece-by-piece.
 There are 28 vertices: six rows, with one vertex in the top row, and six in the
 bottom row. Each one needs a unique id (so the edges between them can be
 defined). The system used is `nm` where `n` is the row number and `m` is the
-count: so `00` is the id of the top node, and `66` the last (sixth) node in the
-bottom (sixth) row.
+count: so `00` is the id of the top node, and `66` the last (seventh) node in the
+bottom (seventh) row.
+
+The top vertex (`00`) is special: it has an `on_click` event that causes a new
+marble (traveller) to appear, and has a different colour (pale blue). The bottom
+row of vertices also have a different colour (pale pink).
 
 ```javascript
 "vertices": [
-  {"id": "00", "x": 500, "y":  50, "payload": 0, "on_click": "drop_new_marble", "fill_color": "0xeeeeff"},
+  {"id": "00", "x": 500, "y":  50, "payload": 0,
+     "on_click": "drop_new_marble", "fill_color": "0xeeeeff"},
   {"id": "10", "x": 440, "y": 110, "payload": 0},
   {"id": "11", "x": 560, "y": 110, "payload": 0},
   {"id": "20", "x": 380, "y": 170, "payload": 0},
@@ -200,7 +205,7 @@ graph (an inevitably 6 journeys from the top). But the config doesn't specify
 that, so it defaults to 0 (immortal). Instead the `on_arrival` function
 explicitly tests for the marble's sixth journey (see `marble_arrives` below).
 
-For clarity, a couple of contstants:
+For clarity, a couple of constants:
 
 ```javascript
 const max_cascade_depth = 6;
@@ -247,15 +252,14 @@ GraphFellow.add_function("marble_arrives", function(event, graph){
 
 ### All done: create the graph
 
-Finally, the graph is initialised by an explicit call to `create_graph()`:
+Finally, the graph is initialised by an explicit call to `init()`:
 
 ```javascript
 GraphFellow.init();
 ```
 
-This finds the container with class `graphfellow`, reads the JSON linked by
-the `data-graph-src` attribute, and populates the graph. There's no `on_init`
-function to run, but — because the `tick_period` is not zero — the `on_tick`
-function will be called a little over 2 seconds later, and marbles will start
-to drop.
-
+This finds the container with class `graphfellow`, reads the JSON linked by the
+`data-graph-src` attribute it find there, and initialises the graph. There's no
+`on_init` function to run, but — because the `tick_period` is not zero — the
+`on_tick` function will be called a little over 2 seconds later, and marbles
+will start to drop.
