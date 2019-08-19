@@ -54,6 +54,8 @@ receives. The highest value on the network is shown in red as it spreads.
 
 The gossip is transmitted randomly, but you can click on a node to force it.
 
+[Just show the graph →](gossip)
+
 <button id="gossip-reset">reset</button>
 
 <div id="gossip-example"

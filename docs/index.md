@@ -107,6 +107,7 @@ repo you'll get all the example source files to poke around in too.
 * see more [examples](examples), including...
   * a network demonstrating the [gossip protocol](examples/gossip)
   * a [finite state automata](examples/regexp) implementing a regular expression
+  * a [Galton board](examples/galton) with cascading marbles
 * or dive into the documentation about...
   * the [container (in your HTML)](html) your graph goes into
   * [the settings & config](settings) that define your graph

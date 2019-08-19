@@ -29,6 +29,8 @@ marble starts at the top and makes a fifty-fifty left-right decision at every
 vertex. Vertices count the number of marbles that have passed through. Marbles
 appear every tick (about 2 seconds) or when you click on that top node.
 
+[Just show the graph →](galton)
+
 <div class="graphfellow" data-graph-src="galton.json" ></div>
 
 <script src="../../graphfellow.js"></script>

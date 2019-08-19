@@ -48,8 +48,10 @@ This finite state automata, representing a regular expression, has a start
 state of `0` and two accepting states, `3` and `5`. Move the red spot through
 it by clicking on the nodes or edges and see how the language "accepts" some
 strings and not others.
-<button id="regexp-reset">reset</button>
 
+[Just show the graph →](regexp)
+
+<button id="regexp-reset">reset</button>
 
 <div id="regexp-example"
   data-graph-src="regexp.json"
