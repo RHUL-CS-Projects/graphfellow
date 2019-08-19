@@ -115,4 +115,4 @@ strings and not others.
 
 <hr style="margin-bottom:4em"/>
 
-[See how this example was implemented](docs/examples/regexp)
+[See how this example was implemented](docs/examples/regexp-details)
