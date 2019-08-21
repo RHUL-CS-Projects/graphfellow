@@ -50,12 +50,16 @@
 <script>
   const max_cascade_depth = 6;
   const start_vertex_id = "00";
+  const rainbow_colors = [0xee4035, 0xf37736, 0xfdf498, 0x7bc043, 0x0392cf, 0x4b0082];
 
   GraphFellow.add_function("drop_new_marble", function(event, graph){
     let v = graph.get_vertex_by_id(start_vertex_id);
-    v.payload.set(v.payload.value+1);
     v.pulse(event.type === 'tick'? 0x0000ff:0x00ff00); // green for tap/click
-    graph.create_traveller({"at_vertex": v}).travel(v.get_random_edge_out());
+    graph.create_traveller({
+       "at_vertex": v, 
+       "fill_color": rainbow_colors[ v.payload.value % rainbow_colors.length]
+    }).travel(v.get_random_edge_out());
+    v.payload.set(v.payload.value+1);
   });
 
   GraphFellow.add_function("marble_arrives", function(event, graph){

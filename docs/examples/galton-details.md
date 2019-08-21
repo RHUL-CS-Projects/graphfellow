@@ -37,12 +37,16 @@ appear every tick (about 2 seconds) or when you click on that top node.
 <script>
   const max_cascade_depth = 6;
   const start_vertex_id = "00";
+  const rainbow_colors = [0xee4035, 0xf37736, 0xfdf498, 0x7bc043, 0x0392cf, 0x4b0082];
 
   GraphFellow.add_function("drop_new_marble", function(event, graph){
     let v = graph.get_vertex_by_id(start_vertex_id);
-    v.payload.set(v.payload.value+1);
     v.pulse(event.type === 'tick'? 0x0000ff:0x00ff00); // green for tap/click
-    graph.create_traveller({"at_vertex": v}).travel(v.get_random_edge_out());
+    graph.create_traveller({
+       "at_vertex": v, 
+       "fill_color": rainbow_colors[ v.payload.value % rainbow_colors.length]
+    }).travel(v.get_random_edge_out());
+    v.payload.set(v.payload.value+1);
   });
 
   GraphFellow.add_function("marble_arrives", function(event, graph){
@@ -207,11 +211,12 @@ graph (an inevitably 6 journeys from the top). But the config doesn't specify
 that, so it defaults to 0 (immortal). Instead the `on_arrival` function
 explicitly tests for the marble's sixth journey (see `marble_arrives` below).
 
-For clarity, a couple of constants:
+For clarity, some constants, including six colours for the marbles:
 
 ```javascript
 const max_cascade_depth = 6;
 const start_vertex_id = "00";
+const rainbow_colors = [0xee4035, 0xf37736, 0xfdf498, 0x7bc043, 0x0392cf, 0x4b0082];
 ```
 
 The first function creates a new traveller (a marble). Marbles _always_ start
@@ -225,15 +230,22 @@ is incremented using `payload.set()`, which updates the value _and_ its display.
 The marbles make their left-right decision using the
 `GraphVertex.get_random_edge_out()` method. On this graph, every vertex has
 exactly two edges out (except the bottom row, which has none), so
-`get_random_edge_out()` is always choosing either left of right.
+`get_random_edge_out()` is always choosing either left of right. The
+settings passed into `create_traveller` override the defaults set in the
+graph's JSON config (for example, the `fill_color`). The payload value
+of the top node increments every time you drop a new marble, so it's being
+used to cycle through the colour each marble is created with:
 
 ```javascript
-GraphFellow.add_function("drop_new_marble", function(event, graph){
-  let v = graph.get_vertex_by_id(start_vertex_id);
-  v.payload.set(v.payload.value+1);
-  v.pulse(event.type === 'tick'? 0x0000ff:0x00ff00); // green for tap/click
-  graph.create_traveller({"at_vertex": v}).travel(v.get_random_edge_out());
-});
+  GraphFellow.add_function("drop_new_marble", function(event, graph){
+    let v = graph.get_vertex_by_id(start_vertex_id);
+    v.pulse(event.type === 'tick'? 0x0000ff:0x00ff00); // green for tap/click
+    graph.create_traveller({
+       "at_vertex": v, 
+       "fill_color": rainbow_colors[ v.payload.value % rainbow_colors.length]
+    }).travel(v.get_random_edge_out());
+    v.payload.set(v.payload.value+1);
+  });
 ```
 
 Each marble's `on_arrival` method increments the payload of the vertex it is
