@@ -11,9 +11,7 @@ _beta: GraphFellow is still in development!_
 <script src="../../vendor/greensock-js/TweenMax.min.js"></script> 
 <style>
 .graphfellow, .graph-container{
-  width: 500px;
   max-width:92%;
-  height:320px;
   border:1px solid #ccc;
   display:inline-block;
   position: relative;
@@ -38,7 +36,7 @@ _beta: GraphFellow is still in development!_
 <div class="graphfellow" data-graph-src="regexp.json"><a href="regexp">regexp →</a></div>
 <div class="graphfellow" data-graph-src="gossip-protocol.json"><a href="gossip">gossip protocol →</a></div>
 <div class="graphfellow" data-graph-src="graph-1.json"
-data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
+data-graph-config="aspect_ratio:0.55,vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
 <div class="graphfellow" data-graph-src="galton.json"><a href="galton">Galton Board →</a></div>
 <div class="graphfellow" data-graph-src="bunny.json" data-graph-config="background-color:0xffccff"></div>
 
@@ -46,41 +44,51 @@ data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertice
 
 <script>
 
+// example config here is the same as example.json
+// but demonstrating loading from a JavaScript object instread of
+// via the data-graph-src AJAX call...
 let example_config = {
-  vertices: [
-    { id: "A", x: 300, y: 125 },
-    { id: "B", x: 700, y: 125 },
-    { id: "C", x: 700, y: 475 },
-    { id: "D", x: 300, y: 475 }
-  ],
-  edges: [
-    { from: "A", to: "B"},
-    { from: "B", to: "C"},
-    { from: "C", to: "D"},
-    { from: "D", to: "A"},
-    { from: "A", to: "C", is_bidirectional: true, journey_duration: 1.4},
-    { from: "B", to: "D", is_bidirectional: true, journey_duration: 1.4}
-  ],
-  travellers: [
-    { at_vertex: "A", radius: 20, on_arrival: "_pulse", fill_color: 0xff0000, stroke_color: 0xff0000 }
-  ],
-  config: {
-    vertices: {
-      stroke_width: 6,
-      radius: 80,
-      text_font_size: 60,
-      has_pulse: true,
-      pulse_scale: 1.1,
-      is_pulse_blur: false
-    },
-    edges: {
-      stroke_width: 6,
-      arrowhead_length: 24
-    },
-    tick_period: 2,
-    on_tick: "_send_travellers_on_all_random"
+    "vertices": [
+      { "id": "A", "x": 200, "y": 225 },
+      { "id": "B", "x": 800, "y": 225 },
+      { "id": "C", "x": 800, "y": 775 },
+      { "id": "D", "x": 200, "y": 775 }
+    ],
+    "edges": [
+      { "from": "A", "to": "B"},
+      { "from": "B", "to": "C"},
+      { "from": "C", "to": "D"},
+      { "from": "D", "to": "A"},
+      { "from": "A", "to": "C", "is_bidirectional": true, "journey_duration": 1.4},
+      { "from": "B", "to": "D", "is_bidirectional": true, "journey_duration": 1.4}
+    ],
+    "travellers": [
+      {
+        "at_vertex": "A", 
+        "radius": 30,
+        "on_arrival": "_pulse",
+        "fill_color": "0xff0000",
+        "stroke_color": "0xff0000"
+      }
+    ],
+    "config": {
+      "vertices": {
+        "stroke_width": 8,
+        "radius": 120,
+        "text_font_size": 80,
+        "has_pulse": true,
+        "pulse_scale": 1.2,
+        "is_pulse_blur": false
+      },
+      "edges": {
+        "stroke_width": 8,
+        "arrowhead_length": 40
+      },
+      "tick_period": 2,
+      "on_tick": "_send_travellers_on_all_random"
+    }
   }
-};
+;
 GraphFellow.create_graph(document.getElementById("other"), example_config);
 
 // functions for CS 1870 finite automata

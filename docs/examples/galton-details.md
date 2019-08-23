@@ -13,12 +13,6 @@ _beta: GraphFellow is still in development!_
 * [settings & config](../settings)
 * [programming graph behaviour](../behaviour)
 
-<style>
-  .graphfellow {
-    width: 100%;
-    height: 50vw;
-  }  
-</style>
 <script src="../../vendor/pixi.min.js"></script>
 <script src="../../vendor/greensock-js/TweenMax.min.js"></script>
 

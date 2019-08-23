@@ -6,6 +6,8 @@
   let default_config = {
     "antialias":             true,
     "grid_width":            DEFAULT_GRID_WIDTH,
+    "grid_height":           null,
+    "aspect_ratio":          1,
     "background_color":      0xffffff,
     "tick_period":           0,
     "text_color":            0x000000,
@@ -302,7 +304,16 @@
       antialias: this.config.antialias,
       backgroundColor: this.config.background_color}
     );
-    this.app.resizeTo = this.container;
+    if (this.config.grid_height) {
+      this.config.aspect_ratio = this.config.grid_height / this.config.grid_width;
+    } else if (this.config.aspect_ratio) {
+      this.config.grid_height = this.config.aspect_ratio * this.config.grid_width;
+    } else {
+      this.config.aspect_ratio = null;
+    }
+    if (this.config.aspect_ratio === null) {
+      this.app.resizeTo = this.container;
+    } 
     this.container.appendChild(this.app.view);
     let resource_ids = {}; // check for dups
     if (this.config && this.config.resources) {
@@ -349,7 +360,11 @@
         this.container_size = new Point(w, h);
         this.core_scale = w / this.config.grid_width;
         this.app.stage.scale = new Point(this.core_scale, this.core_scale);
-        this.app.resize();
+        if (this.config.aspect_ratio != null) {
+          this.app.renderer.resize(w, w * this.config.aspect_ratio);
+        } else {
+          this.app.resize(); // let PIXI resize to container
+        }
         this.app.render(this.app.stage);
       }
     }

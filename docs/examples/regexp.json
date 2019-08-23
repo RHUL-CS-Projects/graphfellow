@@ -28,6 +28,7 @@
     { "at_vertex": "0" }
   ],
   "config": {
+    "grid_height": 350,
     "text_font_size": 50,
     "background-color": "0xffffff",
     "vertices": {

@@ -54,8 +54,7 @@ strings and not others.
 <script src="vendor/greensock-js/TweenMax.min.js"></script>
 <div id="regexp-example"
   data-graph-src="docs/examples/regexp.json"
-  data-graph-config="background-color:0xf2f2f2"
-  style="width:100%;height: 300px;"></div>
+  data-graph-config="background-color:0xf2f2f2"></div>
 <p class="regexp-strings" id="regexp-current"></p>
 <p class="regexp-strings" id="regexp-accepted"></p>
 <script src="graphfellow.js"></script>

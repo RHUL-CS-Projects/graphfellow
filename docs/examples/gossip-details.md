@@ -58,9 +58,7 @@ The gossip is transmitted randomly, but you can click on a node to force it.
 
 <button id="gossip-reset">reset</button>
 
-<div id="gossip-example"
-  data-graph-src="gossip-protocol.json"
-  style="width:100%;height: 420px;"></div>
+<div id="gossip-example" data-graph-src="gossip-protocol.json"></div>
 <label><input type="checkbox" id="is-transmitting-all" class="gossip-settings"/>transmit to all neighbours</label>
 <label><input type="checkbox" id="is-tracking-max-value" class="gossip-settings"/>show max value in red</label>
 <label><input type="checkbox" id="is-using-unqiue-values"  checked="true" class="gossip-settings"/>unique values at start</label>
@@ -227,9 +225,7 @@ The container for the graph links to the JSON file that contains the graph's
 config (see below):
 
 ```html
-<div id="gossip-example"
-  data-graph-src="gossip-example.json"
-  style="width:100%;height: 500px;"></div>
+<div id="gossip-example" data-graph-src="gossip-protocol.json"></div>
 ```
 
 Before defining custom functions, the GraphFellow library itself is loaded:
@@ -276,6 +272,11 @@ for the whole file):
 There are no travellers defined in the config, because they are created (and
 destroyed) whenever a node decides to transmit — see functions described below.
 
+By default, GrapHFellow graphs are defined on a 1000 x 1000 grid. This gossip
+demo is not square, so the `grid_height` of the grid is truncated at 660.
+GraphFellow uses this (or the alternative `aspect_ratio` setting) to determine
+the scaled dimensions when it sacles and renders the graph to fit on your page.
+
 The graph is populated by the `on_init` function, It makes a decision as to
 which nodes should transmit by randomly deciding for each one every "tick". So
 the config defines the tick period (in seconds), and provides a function to run
@@ -284,6 +285,7 @@ on the `on_tick` event that the graph triggers every fifth of a second:
 
 ```javascript
 "config": {
+  "grid_height": 660,
   "on_init": "randomly_assign_payloads",
   "tick_period": 0.2,
   "on_tick": "selectively_transmit_gossip_from_vertices",

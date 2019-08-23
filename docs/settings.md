@@ -85,7 +85,9 @@ values.
 
 | `config`               | default    | meaning
 |------------------------+------------|----------------------
-| `grid_width`           | `1000`     | the nominal width and height of the grid used by any coordinates (`x`, `y`) and sizes in the graph. You probably never need to change this, because the graph will automatically be scaled to fit within your container. For this reason, this is **not** a width in pixels.
+| `grid_width`           | `1000`     | the nominal width of the grid used by any coordinates (`x`, `y`) and sizes in the graph. You usually don't need to change this, because the graph will _always_ automatically scale to fit the width of its container. For this reason, this is **not** a width in pixels.
+| `grid_height`          | `null`     | if you don't specify a height, `aspect_ratio` will be used to calculate it. But if you want to be explicit, set a height here: if it's the same as `grid_width`, you'll get a square graph. This setting overrides `aspect_ratio`.
+| `aspect_ratio`         | 1          | as an alternative to specifying `grid_height`, you can specify a y/x aspect ratio here: `0.5` is a graph that is half as high as it is wide. If you want your graph height to inherit its container's height (defined by CSS), set this to `0`.
 | `on_init`              | `null`     | named function to run, once, when graph is being initialised
 | `tick_period`          | `0`        | how frequently, in seconds, the "clock" ticks (see `on_tick`). `0` means `never`. Use a decimal for small periods (e.g., `0.05`), but don't expect anything faster than 1/60th of a second to work.
 | `on_tick`              | `null`     | named function to run on each tick

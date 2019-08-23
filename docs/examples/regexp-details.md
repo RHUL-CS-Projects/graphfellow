@@ -14,10 +14,6 @@ _beta: GraphFellow is still in development!_
 * [programming graph behaviour](../behaviour)
 
 <style>
-  .graphfellow canvas {
-    top:0;
-    left:0;
-  }  
  .regexp-strings {
    min-height: 3em;
  }
@@ -55,8 +51,7 @@ strings and not others.
 
 <div id="regexp-example"
   data-graph-src="regexp.json"
-  data-graph-config="background-color:0xf2f2f2"
-  style="width:100%;height: 300px;"></div>
+  data-graph-config="background-color:0xf2f2f2"></div>
 <p class="regexp-strings" id="regexp-current"></p>
 <p class="regexp-strings" id="regexp-accepted"></p>
 <script src="../../graphfellow.js"></script>

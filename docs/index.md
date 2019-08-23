@@ -18,48 +18,60 @@ _beta: GraphFellow is still in development!_
 <div class="graphfellow"
   data-graph-src="examples/example.json"
   data-graph-config="background-color:0xf2f2f2"
-  style="width:500px;height:300px"></div>
+  style="max-width:20em"></div>
 <script src="../graphfellow.js"></script>
 # Quick start
 
-Create `example.json` defining a graph on a `1000` × `1000` grid (the default),
-with a "tick" every 2 seconds. This graph has four **vertices** joined by 
-six **edges**, and one **traveller** that moves along them:
+Create `example.json` defining a graph on a `1000` × `1000` grid (the default —
+don't worry, it scales to fit your page when it's rendered), with a "tick" every 2
+seconds. This graph has four **vertices** joined by six **edges** (two are
+bi-directional diagonals), and one **traveller** that moves along them:
 
 ```json
 {
   "vertices": [
-    { "id": "A", "x": 300, "y": 125 },
-    { "id": "B", "x": 700, "y": 125 },
-    { "id": "C", "x": 700, "y": 475 },
-    { "id": "D", "x": 300, "y": 475 }
+    { "id": "A", "x": 200, "y": 225 },
+    { "id": "B", "x": 800, "y": 225 },
+    { "id": "C", "x": 800, "y": 775 },
+    { "id": "D", "x": 200, "y": 775 }
   ],
   "edges": [
-    { "from": "A", "to": "B" },
-    { "from": "B", "to": "C" },
-    { "from": "C", "to": "D" },
-    { "from": "D", "to": "A" },
-    { "from": "A", "to": "C", "is_bidirectional": true, "journey_duration": 1.4 },
-    { "from": "B", "to": "D", "is_bidirectional": true, "journey_duration": 1.4 }
+    { "from": "A", "to": "B"},
+    { "from": "B", "to": "C"},
+    { "from": "C", "to": "D"},
+    { "from": "D", "to": "A"},
+    {
+      "from": "A", "to": "C",
+      "is_bidirectional": true,
+      "journey_duration": 1.4
+    },
+    {
+      "from": "B", "to": "D",
+      "is_bidirectional": true,
+      "journey_duration": 1.4
+    }
   ],
   "travellers": [
     {
-      "at_vertex": "A", "radius": 20, "on_arrival": "_pulse",
-      "fill_color": "0xff0000", "stroke_color": "0xff0000"
+      "at_vertex": "A", 
+      "radius": 30,
+      "on_arrival": "_pulse",
+      "fill_color": "0xff0000",
+      "stroke_color": "0xff0000"
     }
   ],
   "config": {
     "vertices": {
-      "stroke_width": 6,
-      "radius": 80,
-      "text_font_size": 60,
+      "stroke_width": 8,
+      "radius": 120,
+      "text_font_size": 80,
       "has_pulse": true,
-      "pulse_scale": 1.1,
+      "pulse_scale": 1.2,
       "is_pulse_blur": false
     },
     "edges": {
-      "stroke_width": 6,
-      "arrowhead_length": 24
+      "stroke_width": 8,
+      "arrowhead_length": 40
     },
     "tick_period": 2,
     "on_tick": "_send_travellers_on_all_random"
