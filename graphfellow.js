@@ -49,7 +49,7 @@
       "text_font_style":  'normal',
       "text_font_weight": 'normal',
       "is_text_wordwrap": false,
-      "text_wordwrap_width": 10
+      "text_wordwrap_width": 1000
     },
 
     "edges": {

@@ -100,7 +100,7 @@ values.
 | `text_font_style`      | `normal`   | default text font style (e.g., `italic`)
 | `text_font_weight`     | `normal`   | default text font weight (e.g., `bold`)
 | `is_text_wordwrap`     | `false`    | default text wordwrap enabled
-| `text_wordwrap_width`  | `10`       | default text wordwrap width (see `grid_width`)
+| `text_wordwrap_width`  | `1000`     | default text wordwrap width (see `grid_width`)
 
 The graph's coordinate system is nominally 1000 × 1000, unless you've changed
 the `grid_width` value (which you probably never need to do). The graph will be
