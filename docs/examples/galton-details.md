@@ -13,12 +13,6 @@ _beta: GraphFellow is still in development!_
 * [settings & config](../settings)
 * [programming graph behaviour](../behaviour)
 
-<style>
-  .graphfellow {
-    width: 100%;
-    height: 50vw;
-  }  
-</style>
 <script src="../../vendor/pixi.min.js"></script>
 <script src="../../vendor/greensock-js/TweenMax.min.js"></script>
 
@@ -148,7 +142,13 @@ here's just some of them:
 There are no travellers (or marbles) defined, because they are created by
 the `on_click` or `on_tick` events.
 
-The only config for the graph relates to the `on_tick` behaviour. The same 
+The `grid_height` for this graph is `500` — the `grid_width` is `1000`
+by default, so this describes a graph that is twice as wide as it is tall.
+See the documentation about the [dimensions of graphs](../html#dimensions-of-the-graph)
+for more about how this works.
+
+The config for the graph also defines the `on_tick` behaviour: that's an
+event that happens, like the tick of a clock, at regular intervals. The same 
 function that's the `on_click` event for the top node (dropping a marble)
 is used. The `tick_period` is a little over 2 seconds. The default journey
 along an edge is 1 second, so making the period between new marbles being
@@ -157,6 +157,7 @@ aesthetic.
 
 ```javascript
   "config": {
+    "grid_height": 500,
     "on_tick": "drop_new_marble",
     "tick_period": 2.2,
 ```

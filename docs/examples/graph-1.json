@@ -64,6 +64,7 @@
   "travellers": [
   ],
   "config": {
+    "aspect_ratio": 0.55,
     "tick-period": 3,
     "on_tick": "_transmit_from_all_vertices_random",
     "background-color": "0xffcccc",

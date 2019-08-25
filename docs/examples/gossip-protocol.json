@@ -54,6 +54,7 @@
   "travellers": [
   ],
   "config": {
+    "grid_height": 660,
     "on_init": "randomly_assign_payloads",
     "tick_period": 0.1,
     "on_tick": "selectively_transmit_gossip_from_vertices",

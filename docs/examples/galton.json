@@ -74,6 +74,7 @@
     {"from": "55", "to": "66"}
   ],
   "config": {
+    "grid_height": 500,
     "on_tick": "drop_new_marble",
     "tick_period": 2.2,
     "vertices": {

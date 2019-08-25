@@ -8,7 +8,8 @@
     }
   ],
   "config": {
-    "tick_period":         4,
+    "aspect_ratio": 0.6,
+    "tick_period": 4,
     "on_tick": "_transmit_from_all_vertices_random",
         
     "vertices": {

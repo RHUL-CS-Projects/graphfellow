@@ -14,10 +14,6 @@ _beta: GraphFellow is still in development!_
 * [programming graph behaviour](../behaviour)
 
 <style>
-  .graphfellow canvas {
-    top:0;
-    left:0;
-  }  
  .regexp-strings {
    min-height: 3em;
  }
@@ -55,8 +51,7 @@ strings and not others.
 
 <div id="regexp-example"
   data-graph-src="regexp.json"
-  data-graph-config="background-color:0xf2f2f2"
-  style="width:100%;height: 300px;"></div>
+  data-graph-config="background-color:0xf2f2f2"></div>
 <p class="regexp-strings" id="regexp-current"></p>
 <p class="regexp-strings" id="regexp-accepted"></p>
 <script src="../../graphfellow.js"></script>
@@ -224,10 +219,16 @@ it adds the payload to accumulating string, and also handles it specially if
 the state is an accepting state.
 
 Finally the rest of the config describes more of the graph, and importantly
-adds `on_click` handlers to _all_ of the edges and vertices:
+adds `on_click` handlers to _all_ of the edges and vertices.
+
+The `grid_width` of `1000` is optional since this is the default, but it
+helps show how `grid_height` can be used to control the aspect ratio of
+the rendered graph (this graph is wide but not tall):
 
 ```javascript
 "config": {
+  "grid_width": 1000,
+  "grid_height": 350,
   "text_font_size": 50,
   "background-color": "0xffffff",
   "vertices": {
