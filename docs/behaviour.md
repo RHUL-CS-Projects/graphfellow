@@ -44,6 +44,7 @@ The `on_click` and `on_mouseover` events are triggered by `pointertap` and
 `pointerover` events in the browser, so work with touch as well as mouse
 interfaces.
 
+
 ## Built-in functions
 
 _Still in development!_ These are likely to change:
@@ -202,11 +203,31 @@ The number of journeys a traveller has made is recorded in its `.qty_journeys`
 property. This is updated on arrival at a vertex, _before_ the `on_arrival`
 function (if any) is called.
 
+## Accessing the graph or graphs
+
+The GraphFellow methods `init()` and `create_graph()` return the graph that's
+been created. If there is more than one, you'll get an array of graphs instead.
+Often you don't need this, but sometimes it's helpful (for example, see how the
+reset button is implemented in the [regexp example](examples/regexp-details)).
+
+Note that you may get a graph object back from `init()` or `create_graph()`
+before it is ready to use, because it still needs to load its config from the
+JSON file linked from its container's `data-graph-src` attribute. You can check
+the graph's `is_ready` attribute, which is `true` when config has loaded.
+
+All graphs are added to the `GraphFellow.graphs` array in the order they were
+created. For example, if there's only one graph on the page and you didn't save
+it when it was returned from `init()` (or `create_graph()`, you can access it
+with `GraphFellow.graphs[0]`.
 
 ## The Graph object
 
-All the event handlers are called with two arguments, `event` and `graph`. The
-`graph` object gives you access to all the components in the graph.
+You might be accessing the `Graph` object via the result you got back when you
+created it, or via `GraphFellow.graphs` (see above), or — more commonly — in an
+event handler triggered from within the graph. All the event handlers are
+called with two arguments, `event` and `graph`.
+
+The `Graph` object gives you access to all the components in the graph.
 
 Useful fields:
 
@@ -217,10 +238,11 @@ Useful fields:
 | `.travellers`    | array of all travellers
 | `.config`        | the current config settings (see [settings](settings) for detail)
 | `.container`     | the DOM element containing the graph
-| `.component_type`| returns the string "`graph`"
-| `.json_type`     | returns the string "`graphs`"
+| `.component_type`| returns the string with value "`graph`"
+| `.json_type`     | returns the string with value "`graphs`"
+| `.is_ready`      | set to `true` when configuration is complete, which might not be immediately upon creation if it's being loaded, via AJAX, from a JSON file 
 
-For example, you can pulse all vertices red:
+For example, if `graph` is the `Graph` object, you can pulse all vertices red:
 
 ```javascript
 for (let i=0; i < graph.vertices.length; i++) {
@@ -232,7 +254,7 @@ Use `graph.get_vertex_by_id(id)` to find a vertex by its (string) id.
 
 The names of the arrays of components correspond to what you find by inspecting
 a component's `json_type` field. This may be useful if you're writing event
-handlers that are generic because you can use a construction like:
+handlers that are generic, because you can use a construction like:
 
 ```javascript
 // "this" may be a vertex, edge, or traveller
