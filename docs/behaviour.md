@@ -116,15 +116,35 @@ Useful fields:
 | `.edges_out`     | array of edges (`GraphEdge` objects) going out from this vertex
 | `.edges_in`      | array of edges coming into this vertex
 
+The order of edges in the `edges_out` array matches the order in which
+they were declared in the config that was used to create the vertex (see `last`
+in the `get_edge_to()` method below).
+
 This vertex might not be the `from` vertex of an edge you find in the
 `edges_out` array if that edge is bi-directional — if it isn't, it will be the
 `to` vertex (and, similarly, be attentive with bi-directional edges in
 `edges_in`).
 
+You can select an edge out of a vertex using the vertex's
+`get_edge_to(to_vertex, chooser)` method. The method effectively searches the
+`edges_out` array for you and returns one edge that leads from the current to
+vertex to the vertex specified by the `to_vertex` argument (a `GraphVertex`
+object). The returned edge may be `null` if no such edge is available. The
+optional `chooser` argument is a string indicating how that edge will be
+selected if there is more than one available that leads to the `to_vertex`:
+
+| chooser            | description
+|--------------------+-------------------------------
+| _none_             | the first edge found (the default), using the ordering of `edges_out` array
+| `last`             | the last edge found, using the ordering of `edges_out` array
+| `random`           | a random choice from all possible edges (made with equal distribution)
+
+The method `get_random_edge_out()` will choose one of the edges from `edges_out`, without
+consideration for which destination that is.
+
 The `GraphVertex` object has a `pulse(color)` function that you can use to make
 it pulse (if the vertex has not been configured with `has_pulse` then this
 function has no effect).
-
 
 ### The GraphEdge object
 
