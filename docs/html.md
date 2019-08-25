@@ -14,37 +14,52 @@ _beta: GraphFellow is still in development!_
 # HTML for GraphFellow's container
 
 GraphFellow needs a container — typically that will be a `<div>` element — in
-which to draw the graph. You should control the size (dimensions and aspect
-ratio) of that container using CSS (see examples below).
+which to draw the graph.
 
 The rest of this page is about this container. To define the graph itself,
 you must describe its layout and appearance either via a JSON file, or as a
 JavaScript object: see the [settings & config docs](settings) for (lots of)
 details.
 
-GraphFellow assumes that you've described your graph using a 1000 × 1000 grid
-(unless you changed the `grid_width` setting). Whatever the size of that grid,
-you graph will always fit inside the container because GraphFellow **scales
-your graph to fit**. This scaling is (currently) width-based, so if you have a
-tall skinny graph, it might get cropped if your container isn't tall enough.
-
 > Remember that you need to include the libraries and `graphfellow.js` before
 > anything will work — see [quick start](index).
+
+## Dimensions of the graph
+
+GraphFellow assumes that you've described your graph using a 1000 × 1000 grid
+(unless you changed the `grid_width` setting). These are *not* pixels:
+whatever the size of that grid, GraphFellow **scales your graph to fit inside
+its container's width**.
+
+If you have specified the height of that container with CSS, you can explicitly
+tell GraphFellow to render the graph within it by setting `is_container_height`
+to `true`. Otherwise, the graph will be created with an aspect ratio based on its
+`grid_height` or `aspect_ratio` settings, and your container should expand or
+contract to contain it.
+
+If you explicitly set `grid_height`, GraphFellow will calculate `aspect_ratio`
+for you. This overrides any setting of `aspect_ratio` you might also make.
+
+Alternatively, if you _only_ set `aspect_ratio`, `grid_height` will be calculated
+for you, based on `grid_width`. A value of `0.5` describes a graph that is half
+as tall as it is high.
+
+If you don't set either, you get a square graph: `grid_height` will be the
+same as `grid_width`, with an `aspect_ratio` of `1`.
+
+If you set `aspect_ratio` to 0 (explicitly, or by setting `grid_height` to 0)
+your graph will take its height from the container in exactly the same way as
+if `is_container_height` was `true`.
+
+> Only use `is_container_height` (or set the graph's aspect ratio to zero) if
+> you're sure the container itself has styling that results in a positive
+> height. An element with a height of zero cannot be seen!
 
 ## Identifying the container
 
 The simplest way is to make a `<div>` with class `graphfellow`, because that's
 the default:
   
-```html
-<style>
-  .graphfellow {
-    width: 500px;
-    height: 500px;
-  }
-</style>
-```
-
 ```html
 <div class="graphfellow" data-graph-src="example.json"></div>
 <script>
@@ -54,15 +69,6 @@ the default:
 
 If you want more control over what's going on, you can find the container(s)
 yourself, and pass them as the argument to `GraphFellow.init()`.
-
-```html
-<style>
-  #my-graph {
-    width: 20em;
-    height: 10em;
-  }
-</style>
-```
 
 ```html
 <div id="my-graph" data-graph-src="example.json"></div>
@@ -84,7 +90,7 @@ config.
 ```
 
 The `GraphFellow.init()` method (with an optional `containers` argument) will
-read the contents of that JSON file and render the graph.
+read the contents of that JSON file and render the graph:
 
 | argument       | value
 |----------------+---------------------
@@ -94,14 +100,13 @@ If your container doesn't have a `data-graph-src` attribute, or the JSON file
 can't be found, or the JSON can't be parsed, then no graph will appear when
 you call `init()`.
 
-You _can_ create a graph without a separate JSON file, but if you want to do
-that, you need to create a JavaScript object containing the config, and use
-`create_graph()` instead. of `init()`
-
 ### Config as a JavaScript object
 
-If you prefer to define your config in JavaScript (or even fetch and parse the
-JSON yourself), you can pass in a container together with its config:
+You _can_ create a graph without a separate JSON file, but if you want to do
+that, you need to create a JavaScript object containing the config, and use
+`create_graph()` instead of `init()` to pass in a container together with its
+config:
+
 ```html
 <div id="foo"></div>
 ```
@@ -117,8 +122,6 @@ var container = document.getElementById('foo');
 GraphFellow.create_graph( container, config );
 
 ```
-
-Note that this is using `GraphFellow.create_graph()` instead of `init()`.
 
 `GraphFellow.create_graph(container, initial_config)` creates the graph:
 
@@ -175,7 +178,7 @@ You can specifiy _some_ config in the `data-graph-config` attribute of the
 container of your graph as a comma-separated list of name:value settings.
 Settings in here have the highest priority: they will override the same
 settings that you may have made anywhere else. This is mostly useful for
-specifying the background colour. 
+specifying the background colour, or overriding the aspect ratio. 
 
 ```html
 <div class="graphfellow" data-graph-src="my-graph.json"
