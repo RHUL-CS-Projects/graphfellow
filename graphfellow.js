@@ -1,11 +1,12 @@
 (function( GraphFellow, undefined ) {
   GraphFellow.graphs = [];
-  
-  const DEFAULT_GRID_WIDTH = 1000; // nominal width of canvas
-  
+
   let default_config = {
     "antialias":             true,
-    "grid_width":            DEFAULT_GRID_WIDTH,
+    "grid_width":            1000, // default grid width
+    "grid_height":           null, // defaults to match width
+    "aspect_ratio":          1,    // default is square
+    "is_container_height":   false,
     "background_color":      0xffffff,
     "tick_period":           0,
     "text_color":            0x000000,
@@ -302,7 +303,18 @@
       antialias: this.config.antialias,
       backgroundColor: this.config.background_color}
     );
-    this.app.resizeTo = this.container;
+    if (this.config.is_container_height) {
+      this.config.aspect_ratio = 0;
+    } else if (this.config.grid_height) {
+      this.config.aspect_ratio = this.config.grid_height / this.config.grid_width;
+    } else if (this.config.aspect_ratio !=0) {
+      this.config.grid_height = this.config.aspect_ratio * this.config.grid_width;
+    } else { // inherit container height
+      this.config.aspect_ratio = 0;
+    }
+    if (this.config.aspect_ratio === 0) {
+      this.app.resizeTo = this.container;
+    }
     this.container.appendChild(this.app.view);
     let resource_ids = {}; // check for dups
     if (this.config && this.config.resources) {
@@ -349,7 +361,11 @@
         this.container_size = new Point(w, h);
         this.core_scale = w / this.config.grid_width;
         this.app.stage.scale = new Point(this.core_scale, this.core_scale);
-        this.app.resize();
+        if (this.config.aspect_ratio === 0) {
+          this.app.resize(); // let PIXI resize to container
+        } else {
+          this.app.renderer.resize(w, w * this.config.aspect_ratio);
+        }
         this.app.render(this.app.stage);
       }
     }
