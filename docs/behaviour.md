@@ -205,19 +205,30 @@ function (if any) is called.
 
 ## Accessing the graph or graphs
 
-The GraphFellow methods `init()` and `create_graph()` return the graph that's
-been created. If there is more than one, you'll get an array of graphs instead.
-Often you don't need this, but sometimes it's helpful (for example, see how the
-reset button is implemented in the [regexp example](examples/regexp-details)).
+The GraphFellow methods `init()` and `create_graph()` each return the graph
+they create. In the case of `init()`, if there is more than one, you'll get an
+array of graphs instead. Often you don't need this, but sometimes it's helpful
+(for example, see how the reset button is implemented in the [regexp
+example](examples/regexp-details)).
+
+```html
+<div class="graphfellow" data-graph-src="example.json"></div>
+```
+```javascript
+let my_graph = GraphFellow.init(); // my_graph contains graph object
+```
 
 Note that you may get a graph object back from `init()` or `create_graph()`
 before it is ready to use, because it still needs to load its config from the
 JSON file linked from its container's `data-graph-src` attribute. You can check
-the graph's `is_ready` attribute, which is `true` when config has loaded.
+the graph's `is_ready` attribute, which is `true` when config has loaded. If
+you [provided config explicitly](html#config-as-a-javascript-object) with
+`create_graph()` this will be `true` immediately. Otherwise, you may have to
+wait for the AJAX call to complete. That call is automatically made as soon as
+the graph is created (that is, you don't have to trigger it youself).
 
-All graphs are added to the `GraphFellow.graphs` array in the order they were
-created. For example, if there's only one graph on the page and you didn't save
-it when it was returned from `init()` (or `create_graph()`, you can access it
+All graphs are added to the `GraphFellow.graphs` array in the order they are
+created. For example, if there's only one graph on the page you can access it
 with `GraphFellow.graphs[0]`.
 
 ## The Graph object
