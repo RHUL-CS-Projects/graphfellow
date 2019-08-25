@@ -225,6 +225,7 @@
 
   function Graph(container, initial_config){
     this.container = container;
+    this.is_ready = false;
     this.container_size = new PIXI.Point(0, 0); // updated on first resize
     // use defaults, overridden with JSON "graph-specific" defaults
     this.component_type = 'graph';
@@ -237,6 +238,11 @@
     this.travellers = [];
     this.sprite_resources = {};
     this.last_tick_timestamp = (new Date).getTime();
+    if (initial_config) {
+      this.configure_graph(initial_config);
+    }
+  }
+  Graph.prototype.configure_graph = function(initial_config){
     this.graph_data = initial_config;
     for (let i=0; i < type_keys.length; i++) {
       if (this.graph_data[type_keys[i]] === undefined) {
@@ -328,6 +334,7 @@
       }
     }
     let graph = this;
+    this.is_ready = true;
     this.app.loader.load((loader, res) => {graph.run_graph(res)});
   }
   Graph.prototype.run_graph = function(res){
@@ -1018,31 +1025,33 @@
   
   // can manually add a graph here (e.g., if div isn't ready when the init autoruns)
   GraphFellow.create_graph = function(container, initial_config) {
-    if (initial_config == null) {
-      // no initial config so make the AJAX call to get it
+    let new_graph = new Graph(container, initial_config);
+    if (initial_config == null) { // no config, so make AJAX call to get it
       let json_filename = container.getAttribute('data-graph-src');
-      if (json_filename === null || ! json_filename.match(/\w/)) {
+      if (json_filename == null || ! json_filename.match(/\w/)) {
         throw "cannot make graph: missing data-graph-src attribute";
       }
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4) {
           if (this.status == 200) {
-            let config_via_ajax = JSON.parse(replace_hyphens_in_keys(this.responseText, false));
-            GraphFellow.graphs.push(new Graph(container, config_via_ajax));
+            new_graph.configure_graph(JSON.parse(replace_hyphens_in_keys(this.responseText, false)));
           } else {
-            console.log("HTTP error (" + json_filename + ") " + this.status + ": " + this.statusText);
+            let err_msg = "HTTP error (" + json_filename + ") " + this.status + ": " + this.statusText;
+            new_graph.error = err_msg; // needs timestamp?
+            console.log(err_msg);
           }
         }
       }
       req.open("GET", json_filename, true);
       req.send();
-    } else {
-      GraphFellow.graphs.push(new Graph(container, initial_config));
     }
+    GraphFellow.graphs.push(new_graph);
+    return new_graph;
   }
   
   GraphFellow.init = function(divs) {
+    let new_graphs = [];
     if (divs !== undefined) {
       if (! (divs instanceof Array )) {
         divs = [divs];
@@ -1052,9 +1061,10 @@
     }
     for (let i=0; i < divs.length; i++) {
       if (divs[i] && typeof divs[i].getAttribute === "function" && divs[i].getAttribute('data-graph-src')) {
-        GraphFellow.create_graph(divs[i], null);
+        new_graphs.push(GraphFellow.create_graph(divs[i], null));
       }
     }
+    return new_graphs.length === 1? new_graphs[0] : new_graphs;
   }
 
 }( window.GraphFellow = window.GraphFellow || {}));
