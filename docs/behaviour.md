@@ -174,12 +174,19 @@ the `at_vertex` field is cleared after the `on_departure` event and populated
 just before the `on_arrival` event — so all those fields are useful to you when
 programming the traveller's journey-based event functions.
 
-The `Traveller` object has a `travel(edge)` function, which you can use to set
-a traveller on its journey. Make sure the traveller _can_ travel along that
-edge based on its current location. That is, its `at_vertex` must be the same
-vertex as `edge.from` (or either of `edge.from` or `edge.to` if the edge is
-bi-directional) — otherwise this call will do nothing. Calling `travel` will
-subequently trigger the `on_departure` event if this traveller has one defined.
+The `Traveller` object has a `travel(edge)` method, which you can use to set a
+traveller on its journey. The journey will only happen if the traveller _can_
+travel along that edge based on its current location. That is, the edge
+specified must start from the traveller's `at_vertex` (which could be at either
+end if the edge is bi-directional).
+
+If the edge doesn't start from the traveller's current location, the call
+will return `false`, and no journey is commenced.
+
+Otherwise, `travel()` triggers the `on_departure` event if this traveller has
+one defined, starts the animation, and returns `true`. Note that the duration
+of the journey is determined by multiplying the edge's `journey_duration` (in
+seconds) by the traveller's `speed`.
 
 To programmatically create a traveller, use `Graph.create_traveller()`, which
 takes a config object that _must_ include an `at_vertex` `GraphVertex` object,
