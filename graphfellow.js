@@ -776,6 +776,14 @@
     midpoint.y = midpoint.y / qty_points;
     return midpoint;
   }
+  GraphEdge.prototype.is_edge_from = function(origin){
+    return origin != null && (origin === this.from
+      || (this.is_bidirectional && origin === this.to));
+  }
+  GraphEdge.prototype.is_edge_to = function(destination){
+    return destination != null && (destination === this.to
+      || (this.is_bidirectional && destination === this.from));
+  }
   GraphEdge.prototype.to_json = function(){
     let json = get_json_properties(this);
     json.from = this.from.id;
