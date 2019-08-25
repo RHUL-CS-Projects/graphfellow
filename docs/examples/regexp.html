@@ -119,15 +119,14 @@
 
   document.getElementById("regexp-reset")
     .addEventListener("click", function(){
-    let g = GraphFellow.graphs[0];
-    if (g) {
-      g.travellers[0].destroy();
-      g.create_traveller({at_vertex: "0"});
+    if (regexp_graph) {
+      regexp_graph.travellers[0].destroy();
+      regexp_graph.create_traveller({at_vertex: "0"});
       current.innerHTML = accepted.innerHTML = "";
     }
   });
 
-  GraphFellow.init(document.getElementById("regexp-example"));
+  let regexp_graph = GraphFellow.init(document.getElementById("regexp-example"));
 </script>
   <p>
   This finite state automata, representing a regular expression, has a start

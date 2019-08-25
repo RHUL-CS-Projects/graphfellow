@@ -195,11 +195,11 @@
     }
   });
 
-  GraphFellow.init();
+  let gossip_graph = GraphFellow.init();
 
   document.getElementById("gossip-reset")
   .addEventListener("click", function(){
-    GraphFellow.call_function(GraphFellow.graphs[0], "randomly_assign_payloads");
+    GraphFellow.call_function(gossip_graph, "randomly_assign_payloads");
   });
 
   document.getElementById("is-transmitting-all")

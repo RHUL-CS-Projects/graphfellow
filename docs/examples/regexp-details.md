@@ -99,15 +99,14 @@ strings and not others.
 
   document.getElementById("regexp-reset")
     .addEventListener("click", function(){
-    let g = GraphFellow.graphs[0];
-    if (g) {
-      g.travellers[0].destroy();
-      g.create_traveller({at_vertex: "0"});
+    if (regexp_graph) {
+      regexp_graph.travellers[0].destroy();
+      regexp_graph.create_traveller({at_vertex: "0"});
       current.innerHTML = accepted.innerHTML = "";
     }
   });
 
-  GraphFellow.init(document.getElementById("regexp-example"));
+  let regexp_graph = GraphFellow.init(document.getElementById("regexp-example"));
 </script>
 
 <hr style="margin-bottom:4em"/>
@@ -390,14 +389,16 @@ reset button is just a `<button>` element:
 ```javascript
 document.getElementById("regexp-reset")
   .addEventListener("click", function(){
-  let g = GraphFellow.graphs[0];
-  if (g) {
-    g.travellers[0].destroy();
-    g.create_traveller({at_vertex: "0"});
+  if (regexp_graph) {
+    regexp_graph.travellers[0].destroy();
+    regexp_graph.create_traveller({at_vertex: "0"});
     current.innerHTML = accepted.innerHTML = "";
   }
 });
 ```
+
+Note that this function is using a variable, `regexp_graph`, that is
+initialised when the graph is created
 
 This deletes the traveller and replaces it with a new one at the start state
 (vertex `0`). The `destroy()` and `create_traveller()` functions handle
@@ -418,8 +419,13 @@ same settings, which happens when this reset method creates the new traveller.
 Finally, the graph is initialised by an explicit call to `create_graph()`:
 
 ```javascript
-GraphFellow.create_graph(document.getElementById("regexp-example"));
+let regexp_graph = GraphFellow.create_graph(
+                     document.getElementById("regexp-example")
+                   );
 ```
+
+You don't always need to capture the returned value of `create_graph`, but
+here it's handy because it's being used by the reset button's event listener.
 
 If the graph's container had a class of `graphfellow`, it would be possible to
 simply use `GraphFellow.init()` instead. The primary advantage of using

@@ -59,6 +59,7 @@ strings and not others.
 <p class="regexp-strings" id="regexp-accepted"></p>
 <script src="graphfellow.js"></script>
 <script>
+
   // functions for CS 1870 finite automata
 
   let current = document.getElementById("regexp-current")
@@ -101,15 +102,15 @@ strings and not others.
   });
   
   document.getElementById("regexp-reset").addEventListener("click", function(){
-    let g = GraphFellow.graphs[0];
-    if (g) {
-      g.travellers[0].destroy();
-      g.create_traveller({at_vertex: "0"});
+    if (regexp_graph) {
+      regexp_graph.travellers[0].destroy();
+      regexp_graph.create_traveller({at_vertex: "0"});
       current.innerHTML = accepted.innerHTML = "";
     }
   });
   
-  GraphFellow.create_graph(document.getElementById("regexp-example"));
+  let regexp_graph = GraphFellow.create_graph(document.getElementById("regexp-example"));
+
 </script>
 
 <hr style="margin-bottom:4em"/>

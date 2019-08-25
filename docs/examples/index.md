@@ -256,6 +256,7 @@ GraphFellow.add_function("marble_arrives", function(event, graph){
 });
 
 GraphFellow.init(); // all graphs with class 'graphfellow' and data-graph-src
+
 </script>
 
 * [quick start](../index#quick-start)
