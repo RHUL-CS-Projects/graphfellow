@@ -815,6 +815,9 @@
     this.from = null;
     this.to = null;
     this.text_config = get_text_config(config);
+    if (this.speed === 0) {
+      this.speed = 1; // avoid division by zero: ignore setting
+    }
     if (this.type === 'sprite') {
       this.diagram = new Sprite(graph.sprite_resources[this.resource_id].texture);
       this.diagram.anchor.x = 0.5;
@@ -852,7 +855,7 @@
       settings_json['ease'] = Linear.easeNone;
       TweenMax.to(
         this.diagram.position,
-        edge.journey_duration * this.speed,
+        edge.journey_duration * 1/this.speed,
         settings_json
       );
     }

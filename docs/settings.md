@@ -318,7 +318,7 @@ values.
 | `stroke_color`         | `0x000000`    | the colour of the border of the spot-type traveller
 | `fill_color`           | `0x000000`    | the colour of the spot-type traveller (or the tint of the sprite)
 | `is_tinted`            | `false`       | `true` if the `fill_color` should be used to tint the sprite (sprite-type travellers only)
-| `speed`                | `1`           | a multiplier to journey duration that applies to this traveller. `0.5` is a twice as fast. `2` is twice as slow.
+| `speed`                | `1`           | how quickly this traveller executes its journeys (each edge has a `journey_duration` in seconds). `0.5` moves at half speed, `2` goes twice as fast.
 | `resource_id`          | `pixi-bunny`  | the name of the resource to use as the bitmap for a sprite-type traveller
 | `sprite_scale`         | `1`           | the scale of the sprite-type traveller
 | `is_displaying_payload`| `false`       | `true` if the value of the traveller's payload should be displayed
