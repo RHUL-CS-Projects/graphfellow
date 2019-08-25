@@ -836,8 +836,9 @@
   }
   Traveller.prototype = Object.create(GraphComponent.prototype);
   Traveller.prototype.travel = function(edge){
-    if (edge) {
-      this._is_travelling = true;
+    let is_travelling = false;
+    if (edge && edge.is_edge_from(this.at_vertex)) {
+      this._is_travelling = is_travelling = true;
       this.following_edge = edge;
       this.from = this.at_vertex;
       this.to = edge.to === this.from? edge.from : edge.to; // reverse
@@ -855,6 +856,7 @@
         settings_json
       );
     }
+    return is_travelling;
   }
   Traveller.prototype._on_arrival = function(){
     this._is_travelling = false; // journey is over
