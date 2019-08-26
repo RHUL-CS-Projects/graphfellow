@@ -168,6 +168,22 @@ For a fixed-size graph:
 <div class="graphfellow" data-graph-src="example.json"></div>
 ```
 
+Remember that the graph will _always_ scale to fit inside the width
+of the container. This means the height of the container, especially
+if it is fixed, as in these examples, might not match what your
+graph requires (resulting in cropping, or overflow with a scroll bar,
+depending on the CSS). The `aspect_ratio` and `grid_height` settings
+give you control over how this is handled: see
+[dimensions of graphs](#dimensions-of-the-graph) above.
+
+In the last example, since the container is fixed at 5 × 3, then forcing
+an `aspect_ratio` of `1.667` (or, if `grid_width` is `1000`, `grid_height`
+of `600`) might work best:
+
+```html
+<div class="graphfellow" data-graph-src="example.json"
+  data-graph-config="aspect-ratio:1.667"></div>
+```
 
 ## Overriding config in the HTML
 
