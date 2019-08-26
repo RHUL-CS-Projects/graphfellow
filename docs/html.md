@@ -176,13 +176,13 @@ depending on the CSS). The `aspect_ratio` and `grid_height` settings
 give you control over how this is handled: see
 [dimensions of graphs](#dimensions-of-the-graph) above.
 
-In the last example, since the container is fixed at 5 × 3, then applying
-an `aspect_ratio` of `1.667` (or, if `grid_width` is `1000`, `grid_height`
-of `600`) might work best:
+In the last example, since the container has an aspect ratio of 5:3, then
+applying an `aspect_ratio` of `0.6` (or, if `grid_width` is `1000`,
+`grid_height` of `600`) might work best:
 
 ```html
 <div class="graphfellow" data-graph-src="example.json"
-  data-graph-config="aspect_ratio:1.667"></div>
+  data-graph-config="aspect_ratio:0.6"></div>
 ```
 
 ## Overriding config in the HTML
