@@ -456,7 +456,7 @@ GraphFellow.add_function("randomly_assign_payloads", function(e, graph){
 });
 ```
 The next two functions are the `on_departure` and `on_arrival` event handlers that
-are applied to ever traveller. The first sets the traveller's payload at the start
+are applied to every traveller. The first sets the traveller's payload at the start
 of its journey, and the second passes it on to the node (vertex) it's arrived at,
 assuming that it is of higher value than the vertex's current payload. The vertex
 will pulse if the value is set. The colour of the pulse is normally defined by

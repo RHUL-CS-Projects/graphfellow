@@ -324,7 +324,7 @@ values.
 | `is_displaying_payload`| `false`       | `true` if the value of the traveller's payload should be displayed
 | `on_departure`           | `null`        | what function should be run when the traveller departs on its journey
 | `on_arrival`           | `null`        | what function should be run when the traveller arrives at the end of its journey
-| `on_click`             | `null`        | what function should be run if the edge is clicked. Set this to null if you don't want any interaction.
+| `on_click`             | `null`        | what function should be run if the traveller is clicked. Set this to null if you don't want any interaction.
 | `on_moueseover`        | `null`        | what function should be run if the mouse pointer moves over the traveller. Set this to null if you don't want any interaction.
 | `payload`              | `0`           | initial value of the payload       
 | `payload_offset_x`     | `0`           | the payload value is displayed in the middle of the traveller: nudge it horizontally by this amount
