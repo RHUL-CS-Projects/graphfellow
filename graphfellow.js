@@ -8,6 +8,7 @@
     "aspect_ratio":          1,    // default is square
     "is_container_height":   false,
     "background_color":      0xffffff,
+    "is_transparent":        false,
     "tick_period":           0,
     "text_color":            0x000000,
     "text_font_size":        20,
@@ -303,12 +304,14 @@
         }
       }
     }
-    this.app = new PIXI.Application({
+    let app_config = {
       autoResize: true,
       resolution: devicePixelRatio,
       antialias: this.config.antialias,
-      backgroundColor: this.config.background_color}
-    );
+      backgroundColor: this.config.background_color,
+      transparent: this.config.is_transparent
+    };
+    this.app = new PIXI.Application(app_config);
     if (this.config.is_container_height) {
       this.config.aspect_ratio = 0;
     } else if (this.config.grid_height) {
