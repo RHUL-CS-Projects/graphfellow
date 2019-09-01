@@ -167,6 +167,7 @@ Useful fields:
 | `.to`                | the vertex at which this traveller ended (or will end) its journey (`null` if it is not travelling)
 | `.following_edge`    | the edge (`GraphEdge` object) that this traveller is following (`null` if it is not travelling)
 | `.at_vertex`         | the vertex at which this traveller is currently resting (or at which it has just arrvied — see note below)
+| `.qty_journeys`      | count of journeys this traveller has completed (see below)
 
 The `from`, `to`, and `following_edge` fields are set _before_ the traveller's
 `on_departure` event, and cleared _after_ its `on_arrival` event. Additionally,
@@ -200,15 +201,15 @@ the stage and adds the traveller to the graph's `travellers` array.
   });
 ```
 
+The number of journeys a traveller has made is recorded in its `qty_journeys`
+property. This is updated on arrival at a vertex, _before_ the `on_arrival`
+function (if any) is called.
+
 You can destroy a traveller with its `destroy()` function. This is called
-automatically if the number of journeys the traveller makes equals its
+automatically if the number of journeys the traveller has made equals its
 `journey_lifespan`, after the `on_arrival` event of its final journey has been
 executed. If you call `destroy()` on a traveller that is already on a journey,
 it will be destroyed and its `on_arrival` event will not be triggered.
-
-The number of journeys a traveller has made is recorded in its `.qty_journeys`
-property. This is updated on arrival at a vertex, _before_ the `on_arrival`
-function (if any) is called.
 
 ## Accessing the graph or graphs
 
