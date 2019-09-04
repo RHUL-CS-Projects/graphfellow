@@ -30,6 +30,10 @@ _beta: GraphFellow is still in development!_
 .graphfellow a:hover {
   background-color: #660000;
 }
+.daisies {
+  background-image: url(../img/daisies.jpg);
+  background-size:cover;
+}
 </style> 
 
 <div id="other" class="graph-container" data-graph-config="background-color:0xffffcc"></div>
@@ -38,7 +42,7 @@ _beta: GraphFellow is still in development!_
 <div class="graphfellow" data-graph-src="graph-1.json"
 data-graph-config="vertices.pulse-duration:1,vertices.is_pulse_blur:true,vertices.pulse_scale:3,vertices.is_pulse_yoyo:false,background-color:0xccffcc,travellers.fill-color:0xffffff,vertices.fill-color:0xffffcc,vertices.stroke_width:8,vertices.stroke_color:0x009900,edges.is-arrow:true"></div>
 <div class="graphfellow" data-graph-src="galton.json" data-graph-config="grid_height:560"><a href="galton">Galton Board →</a></div>
-<div class="graphfellow" data-graph-src="bunny.json" data-graph-config="background-color:0xffccff"></div>
+<div class="graphfellow daisies" data-graph-src="bunny.json" data-graph-config="is-transparent:true,background-color:0x000000"></div>
 
 <script src="../../graphfellow.js"></script>
 
@@ -258,6 +262,7 @@ GraphFellow.add_function("marble_arrives", function(event, graph){
 GraphFellow.init(); // all graphs with class 'graphfellow' and data-graph-src
 
 </script>
+<p style="margin-top:2em"></p>
 
 * [quick start](../index#quick-start)
 * examples
