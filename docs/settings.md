@@ -93,8 +93,7 @@ values.
 | `tick_period`          | `0`        | how frequently, in seconds, the "clock" ticks (see `on_tick`). `0` means `never`. Use a decimal for small periods (e.g., `0.05`), but don't expect anything faster than 1/60th of a second to work.
 | `on_tick`              | `null`     | named function to run on each tick
 | `antialias`            | `true`     | determines if all the edges should be rendered smoothly on the graph. You probably want `true` because it looks prettier, but this comes at the cost of more processing overhead in the browser.
-| `is_transparent`       | `false`    | if `true`, the background of the graph will be transparent, allowing the background of its container to show through
-| `background_color`     | `0xffffff` | background colour of graph, which by default is white (will not be shown if `is_transparent` is `true`)
+| `is_transparent`       | `false`    | if `true`, the background of the graph will be transparent, allowing the background of its container to show through. Note that the `background_color` is still used as a matte color when calculating antiantialising, so if you get an unsightly pixel-fringe, try setting `background_color` to match the predominant background too.
 | `text_color`           | `0x000000` | default text (fill) colour
 | `text_font_size`       | `20`       | default text size (see `grid_width`)
 | `text_font_family`     | `Arial`    | default text font family
