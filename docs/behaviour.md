@@ -55,6 +55,7 @@ _Still in development!_ These are likely to change:
 | `_vertex_transmit_to_all` | creates and despatches a traveller along every edge out of `this` vertex
 | `_print_payload` | (for debugging) prints the payload value for `this`
 | `_pulse` | animate a pulse on `this`
+| `_tint` | colour `this` with its initial colour
 | `_send_travellers_on_all_random` | executes `_vertex_transmit_to_random` on every vertex
 | `_transmit_from_all_vertices_random` | executes `_vertex_transmit_to_all` on every vertex
 | `_traveller_deliver_max_payload` | sets the payload of the vertex `this` traveller's current `at_vertex` to be the traveller's payload, if it's greater
@@ -126,6 +127,17 @@ This vertex might not be the `from` vertex of an edge you find in the
 `to` vertex (and, similarly, be attentive with bi-directional edges in
 `edges_in`).
 
+Useful methods:
+
+| method               | description
+|----------------------+-----------------------------
+| `get_edge_to(to_vertex, chooser)` | get edge from here to `to_vertex`, based on `chooser`
+| `get_random_edge_out()` | pick a random edge leading out from here
+| `tint(color)`        | set colour of vertex to `color`, or initial colour if no argument
+| `pulse(color)`       | do a pulse animation (use config setting if no argument)
+| `stop_pulse()`       | stop pulse animation (if any)
+| `position`, `x`, `y` | returns position data for the vertex's diagram
+
 You can select an edge out of a vertex using the vertex's
 `get_edge_to(to_vertex, chooser)` method. The method effectively searches the
 `edges_out` array for you and returns one edge that leads from the current to
@@ -157,6 +169,19 @@ Useful fields:
 | `.to`               | the vertex at which this edge ends
 | `.is_bidirectional` | `true` if travellers can traverse this edge both ways, in which case: be careful about what you infer from `from` and `to`
 
+Useful methods:
+
+| method                 | description
+|------------------------+-----------------------------
+| `tint(color)`          | set colour of the edge to `color`, or reset to initial colour if no argument
+| `is_edge_from(vertex)` | `true` if this edge leads _from_ `vertex
+| `is_edge_to(vertex)`   | `true` if this edge leads _to_ `vertex`
+| `calculate_midpoint()` | `{x, y}` object representing the midpoint of the edge (will be an approximation if the edge is curved)
+
+Note that if the edge is bidirectional, `is_edge_from(v)` and `is_edge_from(v)`
+will _both_ return `true` if `v` is at either end of the edge regardless of which
+end that is.
+
 ### The Traveller object
 
 Useful fields:
@@ -174,6 +199,14 @@ The `from`, `to`, and `following_edge` fields are set _before_ the traveller's
 the `at_vertex` field is cleared after the `on_departure` event and populated
 just before the `on_arrival` event — so all those fields are useful to you when
 programming the traveller's journey-based event functions.
+
+Useful methods:
+
+| method               | description
+|----------------------+-----------------------------
+| `travel(edge)`       | commence a journey along `edge`: returns `false` if journey is denied (see below)
+| `tint(color)`        | set colour of traveller to `color`, or reset to initial colour if no argument
+| `destroy()`          | destroys traveller
 
 The `Traveller` object has a `travel(edge)` method, which you can use to set a
 traveller on its journey. The journey will only happen if the traveller _can_
@@ -269,7 +302,12 @@ for (let i=0; i < graph.vertices.length; i++) {
 }
 ```
 
-Use `graph.get_vertex_by_id(id)` to find a vertex by its (string) id.
+Useful methods:
+
+| method                     | description
+|----------------------------+-----------------------------
+| `get_vertex_by_id(id)`     | find vertex bu its (string) id
+| `create_traveller(config)` | make a new traveller (see `Traveller` class above)
 
 The names of the arrays of components correspond to what you find by inspecting
 a component's `json_type` field. This may be useful if you're writing event
