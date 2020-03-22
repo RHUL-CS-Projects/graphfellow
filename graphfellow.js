@@ -177,6 +177,11 @@
         pulser.pulse();
       }
     },
+    _tint: function(event){ // tints self (unless it's a graph)
+      if (this.tint instanceof Function) {
+        this.tint();
+      }
+    },
     _send_travellers_on_all_random(event, graph) {
       for (let i=0; i < graph.travellers.length; i++) {
         t = graph.travellers[i];
