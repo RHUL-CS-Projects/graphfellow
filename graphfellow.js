@@ -914,6 +914,16 @@
       }
     }
   }
+  Traveller.prototype.tint = function(tint_color){
+    if (tint_color === undefined) {
+      if  (this.type === 'sprite' && ! this.is_tinted) {
+        tint_color = WHITE;
+      } else {
+        tint_color = this.fill_color;
+      }
+    }
+    this.diagram.tint = tint_color;
+  }
   Traveller.prototype.add_diagram = function(container){
     if (this.is_above_vertices) {
       container.addChild(this.diagram);
