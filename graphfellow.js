@@ -739,6 +739,13 @@
       .lineTo(p_arrow[2].x, p_arrow[2].y);
     }
   }
+  GraphEdge.prototype.tint = function(tint_color){
+    if (tint_color === undefined) {
+      this.diagram.tint = this.fill_color;
+    } else {
+      this.diagram.tint = tint_color;
+    }
+  }
   GraphEdge.prototype.to_s = function(){
     return "<Edge: " + this.from.id + "↔" + this.to.id + ">";
   }
@@ -841,9 +848,9 @@
     } else if (this.type === 'spot') {
       this.diagram = new Graphics();
       this.diagram.lineStyle(this.stroke_width, this.stroke_color)
-        .beginFill(this.fill_color)
+        .beginFill(WHITE)
         .drawCircle(0, 0, this.radius)
-        .endFill();
+        .endFill().tint = this.fill_color;
     }
     this.diagram.position = this.at_vertex.position();
     this.payload_offset = new Point(this.payload_offset_x, this.payload_offset_y);
