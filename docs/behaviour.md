@@ -136,7 +136,7 @@ Useful methods:
 | `tint(color)`        | set colour of vertex to `color`, or initial colour if no argument
 | `pulse(color)`       | do a pulse animation (use config setting if no argument)
 | `stop_pulse()`       | stop pulse animation (if any)
-| `position`, `x`, `y` | returns position data for the vertex's diagram
+| `payload.set(value)` | update payload value
 
 You can select an edge out of a vertex using the vertex's
 `get_edge_to(to_vertex, chooser)` method. The method effectively searches the
@@ -177,6 +177,7 @@ Useful methods:
 | `is_edge_from(vertex)` | `true` if this edge leads _from_ `vertex
 | `is_edge_to(vertex)`   | `true` if this edge leads _to_ `vertex`
 | `calculate_midpoint()` | `{x, y}` object representing the midpoint of the edge (will be an approximation if the edge is curved)
+| `payload.set(value)` | update payload value
 
 Note that if the edge is bidirectional, `is_edge_from(v)` and `is_edge_from(v)`
 will _both_ return `true` if `v` is at either end of the edge regardless of which
@@ -207,6 +208,7 @@ Useful methods:
 | `travel(edge)`       | commence a journey along `edge`: returns `false` if journey is denied (see below)
 | `tint(color)`        | set colour of traveller to `color`, or reset to initial colour if no argument
 | `destroy()`          | destroys traveller
+| `payload.set(value)` | update payload value
 
 The `Traveller` object has a `travel(edge)` method, which you can use to set a
 traveller on its journey. The journey will only happen if the traveller _can_
