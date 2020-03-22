@@ -1,16 +1,20 @@
 (function( GraphFellow, undefined ) {
   GraphFellow.graphs = [];
 
+  const WHITE = 0xffffff;
+  const BLACK = 0x000000;
+  const RED   = 0xff0000;
+
   let default_config = {
     "antialias":             true,
     "grid_width":            1000, // default grid width
     "grid_height":           null, // defaults to match width
     "aspect_ratio":          1,    // default is square
     "is_container_height":   false,
-    "background_color":      0xffffff,
+    "background_color":      WHITE,
     "is_transparent":        false,
     "tick_period":           0,
-    "text_color":            0x000000,
+    "text_color":            BLACK,
     "text_font_size":        20,
     "text_font_family":      'Arial',
     "text_font_style":       'normal',
@@ -22,17 +26,17 @@
 
     "vertices": {
       "stroke_width":     2,
-      "stroke_color":     0x000000,
-      "fill_color":       0xffffff,
+      "stroke_color":     BLACK,
+      "fill_color":       WHITE,
       "radius":           20,
       "has_ring":         false,
       "ring_radius":      25,
       "ring_width":       2,
-      "ring_color":       0x000000,
+      "ring_color":       BLACK,
       "on_click":         null,
       "on_mouseover":     null,
       "has_pulse":        true,
-      "pulse_color":      0xff0000,
+      "pulse_color":      RED,
       "pulse_alpha":      0.5,
       "pulse_exit_alpha": 0,
       "pulse_duration":   1,
@@ -44,7 +48,7 @@
       "has_id_as_payload": true,
       "payload_offset_x": 0,
       "payload_offset_y": 0,
-      "text_color":       0x000000,
+      "text_color":       BLACK,
       "text_font_size":   20,
       "text_font_family": 'Arial',
       "text_font_style":  'normal',
@@ -55,7 +59,7 @@
 
     "edges": {
       "journey_duration": 1,
-      "stroke_color":     0x000000,
+      "stroke_color":     BLACK,
       "stroke_width":     2,
       "is_arrow":         true,
       "arrowhead_angle":  33,
@@ -66,7 +70,7 @@
       "payload":          0,
       "payload_offset_x": 0,
       "payload_offset_y": 0,
-      "text_color":       0x000000,
+      "text_color":       BLACK,
       "text_font_size":   20,
       "text_font_family": 'Arial',
       "text_font_style":  'normal',
@@ -83,8 +87,8 @@
       "journey_lifespan": 0,
       "radius":           10,
       "stroke_width":     2,
-      "stroke_color":     0x000000,
-      "fill_color":       0x000000,
+      "stroke_color":     BLACK,
+      "fill_color":       BLACK,
       "is_tinted":        false,
       "speed":            1,
       "resource_id":      "bunny",
@@ -93,7 +97,7 @@
       "payload":          0,
       "payload_offset_x": 0,
       "payload_offset_y": 0,
-      "text_color":       0x000000,
+      "text_color":       BLACK,
       "text_font_size":   20,
       "text_font_family": 'Arial',
       "text_font_style":  'normal',
@@ -524,7 +528,7 @@
       .endFill();
     if (this.has_pulse) {
       this.diagram_pulse = new Graphics();
-      this.diagram_pulse.beginFill(0xffffff).drawCircle(0, 0, this.radius).endFill();
+      this.diagram_pulse.beginFill(WHITE).drawCircle(0, 0, this.radius).endFill();
       this.diagram_pulse.alpha = this.pulse_alpha;
       this.diagram_pulse.tint = this.pulse_color;
       this.diagram_pulse.renderable = false;
