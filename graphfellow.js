@@ -518,14 +518,14 @@
     this.edges_out = [];
     this.edges_in = [];
     let g = new Graphics();
-    g.beginFill(this.fill_color);
+    g.beginFill(WHITE); // will tint
     if (this.has_ring){
       g.lineStyle(this.ring_width, this.ring_color)
       .drawCircle(0, 0, this.ring_radius)
     }
     g.lineStyle(this.stroke_width, this.stroke_color)
       .drawCircle(0, 0, this.radius)
-      .endFill();
+      .endFill().tint=this.fill_color;
     if (this.has_pulse) {
       this.diagram_pulse = new Graphics();
       this.diagram_pulse.beginFill(WHITE).drawCircle(0, 0, this.radius).endFill();
@@ -610,6 +610,13 @@
       TweenMax.killTweensOf(this.diagram_pulse.scale);
       this.diagram_pulse.renderable = false;
       this.diagram_pulse.scale = new Point(1, 1);
+    }
+  }
+  GraphVertex.prototype.tint = function(tint_color){
+    if (tint_color === undefined) {
+      this.diagram.children[1].tint = this.fill_color;
+    } else {
+      this.diagram.children[1].tint = tint_color;
     }
   }
   GraphVertex.prototype.to_json = function(){
