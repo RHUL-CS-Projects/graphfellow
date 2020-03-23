@@ -4,7 +4,8 @@
     {
       "from": "A",
       "to": "A",
-      "control_points": [ {"x": -420, "y": 300}, {"x": 520, "y": 400}]
+      "control_points": [ {"x": -420, "y": 300}, {"x": 520, "y": 400}],
+      "arrowhead_rotation": 5
     }
   ],
   "config": {
