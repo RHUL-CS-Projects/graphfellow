@@ -64,6 +64,7 @@
       "is_arrow":         true,
       "arrowhead_angle":  33,
       "arrowhead_length": 15,
+      "arrowhead_rotation": 0,
       "is_arrowhead_closed": true,
       "is_bidirectional": false,
       "is_displaying_payload": false,
@@ -727,6 +728,9 @@
     }
     if (p.x < p_to.x ) {
       theta += Math.PI;
+    }
+    if (this.arrowhead_rotation){
+      theta += this.arrowhead_rotation * Math.PI/180;
     }
     let p_tip = new Point(
         offset.x + Math.cos(theta) * to.actual_radius,
