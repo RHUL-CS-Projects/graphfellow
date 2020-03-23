@@ -32,6 +32,8 @@
       "from": "C",
       "to": "B",
       "control-points": [{"x": 100, "y": 200}],
+      "arrowhead_rotation": -1,
+      "arrowhead_rotation_from": 5,
       "payload": "C-B"
     },
     {
