@@ -523,15 +523,19 @@
     this.edges_out = [];
     this.edges_in = [];
     this.actual_radius = this.has_ring? Math.max(this.ring_radius, this.radius) : this.radius;
+    this.tintable = new Graphics(); // separate layer
+    this.tintable
+      .beginFill(WHITE) // will tint
+      .drawCircle(0, 0, this.actual_radius)
+      .endFill()
+      .tint=this.fill_color;
     let g = new Graphics();
-    g.beginFill(WHITE); // will tint
     if (this.has_ring){
       g.lineStyle(this.ring_width, this.ring_color)
       .drawCircle(0, 0, this.ring_radius)
     }
     g.lineStyle(this.stroke_width, this.stroke_color)
       .drawCircle(0, 0, this.radius)
-      .endFill().tint=this.fill_color;
     if (this.has_pulse) {
       this.diagram_pulse = new Graphics();
       this.diagram_pulse.beginFill(WHITE).drawCircle(0, 0, this.radius).endFill();
@@ -543,6 +547,7 @@
       }
       this.diagram.addChild(this.diagram_pulse); // must add below vertex's diagram
     }
+    this.diagram.addChild(this.tintable);
     this.diagram.addChild(g);
     this.is_interactive = false;
     this.payload_offset = new Point(this.payload_offset_x, this.payload_offset_y);
@@ -620,7 +625,10 @@
   }
   GraphVertex.prototype.tint = function(tint_color){
     if (tint_color === undefined) {
-      this.diagram.children[1].tint = this.fill_color;
+      tint_color = this.fill_color;
+    }
+    if (this.tintable) {
+      this.tintable.tint = tint_color;
     } else {
       this.diagram.children[1].tint = tint_color;
     }
