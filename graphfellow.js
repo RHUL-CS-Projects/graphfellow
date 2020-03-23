@@ -728,10 +728,9 @@
     if (p.x < p_to.x ) {
       theta += Math.PI;
     }
-    let v_rad = 20 * to.actual_radius;
     let p_tip = new Point(
-        offset.x + Math.cos(theta) * v_rad,
-        offset.y + Math.sin(theta) * v_rad
+        offset.x + Math.cos(theta) * to.actual_radius,
+        offset.y + Math.sin(theta) * to.actual_radius
     );
     let p_arrow = [
       new Point(
