@@ -710,7 +710,7 @@
     let p_from = from.diagram.position;
     let offset = is_reversed? new Point(0,0) : new Point(p_to.x - p_from.x, p_to.y - p_from.y);
     let p      = p_from;
-    let arrowhead_rot = this.arrowhead_angle * (Math.PI/360);
+    let arrowhead_angle = this.arrowhead_angle * (Math.PI/360);
     if (this.control_points.length > 0) { // curved edge
       p = this.control_points[is_reversed? 0 : this.control_points.length-1];
       // note control points are _always_ relative to actual from (it's how they're drawn)
@@ -738,13 +738,13 @@
     );
     let p_arrow = [
       new Point(
-        p_tip.x + Math.cos(theta - arrowhead_rot) * this.arrowhead_length,
-        p_tip.y + Math.sin(theta - arrowhead_rot) * this.arrowhead_length
+        p_tip.x + Math.cos(theta - arrowhead_angle) * this.arrowhead_length,
+        p_tip.y + Math.sin(theta - arrowhead_angle) * this.arrowhead_length
       ),
       p_tip,
       new Point(
-        p_tip.x + Math.cos(theta + arrowhead_rot) * this.arrowhead_length,
-        p_tip.y + Math.sin(theta + arrowhead_rot) * this.arrowhead_length
+        p_tip.x + Math.cos(theta + arrowhead_angle) * this.arrowhead_length,
+        p_tip.y + Math.sin(theta + arrowhead_angle) * this.arrowhead_length
       )
     ];
     this.diagram.lineStyle(this.stroke_width, this.stroke_color);
