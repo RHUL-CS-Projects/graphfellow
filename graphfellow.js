@@ -65,6 +65,7 @@
       "arrowhead_angle":  33,
       "arrowhead_length": 15,
       "arrowhead_rotation": 0,
+      "arrowhead_rotation_from": 0,
       "is_arrowhead_closed": true,
       "is_bidirectional": false,
       "is_displaying_payload": false,
@@ -729,9 +730,15 @@
     if (p.x < p_to.x ) {
       theta += Math.PI;
     }
-    if (this.arrowhead_rotation){
-      theta += this.arrowhead_rotation * Math.PI/180;
+    let fudge_rotation = 0;
+    if (this.is_bidirectional && is_reversed) {
+      if (this.arrowhead_rotation_from) {
+        fudge_rotation = this.arrowhead_rotation_from;
+      }
+    } else if (this.arrowhead_rotation){
+      fudge_rotation = this.arrowhead_rotation;
     }
+    theta += fudge_rotation * Math.PI/180;
     let p_tip = new Point(
         offset.x + Math.cos(theta) * to.actual_radius,
         offset.y + Math.sin(theta) * to.actual_radius
