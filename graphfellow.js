@@ -860,11 +860,17 @@
       this.diagram.scale = new Point(this.sprite_scale, this.sprite_scale);
       if (this.is_tinted) { this.diagram.tint = this.fill_color;}
     } else if (this.type === 'spot') {
-      this.diagram = new Graphics();
-      this.diagram.lineStyle(this.stroke_width, this.stroke_color)
-        .beginFill(WHITE)
+      this.tintable = new Graphics(); // separate layer
+      this.tintable
+        .beginFill(WHITE) // will tint
         .drawCircle(0, 0, this.radius)
-        .endFill().tint = this.fill_color;
+        .endFill()
+        .tint=this.fill_color;
+      let g = new Graphics();
+      g.lineStyle(this.stroke_width, this.stroke_color)
+        .drawCircle(0, 0, this.radius)
+      this.diagram = new Container();
+      this.diagram.addChild(this.tintable, g);
     }
     this.diagram.position = this.at_vertex.position();
     this.payload_offset = new Point(this.payload_offset_x, this.payload_offset_y);
