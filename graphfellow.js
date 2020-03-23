@@ -522,6 +522,7 @@
     this.diagram.position = new Point(config.x, config.y);
     this.edges_out = [];
     this.edges_in = [];
+    this.actual_radius = this.has_ring? Math.max(this.ring_radius, this.radius) : this.radius;
     let g = new Graphics();
     g.beginFill(WHITE); // will tint
     if (this.has_ring){
@@ -719,7 +720,7 @@
     if (p.x < p_to.x ) {
       theta += Math.PI;
     }
-    let v_rad = 20 * to.has_ring? Math.max(to.ring_radius, to.radius) : to.radius;
+    let v_rad = 20 * to.actual_radius;
     let p_tip = new Point(
         offset.x + Math.cos(theta) * v_rad,
         offset.y + Math.sin(theta) * v_rad
