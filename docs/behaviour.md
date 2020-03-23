@@ -174,7 +174,7 @@ Useful methods:
 | method                 | description
 |------------------------+-----------------------------
 | `tint(color)`          | set colour of the edge to `color`, or reset to initial colour if no argument
-| `is_edge_from(vertex)` | `true` if this edge leads _from_ `vertex
+| `is_edge_from(vertex)` | `true` if this edge leads _from_ `vertex`
 | `is_edge_to(vertex)`   | `true` if this edge leads _to_ `vertex`
 | `calculate_midpoint()` | `{x, y}` object representing the midpoint of the edge (will be an approximation if the edge is curved)
 | `payload.set(value)` | update payload value
