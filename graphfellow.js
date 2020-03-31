@@ -1002,6 +1002,9 @@
     this.diagram = new Container();
     this.diagram.position = new Point(config.x, config.y);
     this.payload_offset = new Point(this.payload_offset_x, this.payload_offset_y);
+    if (config.text != undefined) {
+      config.payload = config.text;
+    }
     this.payload = new Payload(this, config.payload);
     this.graph.app.stage.addChild(this.diagram);
   }
