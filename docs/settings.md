@@ -32,7 +32,7 @@ created and destroyed.
 | **vertices**   | Vertices are the nodes of the directed graph. Vertices must have a unique ID. All vertices are rendered as circles. Vertices can be rendered with an additional ring, and can be made to pulse (showing an animated surround).
 | **edges**      | Edges are rendered as lines joining the vertices of the graph, and are directed (that is, they have a `from` and a `to` vertex). Edges can be bi-directional, and can be drawn with or without arrowheads. An edge can loop, joining a vertex to itself.
 | **travellers** | Travellers move along the edges, vertex-to-vertex, and can be either circles ("spots") or graphics (sprites). Travellers can have `on_departure` and `on_arrival` event handlers, which can be useful for programming [graph behaviour](behaviour).
-
+| **labels**     | Labels are static text.
 
 
 ## Configuration
@@ -51,12 +51,14 @@ well as global settings for each of the component types.
 vertices: [],     // array of specific vertice definitions
 edges: [],        // array of specific edge definitions
 travellers: [],   // array of specific traveller definitions
+labels: [],       // array of specific label definitions
 config: { 
   // global config items (for the graph)
   // ...and settings for types:
   vertices: {},   // config settings for _all_ vertices
   edges: {},      // config settings for _all_ edges
   travellers: {}, // config settings for _all_ travellers
+  labels: {},     // config settings for _all_ labels
   resources: []   // array of resource values for external resouces (i.e., sprite bitmaps)
 }
 ```
@@ -215,6 +217,23 @@ can programmatically create and destroy travellers: see [behaviour](behaviour)
 for more information.
 
 
+### Defining the labels
+
+Each label requires a position (`x` and `y`) and the text string to display.
+
+| setting           | default    | meaning
+|-------------------+------------|----------------------
+| `x`               | no default | x coordinate of the label
+| `y`               | no default | y coordinate of the label
+| `text`            | no default | the text that should be displayed (synonym for `payload`)
+
+The text for the label is implemented as a `payload` so it behaves in the same
+way as other components. You _can_ use the `payload` setting as a synonym for
+`text` here. Don't specify both — if you do, `text` has priority.
+
+You can include linebreaks in the text string with `\n`.
+
+
 ### Config for all vertices
 
 The configuration for vertices in general can be declared within the `vertex{}`
@@ -341,6 +360,24 @@ values.
 
 
 
+### Config for all labels
+
+These are _not_ defining the labels themselves (do that in the `labels` array).
+
+| `config.labels{}`      | default        | meaning
+|------------------------+----------------|----------------------
+| `text_color`           | global default | override global text color for all labels
+| `text_font_size`       | global default | override global text size for all labels
+| `text_font_family`     | global default | override global text font family for all labels
+| `text_font_style`      | global default | override global text style for all labels
+| `text_font_weight`     | global default | override global text weight for all labels
+| `is_text_wordwrap`     | global default | override global text wordwrap for all labels
+| `text_wordwrap_width`  | global default | override global text wordwrap width for all labels
+
+Because a label's text is implemented as a payload, the settings
+`payload_offset_x` and `payload_offset_y` are supported, but currently it
+doesn't really make sense to use them: better to change the label's `x` and `y`
+settings.
 
 
 
