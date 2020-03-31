@@ -112,6 +112,19 @@
       "on_mouseover":     null
     },
 
+    "labels": {
+      "payload_offset_x": 0,
+      "payload_offset_y": 0,
+      "is_displaying_payload": true,
+      "text_color":       BLACK,
+      "text_font_size":   20,
+      "text_font_family": 'Arial',
+      "text_font_style":  'normal',
+      "text_font_weight": 'normal',
+      "is_text_wordwrap": false,
+      "text_wordwrap_width": 10
+    },
+
     "resources": [],
   }
 
@@ -132,7 +145,7 @@
     // dropShadowDistance: 6,
   }
 
-  const type_keys = [ 'edges', 'vertices', 'travellers', 'resources'];
+  const type_keys = [ 'edges', 'vertices', 'travellers', 'resources', 'labels'];
   const Graphics  = PIXI.Graphics;
   const Point     = PIXI.Point;
   const Sprite    = PIXI.Sprite;
@@ -371,6 +384,9 @@
     for (let i=0; i< this.graph_data.travellers.length; i++) {
       this.create_traveller(this.graph_data.travellers[i]);
     }
+    for (let i=0; i< this.graph_data.labels.length; i++) {
+      this.create_label(this.graph_data.labels[i]);
+    }
     let graph = this;
     setTimeout(function(){graph.graph_init(graph)}, 1000) // 1 second delay at start
   }
@@ -479,6 +495,11 @@
     this.app.stage.addChildAt(edge.diagram, 0);
     this.edges.push(edge);
     return edge;
+  }
+  Graph.prototype.create_label = function(config) {
+    let label = new Label(config, this);
+    this.app.stage.addChild(label.diagram);
+    return label;
   }
 
   //-----------------------------------------------------------
@@ -968,6 +989,36 @@
     return json;
   }
 
+  //-----------------------------------------------------------
+  // Label is just text (TODO: could be interactive?)
+  // note: text is implemented as a payload
+  //-----------------------------------------------------------
+  function Label(config, graph){
+    this.graph = graph;
+    this.component_type = 'label';
+    this.json_type = 'labels';
+    GraphComponent.call(this, config);
+    this.text_config = get_text_config(config);
+    this.diagram = new Container();
+    this.diagram.position = new Point(config.x, config.y);
+    this.payload_offset = new Point(this.payload_offset_x, this.payload_offset_y);
+    this.payload = new Payload(this, config.payload);
+    this.graph.app.stage.addChild(this.diagram);
+  }
+  Label.prototype = Object.create(GraphComponent.prototype);
+  Label.prototype.x = function(){
+    return this.diagram.position.x;
+  }
+  Label.prototype.y = function(){
+    return this.diagram.position.y;
+  }
+  Label.prototype.to_json = function(){
+    let json = get_json_properties(this);
+    json.x = this.x() - this.payload_offset.x;
+    json.y = this.y() - this.payload_offset.y;
+    json.payload = this.payload.init_value;
+    return json;
+  }
   //-----------------------------------------------------------
   // utility functions
   //-----------------------------------------------------------
