@@ -55,7 +55,7 @@ _Still in development!_ These are likely to change:
 | `_vertex_transmit_to_all` | creates and despatches a traveller along every edge out of `this` vertex
 | `_print_payload` | (for debugging) prints the payload value for `this`
 | `_pulse` | animate a pulse on `this`
-| `_tint` | colour `this` with its initial colour
+| `_set_color` | colour `this` with its initial colour
 | `_send_travellers_on_all_random` | executes `_vertex_transmit_to_random` on every vertex
 | `_transmit_from_all_vertices_random` | executes `_vertex_transmit_to_all` on every vertex
 | `_traveller_deliver_max_payload` | sets the payload of the vertex `this` traveller's current `at_vertex` to be the traveller's payload, if it's greater
@@ -133,7 +133,7 @@ Useful methods:
 |----------------------+-----------------------------
 | `get_edge_to(to_vertex, chooser)` | get edge from here to `to_vertex`, based on `chooser`
 | `get_random_edge_out()` | pick a random edge leading out from here
-| `tint(color)`        | set colour of vertex to `color`, or initial colour if no argument
+| `set_color(color)`   | set colour of vertex to `color`, or initial colour if no argument
 | `pulse(color)`       | do a pulse animation (use config setting if no argument)
 | `stop_pulse()`       | stop pulse animation (if any)
 | `payload.set(value)` | update payload value
@@ -173,7 +173,7 @@ Useful methods:
 
 | method                 | description
 |------------------------+-----------------------------
-| `tint(color)`          | set colour of the edge to `color`, or reset to initial colour if no argument
+| `set_color(color)`     | set colour of the edge to `color`, or reset to initial colour if no argument
 | `is_edge_from(vertex)` | `true` if this edge leads _from_ `vertex`
 | `is_edge_to(vertex)`   | `true` if this edge leads _to_ `vertex`
 | `calculate_midpoint()` | `{x, y}` object representing the midpoint of the edge (will be an approximation if the edge is curved)
@@ -206,7 +206,7 @@ Useful methods:
 | method               | description
 |----------------------+-----------------------------
 | `travel(edge)`       | commence a journey along `edge`: returns `false` if journey is denied (see below)
-| `tint(color)`        | set colour of traveller to `color`, or reset to initial colour if no argument
+| `set_color(color)`   | set colour of traveller to `color`, or reset to initial colour if no argument
 | `destroy()`          | destroys traveller
 | `payload.set(value)` | update payload value
 

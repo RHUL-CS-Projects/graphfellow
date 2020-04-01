@@ -646,16 +646,17 @@
       this.diagram_pulse.scale = new Point(1, 1);
     }
   }
-  GraphVertex.prototype.tint = function(tint_color){
-    if (tint_color === undefined) {
-      tint_color = this.fill_color;
+  GraphVertex.prototype.set_color = function(color){
+    if (color === undefined) {
+      color = this.fill_color;
     }
     if (this.tintable) {
-      this.tintable.tint = tint_color;
+      this.tintable.tint = color;
     } else {
-      this.diagram.children[1].tint = tint_color;
+      this.diagram.children[1].tint = color;
     }
   }
+  GraphVertex.prototype.tint = function(c){this.set_color(c)}
   GraphVertex.prototype.to_json = function(){
     let json = get_json_properties(this);
     json.id = this.id;
@@ -785,13 +786,13 @@
       .lineTo(p_arrow[2].x, p_arrow[2].y);
     }
   }
-  GraphEdge.prototype.tint = function(tint_color){
-    if (tint_color === undefined) {
-      this.diagram.tint = this.stroke_color;
-    } else {
-      this.diagram.tint = tint_color;
+  GraphEdge.prototype.set_color = function(color){
+    if (color === undefined) {
+      color = this.stroke_color;
     }
+    this.diagram.tint = color;
   }
+  GraphEdge.prototype.tint = function(c){this.set_color(c)}
   GraphEdge.prototype.to_s = function(){
     return "<Edge: " + this.from.id + "↔" + this.to.id + ">";
   }
@@ -966,16 +967,17 @@
       }
     }
   }
-  Traveller.prototype.tint = function(tint_color){
-    if (tint_color === undefined) {
+  Traveller.prototype.set_color = function(color){
+    if (color === undefined) {
       if  (this.type === 'sprite' && ! this.is_tinted) {
-        tint_color = WHITE;
+        color = WHITE;
       } else {
-        tint_color = this.fill_color;
+        color = this.fill_color;
       }
     }
-    this.diagram.tint = tint_color;
+    this.diagram.tint = color;
   }
+  Traveller.prototype.tint = function(c){this.set_color(c)}
   Traveller.prototype.add_diagram = function(container){
     if (this.is_above_vertices) {
       container.addChild(this.diagram);
