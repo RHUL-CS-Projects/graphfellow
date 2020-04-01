@@ -684,7 +684,7 @@
     this.control_points = config.control_points? config.control_points : [];
     this.text_config = get_text_config(config);
     let diagram = new Graphics();
-    diagram.lineStyle(this.stroke_width, this.stroke_color);
+    diagram.lineStyle(this.stroke_width, WHITE); // will tint this.stroke_color
     diagram.moveTo(0,0);
     if (this.control_points.length === 0) {
       diagram.lineTo(
@@ -711,6 +711,7 @@
       throw "too many control points";
     }
     diagram.position = from_vertex.position();
+    diagram.tint = this.stroke_color;
     this.diagram = diagram;
     if (this.is_arrow) {
       this._draw_arrowhead(false);
@@ -786,7 +787,7 @@
   }
   GraphEdge.prototype.tint = function(tint_color){
     if (tint_color === undefined) {
-      this.diagram.tint = this.fill_color;
+      this.diagram.tint = this.stroke_color;
     } else {
       this.diagram.tint = tint_color;
     }
