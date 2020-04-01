@@ -979,10 +979,14 @@
   }
   Traveller.prototype.tint = function(c){this.set_color(c)}
   Traveller.prototype.add_diagram = function(container){
-    if (this.is_above_vertices) {
+    let index = -1;
+    if (! this.is_above_vertices && this.graph.vertices.length > 0) {
+        index = container.getChildIndex(this.graph.vertices[0].diagram) - 1;
+    }
+    if (index < 0) {
       container.addChild(this.diagram);
     } else {
-      container.addChildAt(this.diagram, this.graph.edges.length);
+      container.addChildAt(this.diagram, index);
     }
   }
   Traveller.prototype.to_json = function(){
