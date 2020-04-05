@@ -379,5 +379,31 @@ Because a label's text is implemented as a payload, the settings
 doesn't really make sense to use them: better to change the label's `x` and `y`
 settings.
 
+## Data
 
+If you add a `data` section to your graph config, its contents will be made
+available as the `.data` element of the `Graph` object. This is handy if you
+need to pass in settings specific for the graph described in the config that
+don't belong to any particular component (and might otherwise be defined as
+constants in your JavaScript code).
+
+```javascript
+"config": {
+  "data": {
+    "title": "Hello World",
+    "final_pulse_color": "0xff0000"
+  }
+}
+```
+
+The `Graph.data` object is just a means off passing data in from the same
+source as the other config — unlike the Graph components, `data` has no
+associated methods.
+
+Like other config items, this is also available via the `data-graph-config`
+mechanism, which may be useful for developing:
+
+```html
+<div class="graphfellow" data-graph-src="dijkstra-12.json" data-graph-config="data.is_debug:true"></div>
+````
 

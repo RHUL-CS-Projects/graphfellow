@@ -205,10 +205,10 @@ GraphFellow is tolerant of you using hyphens or colons interchangeably in the
 property names here.
 
 You can set nested properties using `.`, such as `edges.stroke_color:0x00ff00`.
+Note that this includes `data` config settings, as well as the default and
+component ones.
 
 It's probably not a good idea to overuse this feature, and only use it for
 specific overrides. You can't specify components here, only the `config`
 settings, so this is not an alternative for defining a complete configuration
 in JSON or JavaScript.
-
-
