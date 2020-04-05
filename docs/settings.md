@@ -400,10 +400,11 @@ The `Graph.data` object is just a means off passing data in from the same
 source as the other config — unlike the Graph components, `data` has no
 associated methods.
 
-Like other config items, this is also available via the `data-graph-config`
-mechanism, which may be useful for developing:
+Like other config items, this can also be set via the `data-graph-config`
+mechanism in the HTML, which may be useful for developing:
 
 ```html
-<div class="graphfellow" data-graph-src="dijkstra-12.json" data-graph-config="data.is_debug:true"></div>
+<div class="graphfellow" data-graph-src="my-graph.json"
+  data-graph-config="data.is_debug:true"></div>
 ````
 
