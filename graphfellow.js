@@ -126,6 +126,8 @@
     },
 
     "resources": [],
+    
+    "data": []
   }
 
   const pixi_text_mappings = {
@@ -145,7 +147,7 @@
     // dropShadowDistance: 6,
   }
 
-  const type_keys = [ 'edges', 'vertices', 'travellers', 'resources', 'labels'];
+  const type_keys = [ 'edges', 'vertices', 'travellers', 'resources', 'labels', 'data'];
   const Graphics  = PIXI.Graphics;
   const Point     = PIXI.Point;
   const Sprite    = PIXI.Sprite;
@@ -283,7 +285,9 @@
     for (let key in default_config) {
       if (this.graph_data.config[key] != undefined) {
         if (is_type_key(key)) {
-          if (key === 'resources') {
+          if (key === 'data'){
+            this.data = this.graph_data.config['data'];
+          } else  if (key === 'resources') {
             // TODO resources are an array: not (currently) like other type keys
             this.config.resources = this.graph_data.config[key];
           } else {
@@ -321,7 +325,11 @@
             value = !(value === 'false' || value == '0');
           }
           if (key_type != undefined) {
-            this.config[key_type][key] = value;
+            if (key_type === "data") {
+              this.data[key] = value;
+            } else {
+              this.config[key_type][key] = value;
+            }
           } else {
             this.config[key] = value;
           }
@@ -369,7 +377,7 @@
     this.text_configs = { "default": get_text_config(this.config) };
     this.text_styles = { "default": make_text_style(this.text_configs["default"]) };
     for (let t=0; t < type_keys.length; t++) {
-      if (type_keys[t] != "resources") {
+      if (type_keys[t] != "resources" && type_keys[t] != "data") {
         this.text_styles[type_keys[t]] = make_text_style([this.text_configs["default"], this.config[type_keys[t]]]);
         this.text_configs[type_keys[t]] = get_text_config(this.config[type_keys[t]]);
       }
