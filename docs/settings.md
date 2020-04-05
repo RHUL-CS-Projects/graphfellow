@@ -47,7 +47,8 @@ components) and a `config` object that declares settings for the whole graph as
 well as global settings for each of the component types.
 
 
-```javascript
+```
+{
 vertices: [],     // array of specific vertice definitions
 edges: [],        // array of specific edge definitions
 travellers: [],   // array of specific traveller definitions
@@ -60,6 +61,7 @@ config: {
   travellers: {}, // config settings for _all_ travellers
   labels: {},     // config settings for _all_ labels
   resources: []   // array of resource values for external resouces (i.e., sprite bitmaps)
+  data: {}        // your own values (available as .data) but not used by GraphFellow
 }
 ```
 
@@ -396,7 +398,7 @@ constants in your JavaScript code).
 }
 ```
 
-The `Graph.data` object is just a means off passing data in from the same
+The `Graph.data` object is just a means of passing data in from the same
 source as the other config — unlike the Graph components, `data` has no
 associated methods.
 
