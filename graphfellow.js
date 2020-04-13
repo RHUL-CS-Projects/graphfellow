@@ -988,8 +988,9 @@
   Traveller.prototype.tint = function(c){this.set_color(c)}
   Traveller.prototype.add_diagram = function(container){
     let index = -1;
-    if (! this.is_above_vertices && this.graph.vertices.length > 0) {
-        index = container.getChildIndex(this.graph.vertices[0].diagram) - 1;
+    if (! this.is_above_vertices && this.graph.edges.length > 0) {
+      // first of edges is "highest", so go above that:
+      index = container.getChildIndex(this.graph.edges[0].diagram)+1;
     }
     if (index < 0) {
       container.addChild(this.diagram);
