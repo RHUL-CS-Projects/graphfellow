@@ -140,7 +140,7 @@ Useful methods:
 
 You can select an edge out of a vertex using the vertex's
 `get_edge_to(to_vertex, chooser)` method. The method effectively searches the
-`edges_out` array for you and returns one edge that leads from the current to
+`edges_out` array for you and returns one edge that leads from the current
 vertex to the vertex specified by the `to_vertex` argument (a `GraphVertex`
 object). The returned edge may be `null` if no such edge is available. The
 optional `chooser` argument is a string indicating how that edge will be
@@ -308,7 +308,7 @@ Useful methods:
 
 | method                     | description
 |----------------------------+-----------------------------
-| `get_vertex_by_id(id)`     | find vertex bu its (string) id
+| `get_vertex_by_id(id)`     | find vertex by its (string) id
 | `create_traveller(config)` | make a new traveller (see `Traveller` class above)
 
 The names of the arrays of components correspond to what you find by inspecting
