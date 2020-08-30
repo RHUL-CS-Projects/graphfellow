@@ -201,8 +201,8 @@ specifying the background colour, or overriding the aspect ratio.
   data-graph-config="background-color:0xffccff,vertices.is-pulse-blur:true"></div>
 ```
 
-GraphFellow is tolerant of you using hyphens or colons interchangeably in the
-property names here.
+GraphFellow is tolerant of you using hyphens or underscores interchangeably in
+the property names here.
 
 You can set nested properties using `.`, such as `edges.stroke_color:0x00ff00`.
 Note that this includes `data` config settings, as well as the default and
